@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 5: Risk &amp; Fraud | Payments Academy</title>
+  <meta name="description" content="Study how risk is mitigated: analyze fraud vectors (APP, account takeover), credit card disputes, EMV liability shifts, Nacha ACH returns, and next-generation AI scoring systems." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .hero-badge { background: rgba(var(--mod5-color-rgb, 99, 102, 241), 0.12); border-color: rgba(var(--mod5-color-rgb, 99, 102, 241), 0.35); color: var(--mod5-color); }
+    .module-hero::before { background: radial-gradient(circle, var(--mod5-color), transparent 70%); top: -40%; left: -10%; width: 500px; height: 500px; }
+    .module-hero::after  { background: radial-gradient(circle, #6366f1, transparent 70%); }
+    .sidebar-nav li a.active::before { background: var(--mod5-color); }
+    .section-icon { background: rgba(var(--mod5-color-rgb, 99, 102, 241), 0.12); color: var(--mod5-color); }
+    .key-fact::before { background: var(--mod5-color); }
+    .process-step-num { border-color: rgba(var(--mod5-color-rgb, 99, 102, 241), 0.4); color: var(--mod5-color); }
+    .chapter-tab.active { background: var(--mod5-color); }
+    .check { color: #10b981; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-icon">⚡</div>Payments Academy</a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="module-hero">
+  <div class="hero-badge">MODULE 05</div>
+  <h1 class="hero-title">Risk &amp; Fraud</h1>
+  <p class="hero-desc">Study how risk is mitigated: analyze fraud vectors (APP, account takeover), credit card disputes, EMV liability shifts, Nacha ACH returns, and next-generation AI scoring systems.</p>
+  <div class="hero-meta">
+    <span class="hero-meta-item">📚 3 Chapters</span>
+    <span class="hero-meta-item">⏱ Est. 45 Mins</span>
+    <span class="hero-meta-item">🎯 Practitioner Level</span>
+    <span class="hero-meta-item">💡 Comprehensive Depth</span>
+  </div>
+</header>
+
+<div class="module-layout">
+  <aside class="sidebar">
+    
+    <div class="sidebar-title">Fraud Vectors</div>
+    <ul class="sidebar-nav">
+      <li><a href="#db-fraud" data-section="db-fraud">Card Fraud Vectors</a></li>
+      <li><a href="#ai-fraud" data-section="ai-fraud">AI Fraud Detection</a></li>
+      <li><a href="#ai-genai" data-section="ai-genai">GenAI Dual-Use Risk</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Disputes</div>
+    <ul class="sidebar-nav">
+      <li><a href="#cr-chargebacks" data-section="cr-chargebacks">Disputes &amp; Chargebacks</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Returns</div>
+    <ul class="sidebar-nav">
+      <li><a href="#ach-returns" data-section="ach-returns">ACH Return Codes</a></li>
+      <li><a href="#ach-risk" data-section="ach-risk">ACH Risk Rules</a></li>
+      <li><a href="#ai-techniques" data-section="ai-techniques">GNNs &amp; Biometrics</a></li>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Assessment</div>
+    <ul class="sidebar-nav">
+      <li><a href="#assessment" data-section="assessment">Module Assessment</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    
+      <div class="highlights-container" style="background: var(--bg-glass); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15); backdrop-filter: blur(10px);">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--mod5-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📊</span> Module Highlights &amp; Architecture
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5;">
+          A high-level visual summary of this module. Click through the tabs below for the complete practitioner-grade deep dives.
+        </p>
+        
+    <div class="two-col" style="gap: 1.5rem; margin-top: 1rem;">
+      <div class="card" style="padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+        <h4 style="color: var(--mod5-color); font-size: 1.05rem; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">⚠️ ACH Return Timelines</h4>
+        <ul style="font-size: 0.8rem; color: var(--text-secondary); padding-left: 1.25rem; line-height: 1.6; margin: 0;">
+          <li><strong>R01 (NSF) / R03:</strong> Must return within 2 business days.</li>
+          <li><strong>R10 (Unauthorized):</strong> Consumer has up to 60 calendar days.</li>
+        </ul>
+      </div>
+      <div class="card" style="padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+        <h4 style="color: var(--mod5-color); font-size: 1.05rem; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">🔒 Liability Shift Rules</h4>
+        <ul style="font-size: 0.8rem; color: var(--text-secondary); padding-left: 1.25rem; line-height: 1.6; margin: 0;">
+          <li><strong>EMV Chip:</strong> In-person liability shifts to the party that did not support chip cards.</li>
+          <li><strong>3D Secure:</strong> Online CNP liability shifts from merchant to issuer upon verification.</li>
+        </ul>
+      </div>
+    </div>
+
+      </div>
+    
+
+    <div class="chapter-tabs" data-panels="m5-panels">
+      
+        <button class="chapter-tab active" data-tab="fraud">🛡️ Fraud Typologies</button>
+      
+        <button class="chapter-tab " data-tab="disputes">🔄 Disputes &amp; Chargebacks</button>
+      
+        <button class="chapter-tab " data-tab="failures">⚠️ Returns &amp; Failures</button>
+      
+        <button class="chapter-tab" data-tab="assessment">🎯 Assessment</button>
+      
+    </div>
+
+    <div id="m5-panels">
+      
+    <div class="chapter-panel active" data-tab="fraud">
+      
+    <div class="content-section" data-section-id="db-fraud" id="db-fraud">
+      <div class="section-header">
+        <div class="section-icon">🛡️</div>
+        <div>
+          <div class="section-num">5.1</div>
+          <h2>Card Fraud Vectors &amp; Security</h2>
+        </div>
+      </div>
+      
+      <div class="two-col">
+        <div class="card">
+          <h4 style="margin-bottom:0.75rem">🦹 Fraud Typologies</h4>
+          <ul style="font-size:0.875rem;color:var(--text-secondary);padding-left:1.25rem">
+            <li><strong>Card Skimming:</strong> Physical overlay devices placed on POS terminals or ATMs to copy card magnetic stripe data.</li>
+            <li><strong>Card Shimming:</strong> Ultra-thin paper devices placed inside chip readers to capture EMV card data during insertion.</li>
+            <li><strong>ATM Jackpotting:</strong> Executing physical or network malware on ATMs to force them to dispense cash.</li>
+            <li><strong>CNP (Card-Not-Present) Fraud:</strong> Using stolen card details (PAN, CVV, expiry) to make unauthorized purchases online.</li>
+            <li><strong>Account Takeover (ATO):</strong> Stealing online banking logins to request new replacement cards or link them to fraudulent mobile wallets.</li>
+          </ul>
+        </div>
+        
+        <div class="card">
+          <h4 style="margin-bottom:0.75rem">🔒 Security Technologies</h4>
+          <ul style="font-size:0.875rem;color:var(--text-secondary);padding-left:1.25rem">
+            <li><strong>EMV Chip Standards:</strong> Generates dynamic, one-time cryptograms for physical transactions, rendering card data useless if copied.</li>
+            <li><strong>Network Tokenization:</strong> Replaces real 16-digit card numbers with device-specific tokens (DPANs) that only work with authorized signatures.</li>
+            <li><strong>3D Secure (3DS) Protocols:</strong> A messaging standard that prompts cardholders for multi-factor checks (biometrics or OTP) during e-commerce checkouts.</li>
+            <li><strong>Behavioral Heuristics:</strong> AI scoring checks checking device angle, mouse movements, or typing speeds to detect bot or hacker sessions.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-warning">
+        <div class="callout-icon">⚠️</div>
+        <div class="callout-content">
+          <h4>Friendly Fraud &amp; Monitoring Programs</h4>
+          <p><strong>Friendly Fraud:</strong> Occurs when a cardholder purchases a product but falsely claims they did not initiate or receive the charge to get a refund. It accounts for 30-50% of card disputes. Merchants combat this by submitting delivery receipts and representment evidence.</p>
+        </div>
+      </div>
+    </div>
+  
+      <section class="content-section" id="ai-fraud">
+        <div class="section-header">
+          <div class="section-icon">🤖</div>
+          <div>
+            <h2>AI in Payments: Fraud Detection & Intelligence</h2>
+            <p class="section-lead">Artificial intelligence has moved from an experimental capability to the primary defense layer across every payment type. By 2025, AI-powered fraud detection was effectively mandatory infrastructure for financial institutions.</p>
+          </div>
+        </div>
+
+        <div class="key-facts-grid">
+          <div class="key-fact">
+            <div class="key-fact-value">87%</div>
+            <div class="key-fact-label">of global FIs had AI-powered fraud detection by 2025 (up from 72% in early 2024)</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">$6.84B</div>
+            <div class="key-fact-label">AI fraud detection market in 2025 → projected $49.5B by 2034 (CAGR: 24.6%)</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">47% vs 30%</div>
+            <div class="key-fact-label">Advanced AI adoption: fintechs vs. incumbent banks</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">$60M</div>
+            <div class="key-fact-label">Average annual payment fraud loss per organization (survey data)</div>
+          </div>
+        </div>
+
+        <h3>How Modern AI Fraud Detection Works</h3>
+        <p>Traditional rules-based fraud systems (e.g., "flag any transaction over $5,000 from a new device") produce enormous false positive rates — blocking legitimate customers and generating manual review queues. Modern AI systems replace or augment these rules with probabilistic models that evaluate hundreds of signals simultaneously:</p>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="process-step-num">1</div>
+            <div class="process-step-body">
+              <strong>Feature Engineering</strong>
+              <p>Hundreds of transaction attributes are computed in real time: merchant category, time since last transaction, device fingerprint, network IP, geographic distance from prior transaction, velocity across accounts, and hundreds more.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">2</div>
+            <div class="process-step-body">
+              <strong>Model Scoring</strong>
+              <p>Gradient boosting models (XGBoost, LightGBM) or neural networks produce a fraud probability score (0–1000) for each transaction in under 50 milliseconds. The score routes the transaction: approve, decline, step-up authentication, or manual review.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">3</div>
+            <div class="process-step-body">
+              <strong>Behavioral Baseline</strong>
+              <p>Each customer has an individual behavioral profile that updates continuously — normal spending hours, device types, geographic patterns, merchant preferences. Deviations from this "normal" fingerprint trigger elevated scores.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">4</div>
+            <div class="process-step-body">
+              <strong>Feedback Loop</strong>
+              <p>Confirmed fraud cases and false positives are fed back into training data, enabling continuous model improvement. Challenger models run alongside champions in A/B tests to validate improvements before full deployment.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>Named Platforms & Vendors (2025–2026)</h3>
+        <div class="vendor-grid">
+          <div class="vendor-card">
+            <div class="vendor-name">Mastercard Decision Intelligence Pro</div>
+            <div class="vendor-desc">Real-time GenAI + graph-based scoring across up to 1 trillion transaction data points. Detects fraud patterns invisible to traditional models.</div>
+          </div>
+          <div class="vendor-card">
+            <div class="vendor-name">FICO Falcon Fraud Manager</div>
+            <div class="vendor-desc">Industry-standard enterprise fraud platform. Evolving into the unified "FICO Platform" with agentic AI and explainability-first design for regulatory compliance.</div>
+          </div>
+          <div class="vendor-card">
+            <div class="vendor-name">Quantexa</div>
+            <div class="vendor-desc">Contextual intelligence and graph analytics for financial crime. Builds relationship maps across accounts, entities, and transactions to surface money mule networks.</div>
+          </div>
+          <div class="vendor-card">
+            <div class="vendor-name">Zest AI</div>
+            <div class="vendor-desc">AI-driven credit underwriting focused on fair lending. Uses explainable ML to expand credit access while maintaining — or improving — portfolio performance.</div>
+          </div>
+          <div class="vendor-card">
+            <div class="vendor-name">Taktile</div>
+            <div class="vendor-desc">Automated underwriting decisioning for fintechs. Enables teams to build, test, and deploy credit and fraud decision flows without engineering overhead.</div>
+          </div>
+          <div class="vendor-card">
+            <div class="vendor-name">Silent Eight</div>
+            <div class="vendor-desc">AI-powered sanctions and AML name screening. Reduces the manual review queue for sanctions false positives by automated resolution with audit trail.</div>
+          </div>
+        </div>
+      </section>
+      <section class="content-section" id="ai-genai">
+        <div class="section-header">
+          <div class="section-icon">⚔️</div>
+          <div>
+            <h2>GenAI: The Dual-Use Risk</h2>
+            <p class="section-lead">Generative AI acts simultaneously as the payments industry's most powerful fraud defense and its most dangerous threat vector. Understanding both sides is essential for any payments professional in 2026.</p>
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>As a DEFENSE</th><th>As an ATTACK</th></tr></thead>
+            <tbody>
+              <tr><td>Generates synthetic fraud scenarios for model training data</td><td>Creates synthetic identities that pass all KYC checks ("all-green fraud")</td></tr>
+              <tr><td>Summarizes investigation reports for analysts</td><td>Produces deepfake audio/video to impersonate bank employees or victims</td></tr>
+              <tr><td>Detects anomalous patterns in unstructured data (emails, chat)</td><td>Automates personalized phishing at industrial scale with zero marginal cost</td></tr>
+              <tr><td>Explains model decisions to regulators in plain language</td><td>Generates convincing fraudulent documentation (pay stubs, bank statements)</td></tr>
+              <tr><td>Monitors customer interactions for social engineering signals</td><td>Produces deepfake voice calls to manipulate victims into authorized transfers</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="warning-box">
+          <p>⚠️ <strong>"All-Green Fraud":</strong> GenAI-powered synthetic identities are increasingly able to pass identity verification (ID document matching, selfie liveness checks, knowledge-based authentication) with no human involvement. These identities score well on traditional credit bureaus because they've been cultivated over months. Detecting them requires behavioral analysis — not just document verification.</p>
+        </div>
+
+        <div class="trend-card">
+          <h4>🎯 The $40 Billion Projection</h4>
+          <p>Industry analysts project that GenAI could fuel up to <span class="stat-highlight rose">$40 billion</span> in US fraud losses by 2027 — more than triple 2023 figures — if defensive adoption fails to keep pace with offensive use. The primary vectors: authorized push payment fraud enabled by voice deepfakes and AI-crafted social engineering that bypasses all technical controls.</p>
+        </div>
+      </section>
+    </div>
+    <div class="chapter-panel" data-tab="disputes">
+      
+    <div class="content-section" data-section-id="cr-chargebacks" data-section-id="cr-chargebacks" id="cr-chargebacks">
+      <div class="section-header">
+        <div class="section-icon">🔄</div>
+        <div>
+          <div class="section-num">5.2</div>
+          <h2>Disputes &amp; Chargebacks Lifecycle</h2>
+        </div>
+      </div>
+      <p>Under the Fair Credit Billing Act (FCBA) and network operating rules, cardholders have the right to dispute fraudulent or incorrect transactions, triggering a **chargeback** against the merchant.</p>
+      
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="process-step-num">1</div>
+          <div class="process-step-body">
+            <strong>Dispute Filing</strong>
+            <p>The cardholder contacts their issuing bank to dispute a transaction (e.g., claiming fraud, item not received, or wrong amount). The issuer grants provisional credit and pulls the funds back from the acquiring bank.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">2</div>
+          <div class="process-step-body">
+            <strong>Chargeback &amp; Fees</strong>
+            <p>The acquiring bank passes the debit down to the merchant's account, along with a chargeback processing fee (typically $15 to $25). The merchant is notified and given an opportunity to respond.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">3</div>
+          <div class="process-step-body">
+            <strong>Representment</strong>
+            <p>If the merchant has proof that the transaction was valid (e.g., signature, shipping tracking, delivery confirmation), they submit this evidence in a process called **representment** to win the funds back.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">4</div>
+          <div class="process-step-body">
+            <strong>Pre-Arbitration &amp; Arbitration</strong>
+            <p>If the issuer rejects the representment, the case can proceed to arbitration. The card network (Visa/MC) makes the final binding decision, charging the losing bank high arbitration fees (often $500 or more).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h4>Visa Dispute Categories</h4>
+          <ul style="font-size:0.85rem;color:var(--text-secondary);padding-left:1.25rem">
+            <li><strong>Category 10 (Fraud):</strong> 10.4 - Card-Not-Present Fraud</li>
+            <li><strong>Category 11 (Authorization):</strong> 11.3 - Card Recovery Bulletins</li>
+            <li><strong>Category 12 (Processing Error):</strong> 12.6 - Duplicate Processing</li>
+            <li><strong>Category 13 (Consumer Disputes):</strong> 13.1 - Merchandise Not Received</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Mastercard Chargeback Codes</h4>
+          <ul style="font-size:0.85rem;color:var(--text-secondary);padding-left:1.25rem">
+            <li><strong>4837:</strong> No Cardholder Authorization</li>
+            <li><strong>4853:</strong> Cardholder Dispute (Goods/Services Not Provided or Defective)</li>
+            <li><strong>4840:</strong> Fraudulent Processing</li>
+            <li><strong>4863:</strong> Cardholder Does Not Recognize</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    </div>
+    <div class="chapter-panel" data-tab="failures">
+      <div class="content-section" data-section-id="ach-returns" id="ach-returns">
+          <div class="section-header">
+            <div class="section-icon">↩️</div>
+            <div>
+              <div class="section-num">1.6</div>
+              <h2>Return Codes</h2>
+            </div>
+          </div>
+
+          <p>When an ACH entry cannot be posted — because the account is closed, insufficient funds exist, or the transaction was unauthorized —
+          the RDFI sends back a <strong>return entry</strong> with a standardized return code.
+          Understanding return codes is critical for payment operations teams managing ACH programs.
+          Returns must typically be transmitted within <strong>2 banking days</strong> of settlement
+          (60-day returns apply only to consumer unauthorized entries under specific conditions).</p>
+
+          <h3>Most Common Return Codes</h3>
+          <div class="return-codes">
+            <div class="return-code-item">
+              <div class="return-code-code">R01</div>
+              <div class="return-code-desc"><div class="return-code-title">Insufficient Funds</div>Available balance insufficient to cover the debit. Most common return. May indicate NSF or uncollected funds.</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R02</div>
+              <div class="return-code-desc"><div class="return-code-title">Account Closed</div>Account has been closed by the depository institution or the customer. Do not re-present; update records.</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R03</div>
+              <div class="return-code-desc"><div class="return-code-title">No Account / Unable to Locate</div>Account number does not match any account at RDFI. Could indicate a data entry error or fraudulent account info.</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R04</div>
+              <div class="return-code-desc"><div class="return-code-title">Invalid Account Number</div>Account number structure is not valid. The RDFI cannot post; check account formatting.</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R05</div>
+              <div class="return-code-desc"><div class="return-code-title">Unauthorized Debit to Consumer</div>A CCD or CTX debit was applied to a consumer account without authorization. High-risk code for ODFIs.</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R07</div>
+              <div class="return-code-desc"><div class="return-code-title">Authorization Revoked</div>Consumer revoked the authorization. Originator must cease debiting immediately. Continued debits after R07 = Nacha violation.</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R08</div>
+              <div class="return-code-desc"><div class="return-code-title">Payment Stopped</div>Receiver placed a stop payment on this entry. Similar to a check stop payment. Must honor for at least 6 months.</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R09</div>
+              <div class="return-code-desc"><div class="return-code-title">Uncollected Funds</div>Collected balance sufficient but uncollected funds present. The RDFI may re-present; funds may clear later.</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R10</div>
+              <div class="return-code-desc"><div class="return-code-title">Customer Advises Unauthorized</div>Consumer advises the debit was unauthorized. Nacha rule: RDFI has up to 60 calendar days from settlement to return for consumer unauthorized entries.</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R11</div>
+              <div class="return-code-desc"><div class="return-code-title">Check Truncation Entry Return</div>Used when returning ARC, BOC, or POP entries. Original check item was ineligible.</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R16</div>
+              <div class="return-code-desc"><div class="return-code-title">Account Frozen</div>Account access restricted due to legal order, regulatory action, or internal bank hold. Common in BSA/AML freeze scenarios.</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R20</div>
+              <div class="return-code-desc"><div class="return-code-title">Non-Transaction Account</div>Account type does not allow ACH (e.g., savings account with Reg D restrictions, or brokerage account).</div>
+            </div>
+            <div class="return-code-item">
+              <div class="return-code-code">R29</div>
+              <div class="return-code-desc"><div class="return-code-title">Corporate Not Authorized</div>Corporate receiver has not authorized this debit (equivalent of R10 for businesses). Must return within 2 banking days.</div>
+            </div>
+          </div>
+
+          <div class="callout callout-danger">
+            <div class="callout-icon">🚨</div>
+            <div class="callout-content">
+              <h4>Return Rate Monitoring — Nacha Compliance</h4>
+              <p>Nacha imposes strict return rate thresholds. ODFIs must monitor originator return rates:<br>
+              • <strong>Overall ACH debit returns:</strong> Must not exceed <strong>15%</strong> of debit entries<br>
+              • <strong>Unauthorized returns (R05, R07, R10, R29):</strong> Must not exceed <strong>0.5%</strong> of debit entries<br>
+              • <strong>Administrative returns (R02, R03, R04):</strong> Must not exceed <strong>3%</strong> of debit entries<br>
+              Exceeding these thresholds triggers ODFI review and potential suspension of origination rights.</p>
+            </div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="ach-risk" id="ach-risk">
+          <div class="section-header">
+            <div class="section-icon">🛡</div>
+            <div>
+              <div class="section-num">1.7</div>
+              <h2>Risk, Fraud &amp; Compliance</h2>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="card">
+              <h4 style="margin-bottom:0.75rem">🔓 Key Fraud Vectors</h4>
+              <ul style="color:var(--text-secondary);padding-left:1.25rem;font-size:0.875rem">
+                <li><strong>Unauthorized ACH debits:</strong> Fraudster uses stolen bank credentials to pull funds</li>
+                <li><strong>Account takeover (ATO):</strong> Attacker gains access to online banking and initiates unauthorized ACH transfers</li>
+                <li><strong>Business Email Compromise (BEC):</strong> Attacker impersonates executive or vendor and tricks AP department into sending ACH</li>
+                <li><strong>Synthetic identity fraud:</strong> Fraudulent account opened with fabricated identity; credit obtained and account drained via ACH</li>
+                <li><strong>Kiting:</strong> Exploiting float between banks by cycling ACH transfers to manufacture fake balances</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4 style="margin-bottom:0.75rem">📜 Key Regulations</h4>
+              <ul style="color:var(--text-secondary);padding-left:1.25rem;font-size:0.875rem">
+                <li><strong>Nacha Operating Rules:</strong> The comprehensive rulebook governing all ACH participants</li>
+                <li><strong>Reg E (EFTA):</strong> Consumer protections for electronic fund transfers including ACH</li>
+                <li><strong>Reg CC:</strong> Funds availability rules (how quickly banks must make ACH credits available)</li>
+                <li><strong>BSA/AML:</strong> Bank Secrecy Act requirements for transaction monitoring and SAR filing</li>
+                <li><strong>OFAC:</strong> Sanctions screening required on all ACH entries (mandatory for IAT)</li>
+                <li><strong>UDAAP:</strong> CFPB unfair/deceptive/abusive acts practices — applies to ACH origination practices</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>Nacha Third-Party Sender (TPS) Requirements</h3>
+          <p>Since 2022, Nacha requires Third-Party Senders (payment processors) to formally register with the ACH network.
+          TPS must:<br>
+          (1) Register annually with Nacha with legal entity info, list of ODFI relationships, and industries served;<br>
+          (2) Comply with all Nacha rules including return rate monitoring;<br>
+          (3) Be subject to Nacha audits and enforcement actions.
+          This significantly impacted fintech ACH platforms like Dwolla, Stripe ACH, and others.</p>
+
+          <h3>Credit Risk: ODFI Exposure on ACH Credits</h3>
+          <p>When an ODFI allows an originator to send ACH credits (like payroll) before funding settles, the ODFI extends <strong>intraday credit</strong>.
+          If the originator's settlement account comes up short, the ODFI absorbs the loss. ODFIs manage this through:
+          prefunding requirements, exposure limits, collateral, and creditworthiness analysis of the originator.</p>
+        </div>
+      <section class="content-section" id="ai-techniques">
+        <div class="section-header">
+          <div class="section-icon">🧠</div>
+          <div>
+            <h2>Advanced AI Techniques in Payments</h2>
+            <p class="section-lead">Beyond standard ML models, three techniques are rapidly gaining adoption for payment fraud and financial crime detection.</p>
+          </div>
+        </div>
+
+        <div class="trend-card">
+          <h4>Graph Neural Networks (GNNs)</h4>
+          <p>Traditional fraud models treat each transaction in isolation. GNNs map relationships between accounts, devices, merchants, and transactions as a network graph. A "money mule" chain — where fraud proceeds move through multiple accounts before cash-out — becomes visible as a suspicious graph pattern even if each individual transaction looks benign. Mastercard's Decision Intelligence Pro operates on a graph of over 1 trillion data points.</p>
+        </div>
+
+        <div class="trend-card">
+          <h4>Behavioral Biometrics</h4>
+          <p>Rather than "who you are" (passwords, PINs) or "what you have" (device, token), behavioral biometrics captures "how you behave" — typing rhythm, swipe velocity, screen pressure, device hold angle, navigation patterns within an app. This continuous authentication layer operates invisibly and is extremely difficult to replicate, even with stolen credentials. Used to detect account takeover the moment behavior deviates from the established baseline.</p>
+        </div>
+
+        <div class="trend-card">
+          <h4>Agentic AI: From Detection to Remediation</h4>
+          <p>The 2025–2026 shift is from AI that <em>flags</em> fraud to AI that <em>acts on</em> fraud autonomously. Agentic AI systems can: (1) detect a suspicious transaction, (2) pull context from multiple data sources, (3) initiate a step-up authentication challenge, (4) if that fails, freeze the account, (5) draft a customer notification, and (6) file an internal fraud case — all without human intervention. <span class="stat-highlight">76%</span> of financial organizations planned to implement agentic AI within 12 months as of early 2026.</p>
+        </div>
+      </section>
+    </div>
+  
+    <div class="chapter-panel" data-tab="assessment">
+      <div class="content-section" data-section-id="assessment" id="assessment">
+        <div class="quiz-section-title">Module 5 Assessment</div>
+        <div class="quiz-wrapper" data-module="5"></div>
+      </div>
+    </div>
+
+    <div class="module-footer">
+      <a href="module4.html" class="footer-nav-btn">← Module 4: Card Payments</a>
+      <a href="module6.html" class="footer-nav-btn primary">Module 6: Compliance & Regulation →</a>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+
+    <div class="footer-facts">
+      <div class="footer-fact">
+        <div class="footer-fact-icon">✍️</div>
+        <div>
+          <div class="footer-fact-title">Original Written Expression</div>
+          <div class="footer-fact-body">The explanations, summaries, flow descriptions, and educational narratives in this platform are original content created specifically for this Academy. No text has been copied verbatim from any copyrighted publication, proprietary rulebook, or paywalled source.</div>
+        </div>
+      </div>
+      <div class="footer-fact">
+        <div class="footer-fact-icon">📊</div>
+        <div>
+          <div class="footer-fact-title">Publicly Reported Statistics</div>
+          <div class="footer-fact-body">All figures and statistics — including transaction volumes, fee rates, and market data — are drawn from publicly available sources: company earnings releases, Federal Reserve reports, CFPB studies, and Nacha annual reports. Facts are not copyrightable.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-disclaimer">
+      <div class="footer-disclaimer-icon">⚠️</div>
+      <div>
+        <strong>Regulatory Disclaimer:</strong> The regulatory and compliance content in this platform has been simplified for educational purposes. It is intended to build conceptual understanding, not to serve as legal or compliance advice. Payment regulations are complex, jurisdiction-specific, and subject to change. <strong>Anyone making compliance, legal, or business decisions should consult the primary regulatory sources directly and seek qualified legal counsel.</strong>
+      </div>
+    </div>
+
+    <div class="footer-sources-title">Primary Sources &amp; References</div>
+    <div class="footer-sources-grid">
+      <a class="footer-source-tag" href="https://www.nacha.org" target="_blank" rel="noopener">Nacha — ACH Operating Rules</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/paymentsystems.htm" target="_blank" rel="noopener">Federal Reserve — Payment Systems</a>
+      <a class="footer-source-tag" href="https://www.frbservices.org/financial-services/fednow" target="_blank" rel="noopener">Federal Reserve — FedNow Service</a>
+      <a class="footer-source-tag" href="https://www.theclearinghouse.org/payment-systems/rtp" target="_blank" rel="noopener">The Clearing House — RTP Network</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/pubs/fedpoint/fed43.htm" target="_blank" rel="noopener">Federal Reserve — Fedwire Funds</a>
+      <a class="footer-source-tag" href="https://www.cfpb.gov/rules-policy/regulations/1005/" target="_blank" rel="noopener">CFPB — Regulation E (EFTA)</a>
+      <a class="footer-source-tag" href="https://usa.visa.com/run-your-business/merchant-resources/interchange-reimbursement-fees.html" target="_blank" rel="noopener">Visa — Interchange Reimbursement Fees</a>
+      <a class="footer-source-tag" href="https://www.mastercard.us/en-us/business/overview/support/merchant-interchange-rates.html" target="_blank" rel="noopener">Mastercard — Interchange Rates</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/releases/z1/" target="_blank" rel="noopener">Federal Reserve — Z.1 Financial Accounts</a>
+      <a class="footer-source-tag" href="https://www.fdic.gov/regulations/applications/financial/" target="_blank" rel="noopener">FDIC — Banking Regulations</a>
+      <a class="footer-source-tag" href="https://www.swift.com" target="_blank" rel="noopener">SWIFT — Global Messaging Network</a>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/insights.js"></script>
+<script src="js/questions-m5.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

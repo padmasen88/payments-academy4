@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capstone Projects Workspace — Payments Academy 3.0</title>
+  <meta name="description" content="Realistic payments engineering capstone projects. Implement FedNow, build a payment orchestration engine, or design ACH systems." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .caps-layout {
+      max-width: 1200px;
+      margin: 6rem auto 3rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2rem;
+    }
+    @media (max-width: 900px) {
+      .caps-layout { grid-template-columns: 1fr; }
+    }
+    
+    .caps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .cap-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all var(--t-normal);
+    }
+    .cap-item:hover, .cap-item.active {
+      border-color: var(--accent-teal);
+      background: rgba(45,212,191,0.04);
+      transform: translateY(-2px);
+    }
+    .cap-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .cap-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    
+    /* Workspace Area */
+    .caps-workspace {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      height: fit-content;
+      position: sticky;
+      top: 6rem;
+    }
+    .ws-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.5rem;
+    }
+    .ws-subtitle {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 1.25rem;
+      margin-bottom: 0.35rem;
+    }
+    
+    /* Interactive Terminal Console */
+    .terminal-console {
+      background: #040810;
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-emerald);
+      font-size: 0.8rem;
+      min-height: 180px;
+      margin-top: 1.5rem;
+      overflow-y: auto;
+      max-height: 250px;
+      white-space: pre-wrap;
+    }
+    .console-input-area {
+      margin-top: 1.25rem;
+    }
+    .console-textarea {
+      width: 100%;
+      height: 90px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.75rem;
+      font-size: 0.78rem;
+      resize: none;
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">⚡</div>
+    Payments Academy
+  </a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html" class="active">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="map-header" style="padding-bottom:2rem;">
+  <div class="hero-badge">ENGINEERING LAB</div>
+  <h1 class="hero-title">Capstone Projects Workspace</h1>
+  <p class="hero-desc" style="max-width:700px; margin: 1rem auto 0;">
+    Put your payments knowledge into practice. Review architectural requirements, inspect system parameters, and paste configuration/code payloads into the console validator to test implementation parameters.
+  </p>
+</header>
+
+<div class="caps-layout">
+  
+  <!-- Left Side: Capstone Cards -->
+  <div class="caps-list">
+    
+    <div class="cap-item active" onclick="selectCapstone('ach-engine')">
+      <div class="cap-title">Design an ACH Origination Engine</div>
+      <div class="cap-meta">
+        <span>🛠 Operations / Tech</span>
+        <span>⏱ Advanced</span>
+      </div>
+      <p class="details-text" style="font-size:0.82rem; margin:0;">Validate batch routing files, parsing Nacha record structures, checking balancing debits, and auditing return paths.</p>
+    </div>
+
+    <div class="cap-item" onclick="selectCapstone('fednow-api')">
+      <div class="cap-title">Implement FedNow ISO 20022 Handler</div>
+      <div class="cap-meta">
+        <span>💻 Tech / Rails</span>
+        <span>⏱ Expert</span>
+      </div>
+      <p class="details-text" style="font-size:0.82rem; margin:0;">Build a messaging gateway to parse pacs.008 credit transfers and return pacs.002 status reports in seconds.</p>
+    </div>
+
+    <div class="cap-item" onclick="selectCapstone('orchestrator')">
+      <div class="cap-title">Payment Orchestration Routing</div>
+      <div class="cap-meta">
+        <span>🏢 Orchestration</span>
+        <span>⏱ Intermediate</span>
+      </div>
+      <p class="details-text" style="font-size:0.82rem; margin:0;">Write smart routing configurations evaluating MDR interchange fees and failover thresholds across processors.</p>
+    </div>
+
+  </div>
+
+  <!-- Right Side: Interactive Console -->
+  <div class="caps-workspace">
+    <div class="ws-title" id="ws-title">Design an ACH Origination Engine</div>
+    
+    <div class="ws-subtitle">Scenario Brief</div>
+    <p class="details-text" id="ws-scenario" style="font-size:0.88rem; line-height:1.6;"></p>
+    
+    <div class="ws-subtitle">Compliance Requirements</div>
+    <p class="details-text" id="ws-reqs" style="font-size:0.85rem; line-height:1.6; color:var(--text-accent);"></p>
+    
+    <div class="ws-subtitle">Expected Submission Format</div>
+    <p class="details-text" id="ws-format" style="font-size:0.82rem; font-style:italic;"></p>
+
+    <!-- Submissions & Validation -->
+    <div class="console-input-area">
+      <textarea id="ws-input" class="console-textarea" placeholder="Paste JSON submission config payload here..."></textarea>
+      
+      <button class="qz-btn qz-btn-primary" onclick="verifyCapstone()">Verify Submission Payload</button>
+      
+      <div class="terminal-console" id="terminal-log">
+SYSTEM CONSOLE: Select a capstone project and click 'Verify Submission' to run the validation compiler...
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Capstone databases
+  const CAPSTONES = {
+    'ach-engine': {
+      title: 'Design an ACH Origination Engine',
+      scenario: 'You are building a microservice that generates Nacha files for vendor payouts. You must configure the batch header SEC code and balancing batch records.',
+      reqs: '1. The Batch Header must use SEC code "CCD" for B2B.\n2. You must specify a valid 9-digit ODFI routing number.\n3. The file must contain a balancing Batch Control entry.',
+      format: 'Paste a JSON object with: { "sec_code": "...", "odfi_routing": "...", "balanced": true }',
+      defaultInput: '{\n  "sec_code": "CCD",\n  "odfi_routing": "122000248",\n  "balanced": true\n}',
+      validate: (input) => {
+        try {
+          const parsed = JSON.parse(input);
+          if (parsed.sec_code !== 'CCD') return { ok: false, err: 'Nacha validation failed: SEC code must be "CCD" for B2B transfers.' };
+          if (!/^\d{9}$/.test(parsed.odfi_routing)) return { ok: false, err: 'ODFI validation failed: Routing number must be exactly 9 numeric digits.' };
+          if (parsed.balanced !== true) return { ok: false, err: 'Balancing failed: Total credits must match total debits in batch control.' };
+          return { ok: true, msg: 'Nacha file compiled successfully! 1 batch created, balanced clearing sum resolved at DNS window.' };
+        } catch (e) {
+          return { ok: false, err: 'JSON Parsing Exception: Invalid payload structure.' };
+        }
+      }
+    },
+    'fednow-api': {
+      title: 'Implement FedNow ISO 20022 Handler',
+      scenario: 'Build a gateway that parses incoming pacs.008 customer credit transfers and responds with a pacs.002 status confirmation within the 20-second timeout window.',
+      reqs: '1. Payload must contain valid ISO 20022 XML tags <Document> and <FIToFICstmrCdtTrf>.\n2. The currency tag must specify USD.',
+      format: 'Paste a mock XML or string containing: "<pacs008><currency>USD</currency></pacs008>"',
+      defaultInput: '<pacs008>\n  <currency>USD</currency>\n  <amount>250.00</amount>\n</pacs008>',
+      validate: (input) => {
+        if (!input.includes('pacs008')) return { ok: false, err: 'Validation failed: Missing root <pacs008> message wrapper.' };
+        if (!input.includes('USD')) return { ok: false, err: 'Currency rejection: ISO 20022 interbank settlements on FedNow must use USD.' };
+        return { ok: true, msg: 'FedNow parser succeeded! Settle interbank reserves. Generated pacs.002 message with status: ACSC (Settled).' };
+      }
+    },
+    'orchestrator': {
+      title: 'Payment Orchestration Routing',
+      scenario: 'Configure smart routing parameters for an e-commerce checkout platform. Route transactions dynamically between Acquirer A (charges 2.2% + $0.10) and Acquirer B (charges 1.9% + $0.20) to minimize MDR.',
+      reqs: '1. Card transactions under $30 must route to Acquirer A.\n2. Transactions over $30 must route to Acquirer B to optimize fixed fees.',
+      format: 'Paste a JSON object with: { "rule_30_limit": "Acquirer_A" | "Acquirer_B" }',
+      defaultInput: '{\n  "under_30": "Acquirer_A",\n  "over_30": "Acquirer_B"\n}',
+      validate: (input) => {
+        try {
+          const parsed = JSON.parse(input);
+          if (parsed.under_30 !== 'Acquirer_A') return { ok: false, err: 'Routing optimization failed: For $10, Acquirer A charges $0.32, while B charges $0.39. Route under $30 to Acquirer A.' };
+          if (parsed.over_30 !== 'Acquirer_B') return { ok: false, err: 'Routing optimization failed: For $100, Acquirer B charges $2.10, while A charges $2.30. Route over $30 to Acquirer B.' };
+          return { ok: true, msg: 'Smart routing configuration verified! Estimated average transaction fee optimization: +14% savings.' };
+        } catch (e) {
+          return { ok: false, err: 'JSON Parsing Exception: Invalid payload structure.' };
+        }
+      }
+    }
+  };
+
+  let activeCapstone = 'ach-engine';
+
+  function selectCapstone(key) {
+    activeCapstone = key;
+    document.querySelectorAll('.cap-item').forEach(el => {
+      el.classList.toggle('active', el.getAttribute('onclick').includes(key));
+    });
+    
+    const cap = CAPSTONES[key];
+    document.getElementById('ws-title').innerText = cap.title;
+    document.getElementById('ws-scenario').innerText = cap.scenario;
+    document.getElementById('ws-reqs').innerText = cap.reqs;
+    document.getElementById('ws-format').innerText = cap.format;
+    document.getElementById('ws-input').value = cap.defaultInput;
+    document.getElementById('terminal-log').textContent = 'SYSTEM CONSOLE: Loaded project configuration. Paste/edit and click Verify...';
+    document.getElementById('terminal-log').style.color = 'var(--accent-emerald)';
+  }
+
+  function verifyCapstone() {
+    const input = document.getElementById('ws-input').value;
+    const log = document.getElementById('terminal-log');
+    
+    log.textContent = 'COMPILING SUBMISSION PAYLOAD...\n';
+    setTimeout(() => {
+      log.textContent += 'RUNNING PARSER VALIDATION CHECKS...\n';
+      setTimeout(() => {
+        const result = CAPSTONES[activeCapstone].validate(input);
+        if (result.ok) {
+          log.textContent += `PARSER SUCCESS.\n`;
+          log.textContent += `COMPLIANCE AUDIT PASSED.\n\n`;
+          log.textContent += `[VERDICT]: ${result.msg}`;
+          log.style.color = '#10b981';
+        } else {
+          log.textContent += `PARSER EXCEPTION DETECTED.\n`;
+          log.textContent += `COMPLIANCE FAILURE:\n\n`;
+          log.textContent += `[VERDICT]: ${result.err}`;
+          log.style.color = '#f43f5e';
+        }
+      }, 700);
+    }, 600);
+  }
+
+  // Init
+  selectCapstone('ach-engine');
+</script>
+</body>
+</html>

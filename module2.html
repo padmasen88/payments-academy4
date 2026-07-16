@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 2: Payments Infrastructure | Payments Academy</title>
+  <meta name="description" content="Deep-dive into core payments infrastructure: batch clearing in ACH, real-time gross wires, SWIFT correspondent banking networks, and instant rails (RTP and FedNow)." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .hero-badge { background: rgba(var(--mod2-color-rgb, 99, 102, 241), 0.12); border-color: rgba(var(--mod2-color-rgb, 99, 102, 241), 0.35); color: var(--mod2-color); }
+    .module-hero::before { background: radial-gradient(circle, var(--mod2-color), transparent 70%); top: -40%; left: -10%; width: 500px; height: 500px; }
+    .module-hero::after  { background: radial-gradient(circle, #6366f1, transparent 70%); }
+    .sidebar-nav li a.active::before { background: var(--mod2-color); }
+    .section-icon { background: rgba(var(--mod2-color-rgb, 99, 102, 241), 0.12); color: var(--mod2-color); }
+    .key-fact::before { background: var(--mod2-color); }
+    .process-step-num { border-color: rgba(var(--mod2-color-rgb, 99, 102, 241), 0.4); color: var(--mod2-color); }
+    .chapter-tab.active { background: var(--mod2-color); }
+    .check { color: #10b981; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-icon">⚡</div>Payments Academy</a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="module-hero">
+  <div class="hero-badge">MODULE 02</div>
+  <h1 class="hero-title">Payments Infrastructure</h1>
+  <p class="hero-desc">Deep-dive into core payments infrastructure: batch clearing in ACH, real-time gross wires, SWIFT correspondent banking networks, and instant rails (RTP and FedNow).</p>
+  <div class="hero-meta">
+    <span class="hero-meta-item">📚 3 Chapters</span>
+    <span class="hero-meta-item">⏱ Est. 45 Mins</span>
+    <span class="hero-meta-item">🎯 Practitioner Level</span>
+    <span class="hero-meta-item">💡 Comprehensive Depth</span>
+  </div>
+</header>
+
+<div class="module-layout">
+  <aside class="sidebar">
+    
+    <div class="sidebar-title">ACH Rails</div>
+    <ul class="sidebar-nav">
+      <li><a href="#ach-overview" data-section="ach-overview">ACH Overview</a></li>
+      <li><a href="#ach-participants" data-section="ach-participants">ACH Participants</a></li>
+      <li><a href="#ach-flow" data-section="ach-flow">ACH Payment Flow</a></li>
+      <li><a href="#ach-types" data-section="ach-types">SEC Entry Codes</a></li>
+      <li><a href="#ach-timing" data-section="ach-timing">Timing &amp; Settlement</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">High-Value Wires</div>
+    <ul class="sidebar-nav">
+      <li><a href="#wire-details" data-section="wire-details">Fedwire, CHIPS, SWIFT</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Instant Rails</div>
+    <ul class="sidebar-nav">
+      <li><a href="#rtp-overview" data-section="rtp-overview">RTP Overview</a></li>
+      <li><a href="#rtp-flow" data-section="rtp-flow">RTP Payment Flow</a></li>
+      <li><a href="#rtp-features" data-section="rtp-features">RTP Features</a></li>
+      <li><a href="#fn-overview" data-section="fn-overview">FedNow Service</a></li>
+      <li><a href="#fn-vs-rtp" data-section="fn-vs-rtp">FedNow vs. RTP</a></li>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Assessment</div>
+    <ul class="sidebar-nav">
+      <li><a href="#assessment" data-section="assessment">Module Assessment</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    
+      <div class="highlights-container" style="background: var(--bg-glass); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15); backdrop-filter: blur(10px);">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--mod2-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📊</span> Module Highlights &amp; Architecture
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5;">
+          A high-level visual summary of this module. Click through the tabs below for the complete practitioner-grade deep dives.
+        </p>
+        
+    <div class="two-col" style="gap: 1.5rem; margin-top: 1rem;">
+      <div class="card" style="padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+        <h4 style="color: var(--mod2-color); font-size: 1.05rem; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">🏦 Batch net (ACH)</h4>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+          Transactions are accumulated and netted. Clearing happens throughout the day, and settlement occurs on a deferred basis (T+1 or same-day) in batches.
+        </p>
+      </div>
+      <div class="card" style="padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+        <h4 style="color: var(--mod2-color); font-size: 1.05rem; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">⚡ Real-Time Gross (Wires)</h4>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+          High-value payments settled individually and irrevocably in real time across Fed master accounts. Zero counterparty credit risk.
+        </p>
+      </div>
+      <div class="card" style="padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+        <h4 style="color: var(--mod2-color); font-size: 1.05rem; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">🕒 Instant Rails (RTP/FedNow)</h4>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+          24/7/365 credit push payments cleared and settled gross within milliseconds using prefunded reserve accounts at the Fed.
+        </p>
+      </div>
+    </div>
+
+      </div>
+    
+
+    <div class="chapter-tabs" data-panels="m2-panels">
+      
+        <button class="chapter-tab active" data-tab="ach">🏦 ACH Rails</button>
+      
+        <button class="chapter-tab " data-tab="wires">⚡ Wires &amp; SWIFT</button>
+      
+        <button class="chapter-tab " data-tab="instant">🕒 Real-Time (RTP/FedNow)</button>
+      
+        <button class="chapter-tab" data-tab="assessment">🎯 Assessment</button>
+      
+    </div>
+
+    <div id="m2-panels">
+      
+    <div class="chapter-panel active" data-tab="ach">
+      <div class="content-section" data-section-id="ach-overview" id="ach-overview">
+          <div class="section-header">
+            <div class="section-icon">🏦</div>
+            <div>
+              <div class="section-num">1.1</div>
+              <h2>ACH — Overview &amp; History</h2>
+            </div>
+          </div>
+
+          <p>The <strong>Automated Clearing House (ACH)</strong> network is the backbone of everyday US money movement —
+          responsible for direct deposit payroll, Social Security benefits, bill pay, business-to-business payments,
+          and the invisible settlement layer underneath consumer apps like Zelle and Venmo.
+          Governed by <strong>Nacha</strong> (formerly NACHA — the National Automated Clearing House Association),
+          ACH processed <strong>31.5 billion transactions totaling $80.1 trillion</strong> in 2023 alone.</p>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-year">1968</div>
+              <div class="timeline-text"><strong>Origin:</strong> The concept of an electronic check clearing system emerges as banks seek to reduce the cost and volume of paper checks.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1972</div>
+              <div class="timeline-text"><strong>First ACH Association:</strong> The California ACH Association is formed. GIRO Association follows. Regional ACH associations begin operating across the US.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1974</div>
+              <div class="timeline-text"><strong>NACHA Founded:</strong> The National Automated Clearing House Association is established to create uniform rules and governance across regional associations.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1996</div>
+              <div class="timeline-text"><strong>Internet era:</strong> WEB entry type introduced, enabling internet-initiated ACH debits for online bill payment.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2016</div>
+              <div class="timeline-text"><strong>Same-Day ACH launches:</strong> Phase 1 enables same-day ACH credits. Revolutionary for payroll, insurance, and urgent B2B payments.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2022</div>
+              <div class="timeline-text"><strong>Limit increases:</strong> Same-Day ACH limit raised to <strong>$1,000,000</strong> per transaction, dramatically expanding its B2B use case.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2026</div>
+              <div class="timeline-text"><strong>Present:</strong> ACH coexists with RTP and FedNow, serving as the workhorse for scheduled and bulk payments where speed is secondary to cost.</div>
+            </div>
+          </div>
+
+          <div class="key-facts">
+            <div class="key-fact">
+              <div class="key-fact-label">2023 Volume</div>
+              <div class="key-fact-value">$80.1T</div>
+              <div class="key-fact-note">Total dollar value processed</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Transactions</div>
+              <div class="key-fact-value">31.5B</div>
+              <div class="key-fact-note">Individual ACH entries in 2023</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Operators</div>
+              <div class="key-fact-value">2</div>
+              <div class="key-fact-note">FedACH &amp; EPN (TCH)</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Same-Day Limit</div>
+              <div class="key-fact-value">$1M</div>
+              <div class="key-fact-note">Per transaction cap</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Processing</div>
+              <div class="key-fact-value">Batch</div>
+              <div class="key-fact-note">Not real-time</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Governing Body</div>
+              <div class="key-fact-value">Nacha</div>
+              <div class="key-fact-note">Sets rules &amp; standards</div>
+            </div>
+          </div>
+
+          <div class="callout callout-info">
+            <div class="callout-icon">💡</div>
+            <div class="callout-content">
+              <h4>ACH vs. Wire: A Common Misconception</h4>
+              <p>ACH is often conflated with wire transfers. The critical difference: ACH is a <strong>batch, deferred-settlement, reversible</strong> system.
+              Wires are <strong>individual, real-time, irrevocable</strong>. ACH is low-cost (~$0.02–0.25 per transaction); wires are expensive ($15–50+).</p>
+            </div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="ach-participants" id="ach-participants">
+          <div class="section-header">
+            <div class="section-icon">👥</div>
+            <div>
+              <div class="section-num">1.2</div>
+              <h2>Participants &amp; Roles</h2>
+            </div>
+          </div>
+
+          <p>Every ACH transaction involves five core participants. Understanding their roles and liability is essential to understanding
+          the ACH risk framework.</p>
+
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-card-icon">🏭</div>
+              <div class="info-card-label">Originator</div>
+              <div class="info-card-value" style="font-size:1rem; margin-bottom:0.5rem">Company or individual who initiates the ACH transaction.</div>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin:0">Examples: Your employer (for payroll), Netflix (for subscription billing), a landlord (for rent). The originator has an agreement with the ODFI.</p>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">🏦</div>
+              <div class="info-card-label">ODFI</div>
+              <div class="info-card-value" style="font-size:1rem; margin-bottom:0.5rem">Originating Depository Financial Institution</div>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin:0">The bank or credit union that receives payment instructions from the originator and submits them into the ACH network. <strong>The ODFI bears significant liability</strong> for unauthorized or erroneous entries.</p>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">⚙️</div>
+              <div class="info-card-label">ACH Operator</div>
+              <div class="info-card-value" style="font-size:1rem; margin-bottom:0.5rem">Central clearing facility for ACH transactions.</div>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin:0">Two operators: <strong>FedACH</strong> (Federal Reserve Banks) handles ~60% of volume. <strong>EPN</strong> (Electronic Payments Network, operated by The Clearing House) handles ~40%. They interoperate.</p>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">🏛</div>
+              <div class="info-card-label">RDFI</div>
+              <div class="info-card-value" style="font-size:1rem; margin-bottom:0.5rem">Receiving Depository Financial Institution</div>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin:0">The receiver's bank. Receives ACH entries from the operator and posts them to the receiver's account. Responsible for returning entries within required timeframes.</p>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">👤</div>
+              <div class="info-card-label">Receiver</div>
+              <div class="info-card-value" style="font-size:1rem; margin-bottom:0.5rem">The account holder at the RDFI.</div>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin:0">Can be a consumer or a business. Has authorized the originator to debit or credit their account, typically via a signed authorization agreement.</p>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">🔗</div>
+              <div class="info-card-label">Third-Party Sender (TPS)</div>
+              <div class="info-card-value" style="font-size:1rem; margin-bottom:0.5rem">Intermediary between originator and ODFI.</div>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin:0">Payment processors (e.g., Stripe, Dwolla) that aggregate ACH transactions on behalf of many originators. Subject to strict Nacha registration and compliance requirements since 2022.</p>
+            </div>
+          </div>
+
+          <div class="callout callout-warning">
+            <div class="callout-icon">⚠️</div>
+            <div class="callout-content">
+              <h4>ODFI Liability: A Critical Concept</h4>
+              <p>The ODFI is ultimately liable to the ACH network for all entries it submits. If an originator generates fraudulent or unauthorized entries, the ODFI must make the affected parties whole. This is why ODFIs perform extensive due diligence and ongoing monitoring of their originators and third-party senders.</p>
+            </div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="ach-flow" id="ach-flow">
+          <div class="section-header">
+            <div class="section-icon">🔄</div>
+            <div>
+              <div class="section-num">1.3</div>
+              <h2>ACH Transaction Flow</h2>
+            </div>
+          </div>
+
+          <p>ACH transactions are processed in <strong>batches</strong>, not individually. This batch nature is what makes ACH cost-effective but not real-time.</p>
+
+          <h3>ACH Credit Flow (e.g., Payroll Direct Deposit)</h3>
+          <div class="flow-container">
+            <div class="flow-title">ACH CREDIT — STEP-BY-STEP FLOW</div>
+            <div class="flow-diagram">
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color: #6366f1;">
+                  <div class="flow-node-icon">🏭</div>
+                  <div class="flow-node-name">Originator</div>
+                  <div class="flow-node-abbr">e.g., Employer</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#6366f1;">
+                  <div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #6366f1;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div>
+                </div>
+                <div class="flow-arrow-label">Submits ACH file (NACHA format)</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color: #6366f1;">
+                  <div class="flow-node-icon">🏦</div>
+                  <div class="flow-node-name">ODFI</div>
+                  <div class="flow-node-abbr">Originator's Bank</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#6366f1;">
+                  <div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #6366f1;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div>
+                </div>
+                <div class="flow-arrow-label">Batch submitted to ACH Operator</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color: #8b5cf6;">
+                  <div class="flow-node-icon">⚙️</div>
+                  <div class="flow-node-name">ACH Operator</div>
+                  <div class="flow-node-abbr">FedACH or EPN</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#8b5cf6;">
+                  <div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #8b5cf6;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div>
+                </div>
+                <div class="flow-arrow-label">Routes entries to RDFI</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color: #2dd4bf;">
+                  <div class="flow-node-icon">🏛</div>
+                  <div class="flow-node-name">RDFI</div>
+                  <div class="flow-node-abbr">Receiver's Bank</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#2dd4bf;">
+                  <div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #2dd4bf;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div>
+                </div>
+                <div class="flow-arrow-label">Posts to account</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color: #10b981;">
+                  <div class="flow-node-icon">👤</div>
+                  <div class="flow-node-name">Receiver</div>
+                  <div class="flow-node-abbr">Employee</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3>The Dual Operators &amp; Interoperability</h3>
+          <p>ACH entries can be processed by <strong>either operator</strong> (FedACH or EPN). Banks are members of one or both. Interoperability rules ensure that an ODFI on EPN can still pay a receiver at a bank that only uses FedACH. The operators exchange files through established exchange agreements.</p>
+
+          <h3>ACH Debit Flow (e.g., Bill Pay)</h3>
+          <div class="process-steps">
+            <div class="process-step">
+              <div class="process-step-num">1</div>
+              <div class="process-step-content">
+                <h4>Consumer Authorizes</h4>
+                <p>Consumer provides bank routing + account number to the biller (e.g., utility company). The authorization can be written, electronic (WEB), or verbal (TEL). The originator must retain proof of authorization.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">2</div>
+              <div class="process-step-content">
+                <h4>Biller Creates ACH Debit Entry</h4>
+                <p>On the due date, the biller (originator) creates an ACH debit entry targeting the consumer's account. This is a CCD (business) or PPD (consumer) SEC code entry.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">3</div>
+              <div class="process-step-content">
+                <h4>ODFI Submits Batch</h4>
+                <p>The biller's bank (ODFI) aggregates entries into a batch file and submits to the ACH operator at a designated cut-off time. Files have a rigid NACHA format (94-character fixed-width records).</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">4</div>
+              <div class="process-step-content">
+                <h4>Operator Sorts &amp; Distributes</h4>
+                <p>The ACH operator validates the file format, sorts entries by receiving bank (RDFI), and distributes them. FedACH settles through the Federal Reserve's National Settlement Service. EPN settles through its own settlement process.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">5</div>
+              <div class="process-step-content">
+                <h4>RDFI Posts or Returns</h4>
+                <p>The receiver's bank posts the debit to the consumer's account. If the account has insufficient funds (NSF), the account is closed, or the transaction is unauthorized, the RDFI returns it with a return code (R01, R02, etc.) within 2 business days.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">6</div>
+              <div class="process-step-content">
+                <h4>Settlement</h4>
+                <p>For standard ACH, funds settle the <strong>next banking day</strong> after origination. For Same-Day ACH, settlement occurs on the same banking day within the defined processing windows.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="ach-types" id="ach-types">
+          <div class="section-header">
+            <div class="section-icon">📋</div>
+            <div>
+              <div class="section-num">1.4</div>
+              <h2>SEC Entry Codes (Standard Entry Class)</h2>
+            </div>
+          </div>
+
+          <p>Every ACH entry carries a <strong>Standard Entry Class (SEC) code</strong> — a 3-letter code identifying the payment type,
+          authorization method, and applicable rules. Choosing the correct SEC code is a compliance requirement.
+          Using the wrong code can result in Nacha violations and fines.</p>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Use Case</th>
+                <th>Authorization</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>PPD</code></td>
+                <td><strong>Prearranged Payment &amp; Deposit</strong></td>
+                <td><span class="badge badge-blue">Consumer</span></td>
+                <td>Payroll direct deposit, bill pay, insurance premiums</td>
+                <td>Written authorization required for debits</td>
+              </tr>
+              <tr>
+                <td><code>CCD</code></td>
+                <td><strong>Corporate Credit or Debit</strong></td>
+                <td><span class="badge badge-purple">Business</span></td>
+                <td>B2B vendor payments, concentration of funds, tax payments</td>
+                <td>Trading partner agreement</td>
+              </tr>
+              <tr>
+                <td><code>WEB</code></td>
+                <td><strong>Internet-Initiated Entry</strong></td>
+                <td><span class="badge badge-blue">Consumer</span></td>
+                <td>Online bill pay initiated via website or mobile app</td>
+                <td>Electronic authorization + account validation required</td>
+              </tr>
+              <tr>
+                <td><code>TEL</code></td>
+                <td><strong>Telephone-Initiated Entry</strong></td>
+                <td><span class="badge badge-blue">Consumer</span></td>
+                <td>One-time debit initiated by phone (live agent)</td>
+                <td>Oral authorization + call recording or written confirmation</td>
+              </tr>
+              <tr>
+                <td><code>CTX</code></td>
+                <td><strong>Corporate Trade Exchange</strong></td>
+                <td><span class="badge badge-purple">Business</span></td>
+                <td>EDI-based B2B payments with addenda records for invoice detail</td>
+                <td>Trading partner agreement; up to 9,999 addenda records</td>
+              </tr>
+              <tr>
+                <td><code>IAT</code></td>
+                <td><strong>International ACH Transaction</strong></td>
+                <td><span class="badge badge-yellow">International</span></td>
+                <td>Cross-border transactions involving a non-US financial institution</td>
+                <td>OFAC screening required; additional disclosures</td>
+              </tr>
+              <tr>
+                <td><code>CIE</code></td>
+                <td><strong>Customer-Initiated Entry</strong></td>
+                <td><span class="badge badge-blue">Consumer</span></td>
+                <td>Credit entries initiated by consumers (e.g., loan payments)</td>
+                <td>Consumer-initiated; credit-push only</td>
+              </tr>
+              <tr>
+                <td><code>ARC</code></td>
+                <td><strong>Accounts Receivable Entry</strong></td>
+                <td><span class="badge badge-blue">Consumer</span></td>
+                <td>Checks received at lockbox or dropbox converted to ACH</td>
+                <td>Notice at point of mailing; check becomes source document</td>
+              </tr>
+              <tr>
+                <td><code>BOC</code></td>
+                <td><strong>Back Office Conversion</strong></td>
+                <td><span class="badge badge-blue">Consumer</span></td>
+                <td>Check conversion at the point of purchase (back office, not POS)</td>
+                <td>Notice at POS; check provided by consumer</td>
+              </tr>
+              <tr>
+                <td><code>POP</code></td>
+                <td><strong>Point of Purchase</strong></td>
+                <td><span class="badge badge-blue">Consumer</span></td>
+                <td>Check conversion at the point of sale (retail)</td>
+                <td>Authorization slip signed at POS; MICR data read</td>
+              </tr>
+              <tr>
+                <td><code>RCK</code></td>
+                <td><strong>Represented Check Entry</strong></td>
+                <td><span class="badge badge-blue">Consumer</span></td>
+                <td>Re-presentment of returned check as ACH debit</td>
+                <td>Notice to consumer at time of original check</td>
+              </tr>
+              <tr>
+                <td><code>ENR</code></td>
+                <td><strong>Automated Enrollment</strong></td>
+                <td><span class="badge badge-gray">Govt</span></td>
+                <td>Federal benefit enrollments (Social Security, Veterans benefits)</td>
+                <td>Government-specific rules apply</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout callout-warning">
+            <div class="callout-icon">⚠️</div>
+            <div class="callout-content">
+              <h4>WEB Debit Validation Rule (2021)</h4>
+              <p>Since March 2021, Nacha requires originators of <strong>WEB debit entries</strong> to use a "commercially reasonable" method to validate that a routing and account number are for a valid, open account. Methods include micro-deposit verification, instant account verification (IAV) via Plaid/MX, or real-time account validation services. This rule significantly impacted fintech ACH origination practices.</p>
+            </div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="ach-timing" id="ach-timing">
+          <div class="section-header">
+            <div class="section-icon">⏱</div>
+            <div>
+              <div class="section-num">1.5</div>
+              <h2>Processing Windows &amp; Timing</h2>
+            </div>
+          </div>
+
+          <p>ACH does not process transactions individually or continuously. It operates on <strong>defined processing windows</strong>.
+          Understanding these windows is critical for product design and customer expectations.</p>
+
+          <h3>Standard ACH (Next-Day Settlement)</h3>
+          <p>The traditional ACH processing model. Entries submitted by the ODFI's cut-off time are sorted by the operator overnight
+          and delivered to the RDFI the following banking day for settlement. Weekends and Federal Reserve holidays cause delays.</p>
+
+          <div class="callout callout-info">
+            <div class="callout-icon">📅</div>
+            <div class="callout-content">
+              <h4>Why Next-Day ACH Matters for Payroll</h4>
+              <p>For standard payroll, employers typically originate ACH files <strong>2 banking days before payday</strong> (e.g., originate Wednesday for Friday payday). Some forward-dated entries allow submission further in advance. Banks that "early-fund" payroll are taking on credit risk for the advance.</p>
+            </div>
+          </div>
+
+          <h3>Same-Day ACH (SDA) — Launched 2016</h3>
+          <p>Same-Day ACH was phased in by Nacha and allows for same-banking-day settlement. All Nacha-member banks are required to receive same-day ACH entries (credits from 2016; debits from 2017). Three processing windows allow multiple intraday submissions:</p>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Window</th>
+                <th>ODFI Submission Deadline (ET)</th>
+                <th>RDFI Settlement</th>
+                <th>Funds Availability</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Morning Window</strong></td>
+                <td>10:30 AM ET</td>
+                <td>1:00 PM ET</td>
+                <td>No later than 1:30 PM ET</td>
+              </tr>
+              <tr>
+                <td><strong>Afternoon Window</strong></td>
+                <td>2:45 PM ET</td>
+                <td>5:00 PM ET</td>
+                <td>No later than 5:00 PM ET</td>
+              </tr>
+              <tr>
+                <td><strong>Evening Window</strong></td>
+                <td>4:45 PM ET</td>
+                <td>6:00 PM ET</td>
+                <td>End of business day (or next morning)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Same-Day ACH: Limits &amp; Surcharges</h3>
+          <ul>
+            <li><strong>Per-transaction limit:</strong> $1,000,000 (raised from $25K → $100K → $1M through successive rule changes)</li>
+            <li><strong>SDA surcharge:</strong> ODFIs pay RDFIs a $0.052 per-entry surcharge for same-day entries (mandated by Nacha rules)</li>
+            <li><strong>Not all entries eligible:</strong> IAT (international) and some government entries are excluded from Same-Day ACH</li>
+            <li><strong>Irrevocability caveat:</strong> Same-day ACH credits CAN still be returned (up to 2 banking days for consumer entries, 2 banking days for business)</li>
+          </ul>
+        </div>
+    </div>
+    <div class="chapter-panel" data-tab="wires">
+      
+    <div class="content-section" data-section-id="wire-details" id="wire-details">
+      <div class="section-header">
+        <div class="section-icon">🔒</div>
+        <div>
+          <div class="section-num">2.2</div>
+          <h2>High-Value Wires: Fedwire, CHIPS, &amp; SWIFT</h2>
+        </div>
+      </div>
+      <p>Wire transfers are the high-value, same-day, irrevocable payment rails of the US financial system, clearing trillions of dollars daily through two domestic networks: Fedwire and CHIPS.</p>
+      
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Fedwire Funds Service</h4>
+          <p>Operated by the Federal Reserve, Fedwire is a pure Real-Time Gross Settlement (RTGS) system. Wires settle individually and irrevocably in real time across bank master accounts at the Fed. Because it uses central bank money, it carries zero credit or counterparty risk. Fedwire is the default rail for mortgage closings, bank treasury operations, and interbank overnight sweeps.</p>
+        </div>
+        <div class="info-card">
+          <h4>CHIPS (Clearing House Interbank Payments System)</h4>
+          <p>CHIPS is a private net settlement system owned by The Clearing House. It uses a sophisticated real-time netting and queuing algorithm. Participants deposit a pool of prefunding liquidity in a joint account at the Fed. CHIPS then continually nets incoming and outgoing wire requests, clearing up to $2 trillion in payments daily using only a fraction of the actual liquidity required by Fedwire.</p>
+        </div>
+        <div class="info-card">
+          <h4>SWIFT Messaging System</h4>
+          <p>The Society for Worldwide Interbank Financial Telecommunication (SWIFT) is not a payment rail—it is a secure messaging network. It routes formatted instructions (traditionally MT messages, now migrating to ISO 20022 XML MX messages) between correspondent banks.</p>
+          <p><strong>Nostro/Vostro Accounts:</strong> To settle a SWIFT transfer, correspondent banks maintain reciprocal ledger accounts. If Bank A in NY wants to pay Bank B in London, Bank A instructs Bank B via SWIFT to debit Bank A's account (Bank A's Nostro account, which is Bank B's Vostro account) and credit the local recipient.</p>
+        </div>
+      </div>
+    </div>
+  
+    </div>
+    <div class="chapter-panel" data-tab="instant">
+      <div class="content-section" data-section-id="rtp-overview" id="rtp-overview">
+          <div class="section-header">
+            <div class="section-icon">⚡</div>
+            <div>
+              <div class="section-num">2.1</div>
+              <h2>RTP — Overview &amp; History</h2>
+            </div>
+          </div>
+
+          <p>The <strong>Real-Time Payments (RTP) network</strong> is the US's first new payment rail in four decades,
+          launched by <strong>The Clearing House (TCH)</strong> in November 2017. Unlike ACH — which batches and defers — RTP is a
+          <strong>24/7/365, always-on, individual transaction system</strong> that settles each payment in seconds and provides
+          immediate confirmation. RTP is a <strong>credit-push only</strong> network: funds can only be pushed to a recipient;
+          debits (pulling from someone's account) are not supported.</p>
+
+          <div class="key-facts">
+            <div class="key-fact">
+              <div class="key-fact-label">Launched</div>
+              <div class="key-fact-value">Nov 2017</div>
+              <div class="key-fact-note">By The Clearing House</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Settlement Speed</div>
+              <div class="key-fact-value">&lt;10 sec</div>
+              <div class="key-fact-note">Typical end-to-end</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Availability</div>
+              <div class="key-fact-value">24/7/365</div>
+              <div class="key-fact-note">No processing windows</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Limit</div>
+              <div class="key-fact-value">$10M</div>
+              <div class="key-fact-note">Per transaction</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Finality</div>
+              <div class="key-fact-value">Irrevocable</div>
+              <div class="key-fact-note">Cannot be recalled</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Direction</div>
+              <div class="key-fact-value">Credit Push</div>
+              <div class="key-fact-note">No pull/debit capability</div>
+            </div>
+          </div>
+
+          <h3>Who Operates RTP?</h3>
+          <p><strong>The Clearing House (TCH)</strong> — a private banking association — owns and operates the RTP network.
+          TCH is owned by the largest US commercial banks (Bank of America, Citibank, JPMorgan Chase, Wells Fargo, US Bank, etc.).
+          This private ownership was a key driver for the Federal Reserve creating FedNow as a public alternative.</p>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-year">2015</div>
+              <div class="timeline-text">Federal Reserve publishes "Strategies for Improving the U.S. Payment System" — identifying the need for faster payments.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">Nov 2017</div>
+              <div class="timeline-text"><strong>RTP launches</strong> with a handful of pilot banks. Initial limit: $25,000 per transaction.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2020</div>
+              <div class="timeline-text">RTP reaches 50% of US DDA (demand deposit accounts) coverage. Limit raised to $100,000.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2022</div>
+              <div class="timeline-text">Limit raised to $1,000,000. RTP now viable for large commercial payments and B2B.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2023</div>
+              <div class="timeline-text">RTP reaches ~300 financial institution participants covering 65%+ of US DDAs. Competes directly with newly launched FedNow.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">Feb 2025</div>
+              <div class="timeline-text">Limit raised to $10,000,000 to enable large-value corporate payments, real estate settlements, and liquidity optimization.</div>
+            </div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="rtp-flow" id="rtp-flow">
+          <div class="section-header">
+            <div class="section-icon">🔄</div>
+            <div>
+              <div class="section-num">2.2</div>
+              <h2>RTP Transaction Flow</h2>
+            </div>
+          </div>
+
+          <p>Unlike ACH, RTP processes each transaction <strong>individually and in real time</strong>. The entire flow from initiation to confirmation typically completes in under 10 seconds.</p>
+
+          <div class="flow-container">
+            <div class="flow-title">RTP CREDIT PUSH — REAL-TIME FLOW</div>
+            <div class="flow-diagram">
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#2dd4bf;">
+                  <div class="flow-node-icon">📱</div>
+                  <div class="flow-node-name">Sender</div>
+                  <div class="flow-node-abbr">Initiates payment</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#2dd4bf;">
+                  <div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #2dd4bf;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div>
+                </div>
+                <div class="flow-arrow-label">ISO 20022 message</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#2dd4bf;">
+                  <div class="flow-node-icon">🏦</div>
+                  <div class="flow-node-name">Sending Bank</div>
+                  <div class="flow-node-abbr">Validates &amp; deducts</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#2dd4bf;">
+                  <div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #2dd4bf;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div>
+                </div>
+                <div class="flow-arrow-label">Real-time gross settlement</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#06b6d4;">
+                  <div class="flow-node-icon">⚙️</div>
+                  <div class="flow-node-name">RTP Network</div>
+                  <div class="flow-node-abbr">TCH, central infra</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#06b6d4;">
+                  <div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #06b6d4;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div>
+                </div>
+                <div class="flow-arrow-label">Instant credit</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#10b981;">
+                  <div class="flow-node-icon">🏛</div>
+                  <div class="flow-node-name">Receiving Bank</div>
+                  <div class="flow-node-abbr">Credits account</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#10b981;">
+                  <div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #10b981;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div>
+                </div>
+                <div class="flow-arrow-label">Confirmation &lt;10s</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#10b981;">
+                  <div class="flow-node-icon">✅</div>
+                  <div class="flow-node-name">Receiver</div>
+                  <div class="flow-node-abbr">Funds available</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3>Real-Time Gross Settlement (RTGS)</h3>
+          <p>RTP uses a <strong>real-time gross settlement</strong> model — each transaction settles individually (gross), not netted against others. Settlement occurs in the TCH multilateral net settlement account at the Federal Reserve. Each RTP participant maintains a pre-funded settlement account at the Fed (called a "joint account"). When a payment is sent, the sending bank's balance in the joint account decreases and the receiving bank's increases — instantly.</p>
+
+          <h3>ISO 20022 Messaging Standard</h3>
+          <p>RTP messages use the <strong>ISO 20022</strong> financial messaging standard — a rich, XML-based format that carries far more payment data than legacy formats (like ACH's flat-file NACHA format or SWIFT MT messages). ISO 20022 enables structured remittance data (invoice numbers, line items, references) to travel with the payment — a major advantage for B2B reconciliation.</p>
+
+          <div class="callout callout-success">
+            <div class="callout-icon">✅</div>
+            <div class="callout-content">
+              <h4>Request for Payment (RFP)</h4>
+              <p>RTP includes a powerful feature: <strong>Request for Payment (RFP)</strong>. A payee can send an electronic payment request to a payer, who then authorizes a credit push. This enables use cases like: B2B electronic invoicing, utility bill pay, and consumer billing — all without the payer sharing their account details. The payer retains control; there are no ACH debits involved.</p>
+            </div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="rtp-features" id="rtp-features">
+          <div class="section-header">
+            <div class="section-icon">🔑</div>
+            <div>
+              <div class="section-num">2.3</div>
+              <h2>Key Features &amp; Capabilities</h2>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-card-icon">⚡</div>
+              <div class="info-card-label">Always-On</div>
+              <div class="info-card-value" style="font-size:0.9rem">24/7/365 processing — including nights, weekends, and holidays when ACH is unavailable.</div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">🔒</div>
+              <div class="info-card-label">Irrevocability</div>
+              <div class="info-card-value" style="font-size:0.9rem">Once settled, RTP payments CANNOT be recalled. This makes fraud recovery extremely difficult — a key operational consideration.</div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">💬</div>
+              <div class="info-card-label">Rich Messaging</div>
+              <div class="info-card-value" style="font-size:0.9rem">ISO 20022 carries up to 140 characters of unstructured remittance data, plus structured addenda for invoice detail.</div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">🧾</div>
+              <div class="info-card-label">Confirmation</div>
+              <div class="info-card-value" style="font-size:0.9rem">Both sender and receiver receive real-time confirmation messages — enabling immediate reconciliation.</div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">🏢</div>
+              <div class="info-card-label">B2B Capable</div>
+              <div class="info-card-value" style="font-size:0.9rem">$10M limit and ISO 20022 remittance data make RTP viable for commercial payments, replacing same-day ACH or wires.</div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">📧</div>
+              <div class="info-card-label">Request for Payment</div>
+              <div class="info-card-value" style="font-size:0.9rem">Payees can send digital payment requests. Enables electronic invoicing without sharing account details.</div>
+            </div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="fn-overview" id="fn-overview">
+          <div class="section-header">
+            <div class="section-icon">🏛</div>
+            <div>
+              <div class="section-num">3.1</div>
+              <h2>FedNow — Overview</h2>
+            </div>
+          </div>
+
+          <p><strong>FedNow</strong> is the Federal Reserve's instant payment service, launched in <strong>July 2023</strong>.
+          It is the first new Federal Reserve payment rail since FedACH and represents a significant strategic decision:
+          the US government decided the private-sector RTP network should have a public-sector counterpart to ensure
+          universal access, particularly for community banks and credit unions that were reluctant to rely solely on TCH.</p>
+
+          <div class="callout callout-info">
+            <div class="callout-icon">🏛</div>
+            <div class="callout-content">
+              <h4>Why the Fed Built FedNow</h4>
+              <p>The Federal Reserve argued that a single private-sector instant payment system (RTP) could create systemic concentration risk and that smaller financial institutions deserved a public alternative they trusted. Community banks and credit unions had advocated strongly for Fed involvement. FedNow is designed to coexist with RTP, not replace it.</p>
+            </div>
+          </div>
+
+          <div class="key-facts">
+            <div class="key-fact">
+              <div class="key-fact-label">Launched</div>
+              <div class="key-fact-value">July 2023</div>
+              <div class="key-fact-note">Federal Reserve</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Max Limit</div>
+              <div class="key-fact-value">$10M</div>
+              <div class="key-fact-note">Per transaction (raised Nov 2025)</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Availability</div>
+              <div class="key-fact-value">24/7/365</div>
+              <div class="key-fact-note">Always on</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Messaging</div>
+              <div class="key-fact-value">ISO 20022</div>
+              <div class="key-fact-note">Same standard as RTP</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Direction</div>
+              <div class="key-fact-value">Credit Push</div>
+              <div class="key-fact-note">No pull/debit currently</div>
+            </div>
+            <div class="key-fact">
+              <div class="key-fact-label">Participants</div>
+              <div class="key-fact-value">900+</div>
+              <div class="key-fact-note">As of early 2024</div>
+            </div>
+          </div>
+
+          <h3>FedNow Architecture</h3>
+          <p>FedNow is technically a <strong>real-time gross settlement (RTGS)</strong> system, similar to RTP.
+          Each participating bank holds a master account at the Federal Reserve. When a FedNow payment is initiated,
+          the Fed debits the sending bank's master account and credits the receiving bank's master account in real time.
+          This gives FedNow a structural advantage: Federal Reserve master accounts are the ultimate settlement asset
+          — there is no credit risk between the two banks in a FedNow transaction.</p>
+
+          <h3>Liquidity Management Tool</h3>
+          <p>FedNow offers a <strong>Liquidity Management Tool (LMT)</strong> that allows banks to shift funds between their
+          FedNow master account balances and other Fed accounts (like the overnight fed funds accounts) to manage intraday
+          liquidity. This is critical for community banks managing 24/7 liquidity without the infrastructure of large banks.</p>
+        </div>
+      <div class="content-section" data-section-id="fn-vs-rtp" id="fn-vs-rtp">
+          <div class="section-header">
+            <div class="section-icon">⚖️</div>
+            <div>
+              <div class="section-num">3.2</div>
+              <h2>FedNow vs. RTP — Key Differences</h2>
+            </div>
+          </div>
+
+          <div class="compare-table-wrapper">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th class="col-feature">Feature</th>
+                  <th style="background:rgba(16,185,129,0.08); color:#10b981;">FedNow</th>
+                  <th style="background:rgba(45,212,191,0.08); color:#2dd4bf;">RTP (TCH)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Operator</td>
+                  <td>Federal Reserve (public)</td>
+                  <td>The Clearing House (private)</td>
+                </tr>
+                <tr>
+                  <td>Launch Date</td>
+                  <td>July 2023</td>
+                  <td>November 2017</td>
+                </tr>
+                <tr>
+                  <td>Transaction Limit</td>
+                  <td>$10,000,000 (configurable)</td>
+                  <td>$10,000,000</td>
+                </tr>
+                <tr>
+                  <td>Settlement Asset</td>
+                  <td>Federal Reserve master accounts</td>
+                  <td>TCH joint settlement account at Fed</td>
+                </tr>
+                <tr>
+                  <td>Availability</td>
+                  <td>24/7/365</td>
+                  <td>24/7/365</td>
+                </tr>
+                <tr>
+                  <td>Message Standard</td>
+                  <td>ISO 20022</td>
+                  <td>ISO 20022</td>
+                </tr>
+                <tr>
+                  <td>Credit Push Only</td>
+                  <td><span class="check">✓</span></td>
+                  <td><span class="check">✓</span></td>
+                </tr>
+                <tr>
+                  <td>Request for Payment</td>
+                  <td><span class="check">✓</span></td>
+                  <td><span class="check">✓</span></td>
+                </tr>
+                <tr>
+                  <td>Prefunding Required</td>
+                  <td>Yes (Fed master account)</td>
+                  <td>Yes (TCH joint account at Fed)</td>
+                </tr>
+                <tr>
+                  <td>Institution Count (2024)</td>
+                  <td>900+ participants</td>
+                  <td>300+ participants</td>
+                </tr>
+                <tr>
+                  <td>Appeal to Community Banks</td>
+                  <td>High (Fed relationship trusted)</td>
+                  <td>Lower (TCH = big bank owned)</td>
+                </tr>
+                <tr>
+                  <td>Per-Transaction Fee</td>
+                  <td>~$0.045 (estimated)</td>
+                  <td>~$0.045</td>
+                </tr>
+                <tr>
+                  <td>Interoperability w/ other rail</td>
+                  <td>Not yet (discussed for future)</td>
+                  <td>Not yet</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout callout-warning">
+            <div class="callout-icon">⚠️</div>
+            <div class="callout-content">
+              <h4>The Interoperability Gap</h4>
+              <p>A significant limitation: <strong>FedNow and RTP do not interoperate</strong>. A bank only on FedNow cannot receive an RTP payment, and vice versa. For full coverage, banks (or payment providers) must participate in both networks. This fragmentation is a key industry debate — the Fed and TCH have discussed interoperability but no timeline exists as of 2025.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+  
+    <div class="chapter-panel" data-tab="assessment">
+      <div class="content-section" data-section-id="assessment" id="assessment">
+        <div class="quiz-section-title">Module 2 Assessment</div>
+        <div class="quiz-wrapper" data-module="2"></div>
+      </div>
+    </div>
+
+    <div class="module-footer">
+      <a href="module1.html" class="footer-nav-btn">← Module 1: Foundation</a>
+      <a href="module3.html" class="footer-nav-btn primary">Module 3: Consumer Payments →</a>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+
+    <div class="footer-facts">
+      <div class="footer-fact">
+        <div class="footer-fact-icon">✍️</div>
+        <div>
+          <div class="footer-fact-title">Original Written Expression</div>
+          <div class="footer-fact-body">The explanations, summaries, flow descriptions, and educational narratives in this platform are original content created specifically for this Academy. No text has been copied verbatim from any copyrighted publication, proprietary rulebook, or paywalled source.</div>
+        </div>
+      </div>
+      <div class="footer-fact">
+        <div class="footer-fact-icon">📊</div>
+        <div>
+          <div class="footer-fact-title">Publicly Reported Statistics</div>
+          <div class="footer-fact-body">All figures and statistics — including transaction volumes, fee rates, and market data — are drawn from publicly available sources: company earnings releases, Federal Reserve reports, CFPB studies, and Nacha annual reports. Facts are not copyrightable.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-disclaimer">
+      <div class="footer-disclaimer-icon">⚠️</div>
+      <div>
+        <strong>Regulatory Disclaimer:</strong> The regulatory and compliance content in this platform has been simplified for educational purposes. It is intended to build conceptual understanding, not to serve as legal or compliance advice. Payment regulations are complex, jurisdiction-specific, and subject to change. <strong>Anyone making compliance, legal, or business decisions should consult the primary regulatory sources directly and seek qualified legal counsel.</strong>
+      </div>
+    </div>
+
+    <div class="footer-sources-title">Primary Sources &amp; References</div>
+    <div class="footer-sources-grid">
+      <a class="footer-source-tag" href="https://www.nacha.org" target="_blank" rel="noopener">Nacha — ACH Operating Rules</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/paymentsystems.htm" target="_blank" rel="noopener">Federal Reserve — Payment Systems</a>
+      <a class="footer-source-tag" href="https://www.frbservices.org/financial-services/fednow" target="_blank" rel="noopener">Federal Reserve — FedNow Service</a>
+      <a class="footer-source-tag" href="https://www.theclearinghouse.org/payment-systems/rtp" target="_blank" rel="noopener">The Clearing House — RTP Network</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/pubs/fedpoint/fed43.htm" target="_blank" rel="noopener">Federal Reserve — Fedwire Funds</a>
+      <a class="footer-source-tag" href="https://www.cfpb.gov/rules-policy/regulations/1005/" target="_blank" rel="noopener">CFPB — Regulation E (EFTA)</a>
+      <a class="footer-source-tag" href="https://usa.visa.com/run-your-business/merchant-resources/interchange-reimbursement-fees.html" target="_blank" rel="noopener">Visa — Interchange Reimbursement Fees</a>
+      <a class="footer-source-tag" href="https://www.mastercard.us/en-us/business/overview/support/merchant-interchange-rates.html" target="_blank" rel="noopener">Mastercard — Interchange Rates</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/releases/z1/" target="_blank" rel="noopener">Federal Reserve — Z.1 Financial Accounts</a>
+      <a class="footer-source-tag" href="https://www.fdic.gov/regulations/applications/financial/" target="_blank" rel="noopener">FDIC — Banking Regulations</a>
+      <a class="footer-source-tag" href="https://www.swift.com" target="_blank" rel="noopener">SWIFT — Global Messaging Network</a>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/insights.js"></script>
+<script src="js/questions-m2.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

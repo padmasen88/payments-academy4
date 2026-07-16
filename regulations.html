@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regulations &amp; Standards Academy — Payments Academy 3.0</title>
+  <meta name="description" content="A comprehensive directory of payments regulations, compliance codes, and international standards." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .regs-grid {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 6rem auto 3rem;
+      padding: 0 1.5rem;
+    }
+    @media (max-width: 800px) {
+      .regs-grid { grid-template-columns: 1fr; }
+    }
+    
+    /* Sidebar Filter */
+    .regs-filter {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      height: fit-content;
+      position: sticky;
+      top: 6rem;
+    }
+    .filter-input {
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      color: #fff;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+    .filter-input:focus {
+      border-color: var(--accent-indigo);
+      outline: none;
+    }
+    .reg-cat-list {
+      list-style: none;
+    }
+    .reg-cat-item {
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all var(--t-fast);
+      margin-bottom: 0.25rem;
+    }
+    .reg-cat-item:hover, .reg-cat-item.active {
+      background: rgba(99,102,241,0.1);
+      color: var(--text-primary);
+    }
+    
+    /* Content Area */
+    .regs-content-area {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .reg-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      transition: all var(--t-normal);
+      position: relative;
+    }
+    .reg-card:hover {
+      border-color: var(--border-accent);
+    }
+    .reg-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 1.25rem;
+    }
+    .reg-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+    .reg-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-fed { background: rgba(99,102,241,0.12); color: var(--accent-indigo); }
+    .badge-card { background: rgba(245,158,11,0.12); color: var(--accent-gold); }
+    .badge-intl { background: rgba(16,185,129,0.12); color: var(--accent-emerald); }
+    
+    .reg-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    
+    .reg-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .detail-block-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+    .detail-block-text {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    /* Quiz styling */
+    .reg-quiz-section {
+      background: rgba(0,0,0,0.2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .quiz-q {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+    }
+    .quiz-opts {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .quiz-opt-btn {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      text-align: left;
+      padding: 0.6rem 1rem;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all var(--t-fast);
+    }
+    .quiz-opt-btn:hover {
+      background: var(--bg-glass-hover);
+      color: #fff;
+    }
+    .quiz-opt-btn.correct {
+      background: rgba(16,185,129,0.15);
+      border-color: #10b981;
+      color: #10b981;
+    }
+    .quiz-opt-btn.wrong {
+      background: rgba(244,63,94,0.15);
+      border-color: #f43f5e;
+      color: #f43f5e;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">⚡</div>
+    Payments Academy
+  </a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html" class="active">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="map-header" style="padding-bottom:2rem;">
+  <div class="hero-badge">COMPLIANCE &amp; STANDARDS</div>
+  <h1 class="hero-title">Regulations &amp; Standards Academy</h1>
+  <p class="hero-desc" style="max-width:700px; margin: 1rem auto 0;">
+    Master the critical laws, operating rules, compliance frameworks, and network requirements that govern the interbank payments ecosystems.
+  </p>
+</header>
+
+<div class="regs-grid">
+  <!-- Sidebar -->
+  <aside class="regs-filter">
+    <input type="text" id="reg-search" class="filter-input" placeholder="Search regulations..." oninput="filterRegs()" />
+    
+    <div class="details-section-title" style="margin-top:0; margin-bottom: 0.5rem;">Categories</div>
+    <ul class="reg-cat-list" id="category-list">
+      <li class="reg-cat-item active" onclick="selectCategory('all')">All Categories</li>
+      <li class="reg-cat-item" onclick="selectCategory('Federal')">Federal Regulations</li>
+      <li class="reg-cat-item" onclick="selectCategory('Operating Rules')">Operating Rules</li>
+      <li class="reg-cat-item" onclick="selectCategory('Standards')">Technical Standards</li>
+    </ul>
+  </aside>
+
+  <!-- Content -->
+  <main class="regs-content-area" id="regs-container">
+    <!-- Rendered via JS -->
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Regulations Database
+  const REGULATIONS = [
+    {
+      id: 'reg-e',
+      name: 'Regulation E',
+      badge: 'Federal',
+      subtitle: 'Implements the Electronic Fund Transfer Act (EFTA), protecting individual consumers engaging in electronic fund transfers.',
+      purpose: 'Protect consumers from electronic financial transaction liabilities, governing debit cards, direct deposits, ATMs, and social wallets.',
+      who: 'All US depository financial institutions, third-party payment wallets, and consumer P2P systems.',
+      why: 'Established in 1978 to protect consumers from errors or theft in computer-based banking ecosystems.',
+      scenario: 'A consumer detects $400 in unauthorized charges on their debit card statement. Under Reg E, if they report this within 2 business days of discovery, their maximum loss liability is limited to $50.',
+      mistakes: 'Confusing business accounts with consumer accounts. Regulation E does NOT cover corporate accounts or B2B payments (which are governed by UCC Article 4A).',
+      types: 'Debit cards, ACH debits, Zelle, Venmo, ATM withdrawals, prepaid cards.',
+      q: 'Under Regulation E, what is the maximum consumer liability for unauthorized charges if reported within 2 business days of discovery?',
+      options: ['$0', '$50', '$500', 'Unlimited'],
+      ans: 1
+    },
+    {
+      id: 'durbin',
+      name: 'Durbin Amendment',
+      badge: 'Federal',
+      subtitle: 'Section 1075 of the Dodd-Frank Act, which regulates debit card interchange fees and network routing restrictions.',
+      purpose: 'Cap debit card interchange transaction fees to lower processing costs for merchants, and break Visa/Mastercard dual duopolies.',
+      who: 'US debit card issuing banks with total assets exceeding $10 billion.',
+      why: 'Enacted in 2010 to address merchant complaints about high, unregulated interchange fees set by card networks.',
+      scenario: 'A merchant processes a $100 debit transaction. Instead of a $1.50 interchange fee, a Durbin-capped issuer can only earn a maximum of $0.21 + 0.05% + $0.01 ($0.27 total).',
+      mistakes: 'Thinking all banks are subject to the cap. Smaller community banks and credit unions with under $10B in assets are exempt and can earn higher interchange.',
+      types: 'Consumer debit cards, business debit cards, gift cards.',
+      q: 'Which issuers are EXEMPT from the Durbin Amendment debit card interchange caps?',
+      options: ['No issuers are exempt', 'Issuers with total assets under $10 billion', 'Issuers of commercial virtual cards', 'All credit unions'],
+      ans: 1
+    },
+    {
+      id: 'nacha-rules',
+      name: 'Nacha Operating Rules',
+      badge: 'Operating Rules',
+      subtitle: 'The private operating rules and compliance requirements governing the Automated Clearing House (ACH) network.',
+      purpose: 'Maintain the systemic safety, security, and predictability of ACH debit and credit transfers in the US.',
+      who: 'All ODFIs, RDFIs, Third-Party Senders, and corporate Originators.',
+      why: 'Provides a private rulebook that legalizes interbank netting and mandates strict return codes/windows.',
+      scenario: 'An ODFI originates an unauthorized corporate debit. Under Nacha rules, the RDFI has only 2 business days to return it via R29, whereas a consumer unauthorized debit gets 60 calendar days via R10.',
+      mistakes: 'Originating WEB debits without implementing required account validation (using micro-deposits, instant API checks, etc.) before the first transaction.',
+      types: 'ACH Credit (Direct Deposit), ACH Debit (Bill Pay, CCD, PPD, WEB).',
+      q: 'Under Nacha rules, what is the maximum unauthorized debit return rate threshold before an ODFI faces potential fines?',
+      options: ['0.1%', '0.5%', '1.0%', '3.0%'],
+      ans: 1
+    },
+    {
+      id: 'pci-dss',
+      name: 'PCI DSS',
+      badge: 'Standards',
+      subtitle: 'Payment Card Industry Data Security Standard — the unified security standard governing entities storing, processing, or transmitting card data.',
+      purpose: 'Prevent credit card fraud by securing cardholder databases, network points of sale, and transaction storage.',
+      who: 'All merchants, payment processors, gateways, and financial institutions handling Visa, MC, Amex, or Discover cards.',
+      why: 'Created in 2004 by the card brands to replace their fragmented individual security standards.',
+      scenario: 'An e-commerce gateway encrypts PAN numbers using AES-256 and stores dynamic CVVs in memory only during auth, discarding them immediately afterwards.',
+      mistakes: 'Storing sensitive authentication data (SAD) like full magnetic stripe details or CVV codes after transaction authorization is complete (strictly prohibited).',
+      types: 'Visa, Mastercard, American Express, Discover credit/debit card transactions.',
+      q: 'According to PCI DSS rules, which card element must NEVER be stored by a merchant after transaction authorization?',
+      options: ['Primary Account Number (PAN)', 'Cardholder Name', 'Card Expiry Date', 'Card Verification Value (CVV/CVC)'],
+      ans: 3
+    },
+    {
+      id: 'iso-20022',
+      name: 'ISO 20022 messaging',
+      badge: 'Standards',
+      subtitle: 'The international standard for financial messaging, providing a rich, structured XML/JSON data architecture.',
+      purpose: 'Harmonize financial messaging globally, enabling detailed remittance data to flow alongside payments.',
+      who: 'Instant payment networks (FedNow, RTP), international wires (SWIFT), and central bank settlement systems.',
+      why: 'Replaces old unstructured systems (like SWIFT MT legacy messages) to enhance automation and anti-fraud checks.',
+      scenario: 'A FedNow transaction sends a pacs.008 customer credit transfer, embedding invoice items and structured tax data directly in the message payload.',
+      mistakes: 'Treating ISO 20022 as just a change in text formatting, rather than leveraging the rich fields to reduce manual operations.',
+      types: 'RTP, FedNow, SWIFT cross-border wires.',
+      q: 'What is the primary technical format used by ISO 20022 messages to convey structured financial data?',
+      options: ['Flat fixed-width text files', 'XML and JSON schemas', 'Binary encrypted fields', 'Standard CSV files'],
+      ans: 1
+    }
+  ];
+
+  let currentCategory = 'all';
+
+  function renderRegs() {
+    const container = document.getElementById('regs-container');
+    const query = document.getElementById('reg-search').value.toLowerCase();
+    
+    container.innerHTML = '';
+    
+    const filtered = REGULATIONS.filter(reg => {
+      const matchesCategory = currentCategory === 'all' || reg.badge === currentCategory;
+      const matchesSearch = reg.name.toLowerCase().includes(query) || 
+                            reg.subtitle.toLowerCase().includes(query) || 
+                            reg.purpose.toLowerCase().includes(query);
+      return matchesCategory && matchesSearch;
+    });
+    
+    if (filtered.length === 0) {
+      container.innerHTML = '<div style="text-align:center; padding:3rem; color:var(--text-muted);">No regulations match your search criteria.</div>';
+      return;
+    }
+    
+    filtered.forEach(reg => {
+      const card = document.createElement('div');
+      card.className = 'reg-card';
+      card.innerHTML = `
+        <div class="reg-title-row">
+          <h3 class="reg-name">${reg.name}</h3>
+          <span class="reg-badge ${getBadgeClass(reg.badge)}">${reg.badge}</span>
+        </div>
+        <p class="reg-subtitle">${reg.subtitle}</p>
+        
+        <div class="reg-details">
+          <div>
+            <div class="detail-block-title">Purpose</div>
+            <p class="detail-block-text">${reg.purpose}</p>
+          </div>
+          <div>
+            <div class="detail-block-title">Who it Applies to</div>
+            <p class="detail-block-text">${reg.who}</p>
+          </div>
+          <div>
+            <div class="detail-block-title">Why it Exists</div>
+            <p class="detail-block-text">${reg.why}</p>
+          </div>
+          <div>
+            <div class="detail-block-title">Real-World Scenario</div>
+            <p class="detail-block-text">${reg.scenario}</p>
+          </div>
+          <div>
+            <div class="detail-block-title">Common Mistakes</div>
+            <p class="detail-block-text" style="color:#f43f5e;">${reg.mistakes}</p>
+          </div>
+          <div>
+            <div class="detail-block-title">Related Rails</div>
+            <p class="detail-block-text">${reg.types}</p>
+          </div>
+        </div>
+        
+        <!-- Interactive Quiz -->
+        <div class="reg-quiz-section">
+          <div class="quiz-q">📝 Knowledge Check: ${reg.q}</div>
+          <div class="quiz-opts" id="opts-${reg.id}">
+            ${reg.options.map((opt, index) => `
+              <button class="quiz-opt-btn" onclick="checkAnswer('${reg.id}', ${index}, ${reg.ans})">${opt}</button>
+            `).join('')}
+          </div>
+          <p id="feedback-${reg.id}" style="font-size:0.82rem; margin-top:0.75rem; font-weight:600; display:none;"></p>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function getBadgeClass(badge) {
+    if (badge === 'Federal') return 'badge-fed';
+    if (badge === 'Operating Rules') return 'badge-card';
+    return 'badge-intl';
+  }
+
+  function selectCategory(cat) {
+    currentCategory = cat;
+    document.querySelectorAll('.reg-cat-item').forEach(el => {
+      el.classList.toggle('active', el.textContent.includes(cat) || (cat === 'all' && el.textContent.includes('All')));
+    });
+    renderRegs();
+  }
+
+  function filterRegs() {
+    renderRegs();
+  }
+
+  function checkAnswer(regId, selectedIndex, correctIndex) {
+    const optsWrapper = document.getElementById(`opts-${regId}`);
+    const btns = optsWrapper.querySelectorAll('.quiz-opt-btn');
+    const feedback = document.getElementById(`feedback-${regId}`);
+    
+    btns.forEach((btn, idx) => {
+      btn.disabled = true;
+      if (idx === correctIndex) {
+        btn.classList.add('correct');
+      }
+      if (idx === selectedIndex && selectedIndex !== correctIndex) {
+        btn.classList.add('wrong');
+      }
+    });
+    
+    feedback.style.display = 'block';
+    if (selectedIndex === correctIndex) {
+      feedback.style.color = '#10b981';
+      feedback.textContent = '✅ Correct! You successfully mastered this regulatory concept.';
+    } else {
+      feedback.style.color = '#f43f5e';
+      feedback.textContent = '❌ Incorrect. Review the guidelines and try again.';
+    }
+  }
+
+  // Init
+  renderRegs();
+</script>
+</body>
+</html>

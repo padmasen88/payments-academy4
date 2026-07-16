@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learning Roadmap — Payments Academy 3.0</title>
+  <meta name="description" content="Interactive Payments Roadmap covering Levels 100 to 500: Foundations, Rails, Operations, Technology, and Risk." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    /* Roadmap Custom Styling */
+    .map-header {
+      padding: 6rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .map-hero-bg {
+      position: absolute;
+      top: -30%; left: -20%; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.1), transparent 70%);
+      pointer-events: none;
+    }
+    .roadmap-container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+    .roadmap-level-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all var(--t-normal);
+    }
+    .roadmap-level-card:hover {
+      border-color: var(--border-accent);
+      box-shadow: var(--shadow-md);
+    }
+    .level-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+    }
+    .level-title-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .level-num-badge {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 0.3rem 0.8rem;
+      background: var(--grad-indigo);
+      border-radius: var(--radius-sm);
+      color: #fff;
+    }
+    .level-name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+    .level-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 1.5rem;
+    }
+    .level-topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      transition: max-height 0.3s ease;
+    }
+    .topic-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      position: relative;
+      transition: all var(--t-fast);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .topic-card:hover {
+      background: var(--bg-glass-hover);
+      border-color: rgba(99,102,241,0.3);
+      transform: translateY(-2px);
+    }
+    .topic-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 0.75rem;
+    }
+    .topic-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .difficulty-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-sm);
+      text-transform: uppercase;
+    }
+    .diff-beg { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .diff-int { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .diff-adv { background: rgba(244, 63, 94, 0.15); color: #f43f5e; }
+    
+    .topic-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+    .topic-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px dashed var(--border-subtle);
+      padding-top: 0.75rem;
+      margin-top: auto;
+    }
+    .topic-link {
+      font-weight: 600;
+      color: var(--accent-teal);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .topic-link:hover {
+      color: var(--text-primary);
+    }
+    .collapse-chevron {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+    }
+    .collapsed .level-topics-grid {
+      display: none;
+    }
+    .collapsed .collapse-chevron {
+      transform: rotate(-90deg);
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">⚡</div>
+    Payments Academy
+  </a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">Level-Based Sequence</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="map-header">
+  <div class="map-hero-bg"></div>
+  <div class="hero-badge">LEVELS 100 – 500</div>
+  <h1 class="hero-title">Payments Learning Map</h1>
+  <p class="hero-desc" style="max-width:700px; margin: 1rem auto 0;">
+    Navigate your payments education sequentially from Level 100 Foundations to Level 500 Advanced Risk &amp; Compliance. Click modules to expand details and begin.
+  </p>
+</header>
+
+<main class="roadmap-container">
+  
+  <!-- LEVEL 100 -->
+  <div class="roadmap-level-card" id="level-100">
+    <div class="level-hdr" onclick="toggleLevel('level-100')">
+      <div class="level-title-group">
+        <span class="level-num-badge">L100</span>
+        <span class="level-name">Foundations</span>
+      </div>
+      <div style="display:flex; align-items:center; gap: 1.5rem;">
+        <div class="level-meta">
+          <span>📚 4 Key Topics</span>
+          <span>⏱ Est. 2 Hours</span>
+        </div>
+        <span class="collapse-chevron">▼</span>
+      </div>
+    </div>
+    
+    <div class="level-topics-grid">
+      
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">What is a Payment?</span>
+          <span class="difficulty-badge diff-beg">Beginner</span>
+        </div>
+        <p class="topic-desc">The core philosophy of value transfer: double-entry ledgers, database edits, and push vs. pull models.</p>
+        <div class="topic-footer">
+          <span>⏱ 30 Mins</span>
+          <a href="module1.html#vocab-ledgers" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+      
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Payment Lifecycle</span>
+          <span class="difficulty-badge diff-beg">Beginner</span>
+        </div>
+        <p class="topic-desc">Tracing the seven key stages of a payment: Initiation, Transportation, Authorization, Clearing, Settlement, Risk, and Regulation.</p>
+        <div class="topic-footer">
+          <span>⏱ 30 Mins</span>
+          <a href="module1.html#lifecycle-journey" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Clearing &amp; Settlement</span>
+          <span class="difficulty-badge diff-beg">Beginner</span>
+        </div>
+        <p class="topic-desc">Understanding message routing versus funds settlement, and the mechanics of DNS and RTGS.</p>
+        <div class="topic-footer">
+          <span>⏱ 30 Mins</span>
+          <a href="module1.html#clearing-settlement" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Universal Participants</span>
+          <span class="difficulty-badge diff-beg">Beginner</span>
+        </div>
+        <p class="topic-desc">The generic roles: Originator, ODFI/Acquirer, Operator, RDFI/Issuer, and Receiver across networks.</p>
+        <div class="topic-footer">
+          <span>⏱ 30 Mins</span>
+          <a href="module1.html#participants-guide" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LEVEL 200 -->
+  <div class="roadmap-level-card" id="level-200">
+    <div class="level-hdr" onclick="toggleLevel('level-200')">
+      <div class="level-title-group">
+        <span class="level-num-badge" style="background:var(--grad-teal);">L200</span>
+        <span class="level-name">Payment Rails</span>
+      </div>
+      <div style="display:flex; align-items:center; gap: 1.5rem;">
+        <div class="level-meta">
+          <span>📚 5 Key Topics</span>
+          <span>⏱ Est. 4 Hours</span>
+        </div>
+        <span class="collapse-chevron">▼</span>
+      </div>
+    </div>
+    
+    <div class="level-topics-grid">
+      
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">ACH Rails</span>
+          <span class="difficulty-badge diff-int">Intermediate</span>
+        </div>
+        <p class="topic-desc">Batch payment architecture, SEC codes (PPD, CCD, WEB, TEL), same-day cycles, and ODFI/RDFI warranties.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module2.html#ach-overview" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Wires &amp; SWIFT</span>
+          <span class="difficulty-badge diff-int">Intermediate</span>
+        </div>
+        <p class="topic-desc">Fedwire RTGS and CHIPS multilateral netting systems, correspondent bank nostro/vostro structures, and SWIFT GPI tracking.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module2.html#wire-details" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Instant Rails (RTP &amp; FedNow)</span>
+          <span class="difficulty-badge diff-int">Intermediate</span>
+        </div>
+        <p class="topic-desc">Real-time settlement mechanisms, pre-funded liquidity, Request for Payment (RFP) messages, and interbank flows.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module2.html#rtp-overview" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Card Payments &amp; Wallets</span>
+          <span class="difficulty-badge diff-int">Intermediate</span>
+        </div>
+        <p class="topic-desc">The four-party card loop, tokenization in Apple Pay/Google Pay, EMV specifications, and push-to-card Direct rails.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module3.html#tokenization" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Consumer P2P &amp; BNPL</span>
+          <span class="difficulty-badge diff-beg">Beginner</span>
+        </div>
+        <p class="topic-desc">Mobile social wallets (Zelle, Venmo, PayPal) and buy now pay later merchant funding mechanisms.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module3.html#z-overview" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LEVEL 300 -->
+  <div class="roadmap-level-card" id="level-300">
+    <div class="level-hdr" onclick="toggleLevel('level-300')">
+      <div class="level-title-group">
+        <span class="level-num-badge" style="background:var(--grad-sky);">L300</span>
+        <span class="level-name">Operations</span>
+      </div>
+      <div style="display:flex; align-items:center; gap: 1.5rem;">
+        <div class="level-meta">
+          <span>📚 3 Key Topics</span>
+          <span>⏱ Est. 2.5 Hours</span>
+        </div>
+        <span class="collapse-chevron">▼</span>
+      </div>
+    </div>
+    
+    <div class="level-topics-grid">
+      
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Disbursements &amp; AP Automation</span>
+          <span class="difficulty-badge diff-int">Intermediate</span>
+        </div>
+        <p class="topic-desc">Accounts Payable optimization: single-use virtual cards, dynamic discounting, and ERP integration mechanics.</p>
+        <div class="topic-footer">
+          <span>⏱ 50 Mins</span>
+          <a href="module4.html#com-ap" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Commercial &amp; Purchasing Cards</span>
+          <span class="difficulty-badge diff-int">Intermediate</span>
+        </div>
+        <p class="topic-desc">Purchasing cards, fleet fuel cards, closed-loop telemetry, MCC spend control limits, and rebate sharing economics.</p>
+        <div class="topic-footer">
+          <span>⏱ 50 Mins</span>
+          <a href="module4.html#com-pcards" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Returns, Failures &amp; Exceptions</span>
+          <span class="difficulty-badge diff-int">Intermediate</span>
+        </div>
+        <p class="topic-desc">Handling transaction exceptions: return windows, ACH return code paths, and administrative rejections.</p>
+        <div class="topic-footer">
+          <span>⏱ 50 Mins</span>
+          <a href="module5.html#ach-returns" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LEVEL 400 -->
+  <div class="roadmap-level-card" id="level-400">
+    <div class="level-hdr" onclick="toggleLevel('level-400')">
+      <div class="level-title-group">
+        <span class="level-num-badge" style="background:var(--grad-gold);">L400</span>
+        <span class="level-name">Technology</span>
+      </div>
+      <div style="display:flex; align-items:center; gap: 1.5rem;">
+        <div class="level-meta">
+          <span>📚 3 Key Topics</span>
+          <span>⏱ Est. 3 Hours</span>
+        </div>
+        <span class="collapse-chevron">▼</span>
+      </div>
+    </div>
+    
+    <div class="level-topics-grid">
+      
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Payment APIs &amp; Webhooks</span>
+          <span class="difficulty-badge diff-adv">Advanced</span>
+        </div>
+        <p class="topic-desc">Building robust APIs: webhooks, OAuth security, idempotency keys, tokenization, and encryption standardizations.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module2.html" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">ISO 8583 vs. ISO 20022</span>
+          <span class="difficulty-badge diff-adv">Advanced</span>
+        </div>
+        <p class="topic-desc">Detailed comparison of legacy card formats with the modern data-rich XML/JSON interbank messaging structures.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module2.html" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Banking-as-a-Service (BaaS)</span>
+          <span class="difficulty-badge diff-adv">Advanced</span>
+        </div>
+        <p class="topic-desc">Sponsor bank middleware structures, virtual ledgers, pooled FBO accounts, and real-time reconciliation workflows.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module7.html#baas" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LEVEL 500 -->
+  <div class="roadmap-level-card" id="level-500">
+    <div class="level-hdr" onclick="toggleLevel('level-500')">
+      <div class="level-title-group">
+        <span class="level-num-badge" style="background:var(--grad-rose);">L500</span>
+        <span class="level-name">Risk &amp; Compliance</span>
+      </div>
+      <div style="display:flex; align-items:center; gap: 1.5rem;">
+        <div class="level-meta">
+          <span>📚 4 Key Topics</span>
+          <span>⏱ Est. 4 Hours</span>
+        </div>
+        <span class="collapse-chevron">▼</span>
+      </div>
+    </div>
+    
+    <div class="level-topics-grid">
+      
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Disputes &amp; Chargebacks</span>
+          <span class="difficulty-badge diff-adv">Advanced</span>
+        </div>
+        <p class="topic-desc">Card-not-present chargeback lifecycles, EMV liability rules, 3D Secure verification, and friendly fraud mitigations.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module5.html#cr-chargebacks" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Regulations (Reg E, Durbin)</span>
+          <span class="difficulty-badge diff-adv">Advanced</span>
+        </div>
+        <p class="topic-desc">Regulation E consumer dispute timelines, Durbin Amendment interchange fee caps, and routing dual-network mandates.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module6.html#db-rege" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Financial Crime (BSA, AML, KYC)</span>
+          <span class="difficulty-badge diff-adv">Advanced</span>
+        </div>
+        <p class="topic-desc">BSA regulations: KYC/CIP identities, SAR suspicious reports, CTR currency thresholds, and OFAC sanctions lists.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module6.html#regulatory" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-hdr">
+          <span class="topic-title">Stablecoins, CBDCs &amp; AI</span>
+          <span class="difficulty-badge diff-adv">Advanced</span>
+        </div>
+        <p class="topic-desc">Stablecoin settlement reserves, GENIUS Act oversight, wholesale mBridge corridors, and GNN fraud ring mapping.</p>
+        <div class="topic-footer">
+          <span>⏱ 60 Mins</span>
+          <a href="module7.html#stablecoins" class="topic-link">Start Lesson →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleLevel(levelId) {
+    const card = document.getElementById(levelId);
+    card.classList.toggle('collapsed');
+  }
+</script>
+</body>
+</html>

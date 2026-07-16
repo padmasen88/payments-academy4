@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 4: Card Payments | Payments Academy</title>
+  <meta name="description" content="Understand credit/debit card mechanics: four-party card models, authorization/clearing message cycles, debit interchange caps, credit float interest, and corporate virtual card AP programs." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .hero-badge { background: rgba(var(--mod4-color-rgb, 99, 102, 241), 0.12); border-color: rgba(var(--mod4-color-rgb, 99, 102, 241), 0.35); color: var(--mod4-color); }
+    .module-hero::before { background: radial-gradient(circle, var(--mod4-color), transparent 70%); top: -40%; left: -10%; width: 500px; height: 500px; }
+    .module-hero::after  { background: radial-gradient(circle, #6366f1, transparent 70%); }
+    .sidebar-nav li a.active::before { background: var(--mod4-color); }
+    .section-icon { background: rgba(var(--mod4-color-rgb, 99, 102, 241), 0.12); color: var(--mod4-color); }
+    .key-fact::before { background: var(--mod4-color); }
+    .process-step-num { border-color: rgba(var(--mod4-color-rgb, 99, 102, 241), 0.4); color: var(--mod4-color); }
+    .chapter-tab.active { background: var(--mod4-color); }
+    .check { color: #10b981; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-icon">⚡</div>Payments Academy</a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="module-hero">
+  <div class="hero-badge">MODULE 04</div>
+  <h1 class="hero-title">Card Payments</h1>
+  <p class="hero-desc">Understand credit/debit card mechanics: four-party card models, authorization/clearing message cycles, debit interchange caps, credit float interest, and corporate virtual card AP programs.</p>
+  <div class="hero-meta">
+    <span class="hero-meta-item">📚 3 Chapters</span>
+    <span class="hero-meta-item">⏱ Est. 45 Mins</span>
+    <span class="hero-meta-item">🎯 Practitioner Level</span>
+    <span class="hero-meta-item">💡 Comprehensive Depth</span>
+  </div>
+</header>
+
+<div class="module-layout">
+  <aside class="sidebar">
+    
+    <div class="sidebar-title">Model &amp; Flows</div>
+    <ul class="sidebar-nav">
+      <li><a href="#net-four-party" data-section="net-four-party">Four-Party Model</a></li>
+      <li><a href="#net-auth" data-section="net-auth">Card Authorization</a></li>
+      <li><a href="#net-clearing" data-section="net-clearing">Clearing &amp; Settlement</a></li>
+      <li><a href="#net-interchange" data-section="net-interchange">Interchange Economics</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Card Types</div>
+    <ul class="sidebar-nav">
+      <li><a href="#db-overview" data-section="db-overview">Debit Cards</a></li>
+      <li><a href="#cr-overview" data-section="cr-overview">Credit Cards</a></li>
+      <li><a href="#pp-types" data-section="pp-types">Prepaid Programs</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Corporate</div>
+    <ul class="sidebar-nav">
+      <li><a href="#com-overview" data-section="com-overview">Commercial Cards</a></li>
+      <li><a href="#com-corporate" data-section="com-corporate">Corporate Spend</a></li>
+      <li><a href="#com-pcards" data-section="com-pcards">Purchasing Cards</a></li>
+      <li><a href="#com-fleet" data-section="com-fleet">Fleet Programs</a></li>
+      <li><a href="#com-ap" data-section="com-ap">AP Virtual Cards</a></li>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Assessment</div>
+    <ul class="sidebar-nav">
+      <li><a href="#assessment" data-section="assessment">Module Assessment</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    
+      <div class="highlights-container" style="background: var(--bg-glass); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15); backdrop-filter: blur(10px);">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--mod4-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📊</span> Module Highlights &amp; Architecture
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5;">
+          A high-level visual summary of this module. Click through the tabs below for the complete practitioner-grade deep dives.
+        </p>
+        
+    <div class="flow-container" style="margin-top: 1rem;">
+      <div class="flow-title">FOUR-PARTY CARD TRANSACTION STEPS</div>
+      <div class="flow-diagram" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-around; width: 100%;">
+        <div style="text-align: center; width: 180px; padding: 1rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: rgba(255,255,255,0.02);">
+          <div style="font-weight: 700; color: var(--mod4-color); font-family: 'Outfit', sans-serif; margin-bottom: 0.25rem;">1. Authorization</div>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+            Cardholder swipes; merchant requests auth; issuer checks balance &amp; places hold in real time.
+          </p>
+        </div>
+        <div class="flow-arrow" style="align-self: center; color: var(--mod4-color); font-weight: bold;">➔</div>
+        <div style="text-align: center; width: 180px; padding: 1rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: rgba(255,255,255,0.02);">
+          <div style="font-weight: 700; color: var(--mod4-color); font-family: 'Outfit', sans-serif; margin-bottom: 0.25rem;">2. Clearing</div>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+            Merchant sends daily batch of transactions to Acquirer; network routes transactions to Issuers.
+          </p>
+        </div>
+        <div class="flow-arrow" style="align-self: center; color: var(--mod4-color); font-weight: bold;">➔</div>
+        <div style="text-align: center; width: 180px; padding: 1rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: rgba(255,255,255,0.02);">
+          <div style="font-weight: 700; color: var(--mod4-color); font-family: 'Outfit', sans-serif; margin-bottom: 0.25rem;">3. Settlement</div>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+            Issuer nets interchange, routes funds via network; Acquirer deducts MDR, credits merchant.
+          </p>
+        </div>
+      </div>
+    </div>
+
+      </div>
+    
+
+    <div class="chapter-tabs" data-panels="m4-panels">
+      
+        <button class="chapter-tab active" data-tab="fourparty">💳 Four-Party Model &amp; Flows</button>
+      
+        <button class="chapter-tab " data-tab="economics">📊 Card Types &amp; Economics</button>
+      
+        <button class="chapter-tab " data-tab="commercial">🏢 Commercial Programs</button>
+      
+        <button class="chapter-tab" data-tab="assessment">🎯 Assessment</button>
+      
+    </div>
+
+    <div id="m4-panels">
+      
+    <div class="chapter-panel active" data-tab="fourparty">
+      <div class="content-section" data-section-id="net-four-party" id="net-four-party">
+          <div class="section-header">
+            <div class="section-icon">🏗</div>
+            <div><div class="section-num">1.1</div><h2>The Four-Party Model</h2></div>
+          </div>
+          <p>The dominant structure of the US card payments industry is the <strong>four-party model</strong> — a system where four distinct entities participate in every transaction. Understanding who they are, what they do, and how money flows between them is the foundation of card payments literacy.</p>
+
+          <div class="flow-container">
+            <div class="flow-title">FOUR-PARTY MODEL — PARTICIPANTS &amp; MONEY FLOW</div>
+            <div class="flow-diagram">
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#f59e0b;">
+                  <div class="flow-node-icon">👤</div>
+                  <div class="flow-node-name">Cardholder</div>
+                  <div class="flow-node-abbr">Consumer / Business</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#f59e0b;"><div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #f59e0b;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div></div>
+                <div class="flow-arrow-label">Card issued by</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#f59e0b;">
+                  <div class="flow-node-icon">🏦</div>
+                  <div class="flow-node-name">Issuing Bank</div>
+                  <div class="flow-node-abbr">e.g., Chase, BofA</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#8b5cf6;"><div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #8b5cf6;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div></div>
+                <div class="flow-arrow-label">Auth / settlement messages</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#8b5cf6;">
+                  <div class="flow-node-icon">🌐</div>
+                  <div class="flow-node-name">Card Network</div>
+                  <div class="flow-node-abbr">Visa / Mastercard</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#2dd4bf;"><div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #2dd4bf;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div></div>
+                <div class="flow-arrow-label">Routes to acquirer</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#2dd4bf;">
+                  <div class="flow-node-icon">🏛</div>
+                  <div class="flow-node-name">Acquiring Bank</div>
+                  <div class="flow-node-abbr">Merchant's bank</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#10b981;"><div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #10b981;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div></div>
+                <div class="flow-arrow-label">Net of interchange</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#10b981;">
+                  <div class="flow-node-icon">🏪</div>
+                  <div class="flow-node-name">Merchant</div>
+                  <div class="flow-node-abbr">Accepts payment</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-card-icon">👤</div>
+              <div class="info-card-label">Cardholder</div>
+              <div class="info-card-value" style="font-size:0.9rem;margin-bottom:0.5rem">Consumer or business holding the card</div>
+              <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Has a relationship with the issuing bank. Uses the card to make purchases. Pays the issuer (credit) or has funds debited (debit).</p>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">🏦</div>
+              <div class="info-card-label">Issuing Bank</div>
+              <div class="info-card-value" style="font-size:0.9rem;margin-bottom:0.5rem">Issues the card, bears credit/fraud risk</div>
+              <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Examples: JPMorgan Chase, Bank of America, Capital One, Synchrony. <strong>Earns interchange</strong> on every transaction. Sets credit limits, interest rates, reward programs. Approves or declines authorizations.</p>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">🌐</div>
+              <div class="info-card-label">Card Network</div>
+              <div class="info-card-value" style="font-size:0.9rem;margin-bottom:0.5rem">Sets rules; routes messages; earns assessments</div>
+              <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Visa and Mastercard do <strong>NOT</strong> issue cards or lend money. They operate the switching infrastructure, set interchange schedules, establish operating rules, manage fraud standards (EMV, 3DS), and earn network assessment fees (~0.13-0.15% of transaction value).</p>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">🏛</div>
+              <div class="info-card-label">Acquiring Bank</div>
+              <div class="info-card-value" style="font-size:0.9rem;margin-bottom:0.5rem">Processes payments for merchants</div>
+              <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Examples: Fiserv/First Data, Worldpay, Adyen, Stripe (as a payment facilitator). The acquirer contracts with the merchant, provides the POS infrastructure, routes auth requests to the network, and deposits funds to the merchant. Charges a Merchant Discount Rate (MDR).</p>
+            </div>
+          </div>
+
+          <h3>Three-Party Model (Closed Loop): Amex &amp; Discover</h3>
+          <p>American Express and Discover have historically operated <strong>three-party (closed-loop) models</strong> where they act as both issuer AND acquirer. This gives them total control of the network and higher per-transaction economics, but limits acceptance (merchants pay higher MDR). Amex has increasingly opened to third-party issuers (e.g., Delta SkyMiles issued by Amex, but also co-brands issued by other banks like Hilton Honors Aspire by Amex directly). Discover was acquired by Capital One in 2024 — a transformative industry event.</p>
+
+          <table class="data-table">
+            <thead><tr><th>Model</th><th>Examples</th><th>Issuer</th><th>Acquirer</th><th>Advantage</th><th>Disadvantage</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Four-Party (Open Loop)</strong></td><td>Visa, Mastercard</td><td>Any bank</td><td>Any bank</td><td>Maximum acceptance; issuer competition drives innovation</td><td>Complex rules; interchange negotiations</td></tr>
+              <tr><td><strong>Three-Party (Closed Loop)</strong></td><td>Amex, Discover</td><td>Network itself</td><td>Network itself</td><td>End-to-end control; premium data; higher MDR</td><td>Lower merchant acceptance historically; higher fees</td></tr>
+            </tbody>
+          </table>
+        </div>
+      <div class="content-section" data-section-id="net-auth" id="net-auth">
+          <div class="section-header">
+            <div class="section-icon">⚡</div>
+            <div><div class="section-num">1.2</div><h2>Authorization Flow</h2></div>
+          </div>
+          <p>Authorization is the real-time process of verifying a card transaction before funds are committed. It happens in <strong>under 2 seconds</strong> end-to-end, traversing four parties across the globe. Understanding this flow is critical for anyone building card-based products.</p>
+
+          <div class="process-steps">
+            <div class="process-step">
+              <div class="process-step-num">1</div>
+              <div class="process-step-content">
+                <h4>Card Presented at Terminal</h4>
+                <p>Consumer taps (NFC/contactless), inserts (EMV chip), or swipes (magstripe) their card at the merchant's point-of-sale terminal. The terminal reads the card data — PAN (Primary Account Number), expiry date, and a cryptographic verification value. For EMV chip transactions, the chip generates a unique cryptogram per transaction (preventing counterfeit cloning).</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">2</div>
+              <div class="process-step-content">
+                <h4>Acquirer Submits Authorization Request</h4>
+                <p>The terminal sends the transaction data to the payment processor / acquirer via an ISO 8583 message. The acquirer adds merchant data (MCC, merchant ID, terminal ID) and routes the authorization request to the appropriate card network based on the card's BIN (Bank Identification Number — first 6–8 digits of the PAN).</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">3</div>
+              <div class="process-step-content">
+                <h4>Network Routes to Issuer</h4>
+                <p>Visa or Mastercard's switching infrastructure identifies the issuing bank from the BIN table and routes the authorization request to the issuer's authorization system in real time. The network also applies its own fraud screening (Visa Advanced Authorization, Mastercard Safety Net) and can decline transactions before they reach the issuer.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">4</div>
+              <div class="process-step-content">
+                <h4>Issuer Makes the Decision</h4>
+                <p>The issuer's authorization system evaluates the transaction in milliseconds against: <br>
+                • <strong>Available balance / credit limit</strong><br>
+                • <strong>Fraud score</strong> (proprietary ML models scoring 100+ signals: location, velocity, MCC, device, behavioral patterns)<br>
+                • <strong>Velocity rules</strong> (e.g., no more than 5 transactions in 10 minutes)<br>
+                • <strong>Account standing</strong> (delinquency, account restrictions)<br>
+                • <strong>Card status</strong> (not reported lost/stolen)<br>
+                Response codes: <code>00</code> = Approved, <code>05</code> = Do Not Honor, <code>51</code> = Insufficient Funds, <code>54</code> = Expired Card, <code>57</code> = Transaction Not Permitted, <code>62</code> = Restricted Card.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">5</div>
+              <div class="process-step-content">
+                <h4>Response Returns to Terminal</h4>
+                <p>The authorization response (approved/declined + response code) routes back through the network to the acquirer to the terminal. Elapsed time: typically <strong>1–2 seconds</strong>. An approval places an <strong>authorization hold</strong> on the funds — reducing available balance, but not yet settling. No money has moved yet.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">6</div>
+              <div class="process-step-content">
+                <h4>Authorization Hold Dynamics</h4>
+                <p>Authorization holds can be tricky for consumers. Examples:<br>
+                • <strong>Gas stations:</strong> Pre-auth of $1 or $100 (to verify card); adjusted to actual amount after fill-up<br>
+                • <strong>Hotels:</strong> Pre-auth for estimated stay + incidentals; may be $200–$500 over actual room rate<br>
+                • <strong>Car rentals:</strong> Large pre-auth holds entire security deposit<br>
+                Holds that are never settled (because the transaction doesn't complete) fall off after the issuer's hold expiry period (typically 3–7 days for most merchants; up to 30 days for travel).</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-info">
+            <div class="callout-icon">💡</div>
+            <div class="callout-content">
+              <h4>Stand-In Processing (STIP)</h4>
+              <p>When a card issuer's authorization system is down (planned maintenance or outage), the card network steps in with <strong>Stand-In Processing</strong>. Visa or Mastercard uses stored issuer parameters to approve or decline transactions on the issuer's behalf. This prevents merchant disruption but creates risk: the network approves based on last-known parameters, which may not reflect current account status.</p>
+            </div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="net-clearing" id="net-clearing">
+          <div class="section-header">
+            <div class="section-icon">🔄</div>
+            <div><div class="section-num">1.3</div><h2>Clearing &amp; Settlement</h2></div>
+          </div>
+          <p>Authorization and settlement are <strong>completely separate processes</strong>. Authorization happens in real time; clearing and settlement happen in batch, typically T+1 or T+2. This distinction is critical for treasury management, reconciliation, and understanding the timing of merchant funding.</p>
+
+          <h3>Clearing</h3>
+          <p>At end of day, the merchant's POS system sends a <strong>batch close</strong> — submitting all the day's authorized transactions to the acquirer for clearing. Each transaction is matched against its authorization record. This is the process of officially recording the transaction details through the network.</p>
+
+          <h3>Settlement</h3>
+          <p>After clearing, funds flow as follows:</p>
+          <div class="process-steps">
+            <div class="process-step">
+              <div class="process-step-num">1</div>
+              <div class="process-step-content">
+                <h4>Issuer to Network</h4>
+                <p>The issuing bank pays the card network the gross transaction amount.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">2</div>
+              <div class="process-step-content">
+                <h4>Network Nets and Pays Acquirer</h4>
+                <p>The network nets all transactions, deducts interchange (which flows back to the issuer), deducts its own assessment fees, and pays the acquirer the net amount.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="process-step-num">3</div>
+              <div class="process-step-content">
+                <h4>Acquirer Pays Merchant</h4>
+                <p>The acquirer deposits funds to the merchant's bank account, net of the Merchant Discount Rate (MDR). Most merchants receive funds T+1 or T+2 after batch close.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-info">
+            <div class="callout-icon">💡</div>
+            <div class="callout-content">
+              <h4>The Interchange Flow Is Counter-Intuitive</h4>
+              <p>Many people assume interchange flows from issuer to acquirer. The direction is actually <strong>acquirer → network → issuer</strong>. The merchant pays the MDR to the acquirer; the acquirer remits interchange to the network; the network passes it to the issuer. This is why the issuer — who takes the credit risk — earns interchange. The merchant bears the cost; the cardholder gets the rewards funded by that cost.</p>
+            </div>
+          </div>
+
+          <h3>Gross vs. Net Settlement</h3>
+          <p>Merchants receive <strong>net</strong> of fees — the MDR is already deducted before funds hit the merchant's account. For a $100 transaction with a 2.5% MDR, the merchant receives $97.50. This contrasts with ACH and wire where the full amount is sent and fees are charged separately.</p>
+        </div>
+      <div class="content-section" data-section-id="net-interchange" id="net-interchange">
+          <div class="section-header">
+            <div class="section-icon">💰</div>
+            <div><div class="section-num">1.4</div><h2>Interchange Economics</h2></div>
+          </div>
+
+          <p><strong>Interchange</strong> is the fee that the acquiring bank pays to the issuing bank on every card transaction. It is set by the card networks (Visa/Mastercard publish their interchange tables annually) and is the single largest component of the merchant's cost of accepting cards. Understanding interchange is essential to understanding the entire card industry's economics.</p>
+
+          <div class="key-facts">
+            <div class="key-fact"><div class="key-fact-label">Consumer Credit (typical)</div><div class="key-fact-value">1.5–2.5%</div><div class="key-fact-note">+ fixed fee per transaction</div></div>
+            <div class="key-fact"><div class="key-fact-label">Premium Rewards</div><div class="key-fact-value">2.3–3.5%</div><div class="key-fact-note">Travel cards, high-tier rewards</div></div>
+            <div class="key-fact"><div class="key-fact-label">Debit (Durbin-regulated)</div><div class="key-fact-value">$0.21+0.05%</div><div class="key-fact-note">Large bank issuers only</div></div>
+            <div class="key-fact"><div class="key-fact-label">Commercial (Level 3)</div><div class="key-fact-value">1.9–2.2%</div><div class="key-fact-note">With line-item data</div></div>
+            <div class="key-fact"><div class="key-fact-label">Network Assessment (Visa)</div><div class="key-fact-value">0.13–0.15%</div><div class="key-fact-note">Goes to Visa/MC, not issuer</div></div>
+            <div class="key-fact"><div class="key-fact-label">Who Earns It</div><div class="key-fact-value">Issuing Bank</div><div class="key-fact-note">Funds rewards programs</div></div>
+          </div>
+
+          <h3>Key Interchange Rate Determinants</h3>
+          <table class="data-table">
+            <thead><tr><th>Factor</th><th>Lower Rate Scenario</th><th>Higher Rate Scenario</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Card Type</strong></td><td>Standard debit card</td><td>Premium rewards credit card</td></tr>
+              <tr><td><strong>Transaction Type</strong></td><td>Card-present (chip/tap)</td><td>Card-not-present (CNP/e-commerce)</td></tr>
+              <tr><td><strong>Merchant Category (MCC)</strong></td><td>Supermarkets, utilities, gas</td><td>Specialty retail, airlines</td></tr>
+              <tr><td><strong>Data Quality</strong></td><td>Level 3 data (full line-item)</td><td>Level 1 (minimal data)</td></tr>
+              <tr><td><strong>Issuer Size</strong></td><td>Large bank (&gt;$10B, Durbin-regulated debit)</td><td>Small bank (&lt;$10B, unregulated debit)</td></tr>
+              <tr><td><strong>Transaction Size</strong></td><td>Small ticket programs</td><td>Standard ticket</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Merchant Discount Rate (MDR) Anatomy</h3>
+          <div class="card" style="margin:1.5rem 0;">
+            <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+              <div style="flex:1;min-width:140px;text-align:center;padding:1rem;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;">
+                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:var(--accent-gold);letter-spacing:0.08em;margin-bottom:0.25rem">Interchange</div>
+                <div style="font-family:'Outfit',sans-serif;font-size:1.75rem;font-weight:800;color:var(--text-primary)">~1.80%</div>
+                <div style="font-size:0.72rem;color:var(--text-muted)">Flows to Issuer</div>
+              </div>
+              <div style="font-size:1.5rem;color:var(--text-muted)">+</div>
+              <div style="flex:1;min-width:140px;text-align:center;padding:1rem;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);border-radius:12px;">
+                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:var(--accent-violet);letter-spacing:0.08em;margin-bottom:0.25rem">Network Fee</div>
+                <div style="font-family:'Outfit',sans-serif;font-size:1.75rem;font-weight:800;color:var(--text-primary)">~0.14%</div>
+                <div style="font-size:0.72rem;color:var(--text-muted)">Flows to Visa/MC</div>
+              </div>
+              <div style="font-size:1.5rem;color:var(--text-muted)">+</div>
+              <div style="flex:1;min-width:140px;text-align:center;padding:1rem;background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.3);border-radius:12px;">
+                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:var(--accent-teal);letter-spacing:0.08em;margin-bottom:0.25rem">Acquirer Markup</div>
+                <div style="font-family:'Outfit',sans-serif;font-size:1.75rem;font-weight:800;color:var(--text-primary)">~0.30%</div>
+                <div style="font-size:0.72rem;color:var(--text-muted)">Stays with Acquirer</div>
+              </div>
+              <div style="font-size:1.5rem;color:var(--text-muted)">=</div>
+              <div style="flex:1;min-width:140px;text-align:center;padding:1rem;background:rgba(244,63,94,0.1);border:1px solid rgba(244,63,94,0.3);border-radius:12px;">
+                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:var(--accent-rose);letter-spacing:0.08em;margin-bottom:0.25rem">MDR (Merchant Cost)</div>
+                <div style="font-family:'Outfit',sans-serif;font-size:1.75rem;font-weight:800;color:var(--text-primary)">~2.24%</div>
+                <div style="font-size:0.72rem;color:var(--text-muted)">Paid by merchant</div>
+              </div>
+            </div>
+          </div>
+
+          <h3>Durbin Amendment (Debit Interchange Cap)</h3>
+          <p>Enacted as part of Dodd-Frank in 2010, implemented by <strong>Federal Reserve Regulation II</strong> in 2011, the Durbin Amendment was a watershed moment in payments regulation. It caps debit interchange for large issuers and introduced mandatory network routing choice for merchants.</p>
+          <ul>
+            <li><strong>Interchange cap:</strong> For issuers with assets &gt;$10 billion: maximum debit interchange = <strong>$0.21 + 0.05%</strong> of transaction amount + <strong>$0.01</strong> fraud prevention adjustment</li>
+            <li><strong>Dual-network routing:</strong> Every debit card must carry two unaffiliated network brands (e.g., Visa + Star). Merchants choose which to route through — and most choose the cheaper PIN network.</li>
+            <li><strong>Small bank exemption:</strong> Issuers under $10B in assets are nominally exempt; they can earn market-rate interchange (~$0.50–$0.80 per transaction). In practice, networks maintain higher rates for small issuers to preserve the appearance of the exemption.</li>
+            <li><strong>Revenue impact:</strong> Durbin cost large bank debit issuers an estimated <strong>$8–10 billion per year</strong> in lost interchange. Banks responded by eliminating free checking accounts, adding fees, and increasing minimum balance requirements.</li>
+            <li><strong>Durbin 2.0 (2023 Fed proposal):</strong> The Federal Reserve proposed extending routing requirements to card-not-present (e-commerce) transactions — a major ongoing battle between networks, issuers, and merchants.</li>
+          </ul>
+        </div>
+    </div>
+    <div class="chapter-panel" data-tab="economics">
+      <div class="content-section" data-section-id="db-overview" id="db-overview">
+          <div class="section-header">
+            <div class="section-icon">💳</div>
+            <div><div class="section-num">2.1</div><h2>Debit Cards — Overview</h2></div>
+          </div>
+          <p>Debit cards provide direct access to funds in a <strong>demand deposit account (DDA)</strong> — a checking account. Unlike credit cards, there is no borrowing involved: spending is limited to available account funds. Debit cards are the most-used payment card in the US by <em>transaction count</em> (though credit leads by dollar volume).</p>
+
+          <div class="key-facts">
+            <div class="key-fact"><div class="key-fact-label">US Debit Transactions</div><div class="key-fact-value">~100B</div><div class="key-fact-note">Annually (2023)</div></div>
+            <div class="key-fact"><div class="key-fact-label">Avg Transaction</div><div class="key-fact-value">$40–50</div><div class="key-fact-note">Lower than credit avg</div></div>
+            <div class="key-fact"><div class="key-fact-label">Regulated Interchange</div><div class="key-fact-value">$0.21+0.05%</div><div class="key-fact-note">Durbin cap (large issuers)</div></div>
+            <div class="key-fact"><div class="key-fact-label">Networks</div><div class="key-fact-value">Dual</div><div class="key-fact-note">Signature + PIN required</div></div>
+          </div>
+
+          <h3>Signature Debit vs. PIN Debit</h3>
+          <table class="data-table">
+            <thead><tr><th>Feature</th><th>Signature Debit</th><th>PIN Debit</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Authentication</strong></td><td>Signature (or no verification)</td><td>4-digit PIN</td></tr>
+              <tr><td><strong>Network</strong></td><td>Visa or Mastercard</td><td>Star, NYCE, Pulse, Interlink, Maestro</td></tr>
+              <tr><td><strong>Interchange</strong></td><td>Higher (e.g., $0.21 + 0.05% cap)</td><td>Lower flat fee (e.g., $0.17–0.22)</td></tr>
+              <tr><td><strong>Settlement</strong></td><td>T+1 (like credit)</td><td>Same day</td></tr>
+              <tr><td><strong>Merchant routing choice</strong></td><td>Routes to Visa/MC</td><td>Can route to lowest-cost network</td></tr>
+              <tr><td><strong>Online/CNP use</strong></td><td>Yes (standard)</td><td>Limited (Durbin 2.0 trying to change)</td></tr>
+              <tr><td><strong>Cash back at POS</strong></td><td>Rarely</td><td>Common</td></tr>
+            </tbody>
+          </table>
+        </div>
+      
+    <div class="content-section" data-section-id="cr-overview" id="cr-overview">
+      <div class="section-header">
+        <div class="section-icon">💳</div>
+        <div>
+          <div class="section-num">4.3</div>
+          <h2>Credit Cards: Revolving Credit &amp; Float Economics</h2>
+        </div>
+      </div>
+      <p>Credit cards operate on a revolving line of credit. Rather than debiting a checking account, transactions are authorized against a pre-approved credit limit granted by the issuing bank.</p>
+      
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Revolving Lines of Credit</h4>
+          <p>Cardholders can carry a balance from month to month, subject to interest charges (APR) and minimum monthly payments. If paid in full before the monthly billing cycle's grace period expires, no interest is charged, creating an interest-free float period for consumers.</p>
+        </div>
+        <div class="info-card">
+          <h4>Float &amp; Funding Costs</h4>
+          <p>During the transaction flow, the issuing bank funds the merchant immediately but does not receive payment from the cardholder for up to 50 days. The issuer bears the float funding cost and the credit risk if the cardholder defaults, which is why credit cards command higher interchange rates than debit cards.</p>
+        </div>
+        <div class="info-card">
+          <h4>Rewards Funding</h4>
+          <p>The premium rewards (cashback, airline miles) offered by cards like Visa Infinite or Mastercard World Elite are directly funded by the higher interchange rates (up to 2.5% or more) charged to merchants on these premium card products.</p>
+        </div>
+      </div>
+    </div>
+  
+      <div class="content-section" data-section-id="pp-types" id="pp-types">
+          <div class="section-header">
+            <div class="section-icon">🎫</div>
+            <div><div class="section-num">4.1</div><h2>Types of Prepaid Cards</h2></div>
+          </div>
+          <p>Prepaid cards are cards loaded with value before use — there is no credit underwriting, no linked bank account, and often no minimum balance requirement. They serve as a critical financial tool for the <strong>unbanked and underbanked population</strong> (~77 million US adults) while also powering sophisticated corporate payment programs.</p>
+
+          <div class="two-col">
+            <div class="card">
+              <h4 style="margin-bottom:0.75rem">🔓 Open-Loop (Network-Branded)</h4>
+              <p style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:0.75rem">Carry Visa, Mastercard, or Amex branding. Accepted at any merchant that accepts that network — worldwide.</p>
+              <ul style="font-size:0.8rem;color:var(--text-secondary);padding-left:1.25rem">
+                <li>GPR (General Purpose Reloadable) cards</li>
+                <li>Government benefit cards (EBT, SSI, unemployment)</li>
+                <li>Payroll cards</li>
+                <li>Health FSA/HSA/HRA cards</li>
+                <li>Virtual prepaid cards</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4 style="margin-bottom:0.75rem">🔒 Closed-Loop (Single Merchant)</h4>
+              <p style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:0.75rem">Only accepted at the issuing merchant or affiliated merchants. No network branding.</p>
+              <ul style="font-size:0.8rem;color:var(--text-secondary);padding-left:1.25rem">
+                <li>Retail gift cards (Starbucks, Amazon, Target)</li>
+                <li>Restaurant gift cards</li>
+                <li>Merchant loyalty currency</li>
+                <li>Transit cards (Oyster, ORCA, BART)</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>Detailed Prepaid Card Categories</h3>
+          <table class="data-table">
+            <thead><tr><th>Category</th><th>Examples</th><th>Target Market</th><th>Key Features</th></tr></thead>
+            <tbody>
+              <tr><td><strong>GPR (General Purpose Reloadable)</strong></td><td>Walmart MoneyCard, Green Dot, NetSpend, Serve (Amex)</td><td>Unbanked / underbanked consumers</td><td>Direct deposit capable, ATM access, bill pay, mobile check deposit</td></tr>
+              <tr><td><strong>Government Benefits</strong></td><td>EBT (SNAP/food stamps), SSI Direct Express</td><td>Benefit recipients</td><td>Government-funded, restricted to eligible purchase categories (EBT)</td></tr>
+              <tr><td><strong>Payroll Cards</strong></td><td>ADP Aline, Comdata, Global Cash Card</td><td>Unbanked workers; gig economy</td><td>Employer loads wages; employee uses like debit card; avoids check cashing fees</td></tr>
+              <tr><td><strong>Health Spending (FSA/HSA/HRA)</strong></td><td>WEX Health, Flores, PayFlex</td><td>Employer benefit recipients</td><td>Restricted to eligible medical expenses; IRS-compliant; Durbin-exempt</td></tr>
+              <tr><td><strong>Travel Prepaid</strong></td><td>Caxton, Wise travel card</td><td>International travelers</td><td>Multi-currency loading; competitive FX rates; no foreign transaction fees</td></tr>
+              <tr><td><strong>Incentive / Reward</strong></td><td>Corporate incentive programs, rebate cards</td><td>Employees, customers</td><td>Single-load, often expiring; used for bonus pay, rebates, promotions</td></tr>
+              <tr><td><strong>Virtual Prepaid</strong></td><td>Corporate AP virtual cards; single-use for CNP</td><td>Businesses, security-conscious consumers</td><td>No physical card; 16-digit number + CVV; single-use or controlled-use</td></tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <div class="chapter-panel" data-tab="commercial">
+      <div class="content-section" data-section-id="com-overview" id="com-overview">
+          <div class="section-header">
+            <div class="section-icon">🏢</div>
+            <div><div class="section-num">5.1</div><h2>Commercial Card Program Types</h2></div>
+          </div>
+          <p>Commercial cards are cards issued for business purposes — controlling employee spending, paying suppliers, managing fleet costs, and automating accounts payable. The US commercial card market exceeded <strong>$1.2 trillion in spend</strong> in 2023 and continues growing rapidly as organizations replace checks and paper processes with card-based automation.</p>
+
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-card-icon">✈️</div>
+              <div class="info-card-label">Corporate / T&amp;E Card</div>
+              <div class="info-card-value" style="font-size:0.85rem;line-height:1.5">Travel &amp; entertainment spending by employees. American Express dominates. Often individual liability — employee responsible for payment; company reimburses. Integrates with expense management tools.</div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">🛒</div>
+              <div class="info-card-label">Purchasing Card (P-Card)</div>
+              <div class="info-card-value" style="font-size:0.85rem;line-height:1.5">High-volume procurement. Company liability. MCC and spend controls. Level 3 data capability. Replaces purchase orders and checks for routine buying. Primary driver of commercial card spend growth.</div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">⛽</div>
+              <div class="info-card-label">Fleet Card</div>
+              <div class="info-card-value" style="font-size:0.85rem;line-height:1.5">Fuel and vehicle maintenance for company fleets. MCC-restricted to gas stations and auto services. Captures odometer data. Closed-loop networks (WEX, Fleetcor) or open-loop with fleet controls.</div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">👻</div>
+              <div class="info-card-label">Ghost / Lodge Card</div>
+              <div class="info-card-value" style="font-size:0.85rem;line-height:1.5">No physical card; account number pre-shared with specific recurring vendors (hotels, airlines). Used for managed travel programs where a central account pays specific suppliers automatically.</div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">💻</div>
+              <div class="info-card-label">Virtual Card (AP Automation)</div>
+              <div class="info-card-value" style="font-size:0.85rem;line-height:1.5">Single-use or controlled virtual card numbers issued by AP automation platforms to pay suppliers. Replacing paper checks in B2B payables. Issuer earns interchange; some shared with buyer as rebate.</div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">🔗</div>
+              <div class="info-card-label">One Card</div>
+              <div class="info-card-value" style="font-size:0.85rem;line-height:1.5">Combines T&amp;E and purchasing capabilities into a single card. Simplifies program administration and card management for midsize companies.</div>
+            </div>
+          </div>
+
+          <div class="key-facts">
+            <div class="key-fact"><div class="key-fact-label">Market Size (US)</div><div class="key-fact-value">$1.2T+</div><div class="key-fact-note">Annual commercial card spend</div></div>
+            <div class="key-fact"><div class="key-fact-label">Top T&amp;E Issuer</div><div class="key-fact-value">Amex</div><div class="key-fact-note">Dominant in corporate T&amp;E</div></div>
+            <div class="key-fact"><div class="key-fact-label">Interchange (Commercial)</div><div class="key-fact-value">2.5–3.5%</div><div class="key-fact-note">Higher than consumer cards</div></div>
+            <div class="key-fact"><div class="key-fact-label">B2B Checks Remaining</div><div class="key-fact-value">~50%</div><div class="key-fact-note">Still paid by check (2023)</div></div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="com-corporate" id="com-corporate">
+          <div class="section-header">
+            <div class="section-icon">✈️</div>
+            <div><div class="section-num">5.2</div><h2>Corporate Card Programs — T&amp;E</h2></div>
+          </div>
+
+          <h3>Liability Models</h3>
+          <table class="data-table">
+            <thead><tr><th>Model</th><th>Who is Liable</th><th>Credit Check on Employee</th><th>Best For</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Individual Liability</strong></td><td>Employee personally liable; company reimburses</td><td>Yes — personal credit</td><td>Employees with established credit; company wants to protect its credit</td></tr>
+              <tr><td><strong>Corporate Liability</strong></td><td>Company liable for all charges</td><td>No — company underwritten</td><td>Enterprises with strong credit; simplifies employee experience</td></tr>
+              <tr><td><strong>Split Liability</strong></td><td>Employee liable for personal charges; company for business charges</td><td>Sometimes</td><td>Hybrid programs where cards used for both business and personal</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Charge Card vs. Revolving</h3>
+          <p>Many corporate cards — particularly Amex — are <strong>charge cards</strong>, not revolving credit. The full balance is due each month; there is no preset spending limit (NPSL). This means the card's limit scales with the company's spending pattern, and there are no interest charges — but also no option to carry a balance. Corporate charge cards are structured differently from consumer credit cards and are typically outside the scope of the CARD Act.</p>
+
+          <h3>Level 2 and Level 3 Data</h3>
+          <p>Commercial cards can capture and transmit enhanced transaction data through the payment network — enabling lower interchange rates and better spend visibility:</p>
+          <ul>
+            <li><strong>Level 1 (Standard):</strong> Basic data — merchant name, amount, date. Consumer interchange rate applies.</li>
+            <li><strong>Level 2:</strong> Adds sales tax amount, customer reference code, merchant postal code. ~0.5% interchange reduction for B2B transactions.</li>
+            <li><strong>Level 3:</strong> Full line-item detail — item description, quantity, unit cost, product code, freight amount. ~1%+ interchange reduction. Requires both merchant and acquirer to support L3 data. Critical for P-card programs.</li>
+          </ul>
+
+          <h3>Expense Management Integration</h3>
+          <p>Modern corporate card programs integrate tightly with expense management platforms. Market leaders: <strong>Concur</strong> (SAP), <strong>Expensify</strong>, <strong>TripActions/Navan</strong>. Challenger platforms with card-first approaches: <strong>Brex</strong>, <strong>Ramp</strong>, <strong>Divvy</strong> (BILL). These platforms provide real-time transaction feeds, automated receipt matching, policy enforcement, and manager approval workflows — dramatically reducing the cost and friction of expense management.</p>
+        </div>
+      <div class="content-section" data-section-id="com-pcards" id="com-pcards">
+          <div class="section-header">
+            <div class="section-icon">🛒</div>
+            <div><div class="section-num">5.3</div><h2>Purchasing Cards (P-Cards)</h2></div>
+          </div>
+          <p>Purchasing cards are the engine of commercial card spend growth. They replace traditional procurement processes (purchase orders, invoice approval, check payment) for routine, low-to-medium-dollar purchases — streamlining procurement and generating rebate income for buyers.</p>
+
+          <h3>Controls Available on P-Cards</h3>
+          <div class="info-grid">
+            <div class="info-card"><div class="info-card-icon">🏪</div><div class="info-card-label">MCC Restrictions</div><div class="info-card-value" style="font-size:0.85rem;line-height:1.5">Restrict card to specific Merchant Category Codes. Example: IT department P-card blocked at restaurants and auto dealers; only allowed at office supply stores, software vendors, electronics retailers.</div></div>
+            <div class="info-card"><div class="info-card-icon">💲</div><div class="info-card-label">Transaction Limits</div><div class="info-card-value" style="font-size:0.85rem;line-height:1.5">Per-transaction ceiling. Anything above requires purchase order. Common threshold: $2,500–$10,000. Balances controls against procurement efficiency.</div></div>
+            <div class="info-card"><div class="info-card-icon">📅</div><div class="info-card-label">Daily / Monthly Limits</div><div class="info-card-value" style="font-size:0.85rem;line-height:1.5">Rolling spend caps to prevent abuse. Automatically resets on billing cycle. Can be adjusted by program administrator per employee or department.</div></div>
+            <div class="info-card"><div class="info-card-icon">👤</div><div class="info-card-label">Employee-Specific Controls</div><div class="info-card-value" style="font-size:0.85rem;line-height:1.5">Different limits and restrictions for different employees or departments. Admin can increase limits temporarily for specific projects.</div></div>
+          </div>
+
+          <h3>The Rebate Economics</h3>
+          <p>One of the most compelling — and often misunderstood — aspects of commercial cards is the <strong>rebate program</strong>. Banks share interchange revenue with corporate buyers as an incentive to use cards instead of checks:</p>
+          <ul>
+            <li><strong>Commercial interchange:</strong> 2.5–3.5% on most commercial card transactions (much higher than consumer debit)</li>
+            <li><strong>Buyer rebate:</strong> Bank returns 0.5–1.5% of spend to the corporate buyer annually</li>
+            <li><strong>Net to issuer:</strong> After rebate and processing costs, issuer retains the remainder — still profitable</li>
+            <li><strong>Buyer ROI:</strong> For a $10 million annual P-card program at 1% rebate, the buyer earns $100,000 — often exceeding the cost of the program administration</li>
+            <li><strong>Working capital benefit:</strong> Buyers also get 30–55 days of float before payment is due; suppliers receive payment faster than traditional AP terms</li>
+          </ul>
+        </div>
+      <div class="content-section" data-section-id="com-fleet" id="com-fleet">
+          <div class="section-header">
+            <div class="section-icon">⛽</div>
+            <div><div class="section-num">5.4</div><h2>Fleet Cards</h2></div>
+          </div>
+          <p>Fleet cards manage fuel and vehicle maintenance spending for organizations with vehicle fleets — from small delivery companies to massive trucking fleets of thousands of vehicles.</p>
+
+          <div class="two-col">
+            <div class="card">
+              <h4 style="margin-bottom:0.75rem">🔒 Closed-Loop Fleet Networks</h4>
+              <p style="font-size:0.875rem;color:var(--text-secondary)">Accepted only at partner fuel stations. Lower cost for merchants (no standard card interchange). Feature-rich for fleet management.</p>
+              <ul style="font-size:0.8rem;color:var(--text-secondary);padding-left:1.25rem;margin-top:0.5rem">
+                <li><strong>WEX Inc.</strong> (formerly Wright Express) — largest closed-loop fleet network</li>
+                <li><strong>Fleetcor</strong> — Fuelman, FleetCards USA brands</li>
+                <li><strong>Comdata</strong> — trucking industry focus; also ATM access</li>
+                <li><strong>EFS (Elavon Fleet Solutions)</strong></li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4 style="margin-bottom:0.75rem">🌐 Open-Loop Fleet (Visa/MC-Branded)</h4>
+              <p style="font-size:0.875rem;color:var(--text-secondary)">Accepted anywhere the network is accepted, with fleet management controls layered on. More flexibility but typically higher cost and fewer fleet-specific features.</p>
+              <ul style="font-size:0.8rem;color:var(--text-secondary);padding-left:1.25rem;margin-top:0.5rem">
+                <li>Useful for diverse, geographically dispersed fleets</li>
+                <li>WEX also offers open-loop Visa products</li>
+                <li>Standard interchange applies; fleet controls via card parameters</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>Fleet-Specific Data Capture</h3>
+          <ul>
+            <li><strong>Odometer reading:</strong> Driver enters odometer at pump; captured and transmitted with transaction. Enables MPG tracking and maintenance scheduling.</li>
+            <li><strong>Driver ID / vehicle ID:</strong> PIN-based identification ties each transaction to a specific driver and vehicle</li>
+            <li><strong>Fuel grade restriction:</strong> Card can be restricted to regular unleaded only (prevents premium purchases)</li>
+            <li><strong>IFTA reporting:</strong> International Fuel Tax Agreement compliance for interstate truckers — fuel purchase data by state automatically aggregated</li>
+            <li><strong>Telematics integration:</strong> Increasingly, fleet card data integrates with GPS telematics (Samsara, Verizon Connect) for comprehensive fleet cost analytics</li>
+          </ul>
+        </div>
+      <div class="content-section" data-section-id="com-ap" id="com-ap">
+          <div class="section-header">
+            <div class="section-icon">🤖</div>
+            <div><div class="section-num">5.5</div><h2>AP Automation — The B2B Card Opportunity</h2></div>
+          </div>
+          <p>Accounts payable automation via virtual cards represents one of the largest greenfield opportunities in commercial payments. Despite decades of electronic payments adoption, an estimated <strong>~40–50% of US B2B payments are still made by paper check</strong>. Each check costs $3–20 to process; virtual card costs under $0.50. The economic case for conversion is clear — but supplier adoption has been the friction point.</p>
+
+          <h3>How Virtual Card AP Works</h3>
+          <div class="process-steps">
+            <div class="process-step"><div class="process-step-num">1</div><div class="process-step-content"><h4>Invoice Received</h4><p>Buyer's AP system receives invoice from supplier (via EDI, AP automation platform, or manual upload).</p></div></div>
+            <div class="process-step"><div class="process-step-num">2</div><div class="process-step-content"><h4>Virtual Card Generated</h4><p>AP platform (AvidXchange, Billtrust, MineralTree, SAP Ariba) generates a single-use virtual card number tied to the exact invoice amount and the specific supplier. Controls: can only be charged by this merchant, for this exact amount, within a narrow time window.</p></div></div>
+            <div class="process-step"><div class="process-step-num">3</div><div class="process-step-content"><h4>Card Number Delivered to Supplier</h4><p>The virtual card number is sent to the supplier via secure email, supplier portal, or automated data feed. Supplier charges the card through their standard card terminal or virtual terminal.</p></div></div>
+            <div class="process-step"><div class="process-step-num">4</div><div class="process-step-content"><h4>Supplier Receives Funds T+1</h4><p>Standard card settlement: supplier's bank receives net proceeds (less their MDR) within 1-2 business days. Faster than net-30 or net-60 check terms.</p></div></div>
+            <div class="process-step"><div class="process-step-num">5</div><div class="process-step-content"><h4>Buyer Pays Card Statement</h4><p>Buyer pays the card issuer on net-30 terms. During the float period, buyer retains working capital. Annual rebate is credited at year-end.</p></div></div>
+          </div>
+
+          <h3>Economics of the Virtual Card AP Ecosystem</h3>
+          <table class="data-table">
+            <thead><tr><th>Participant</th><th>Revenue / Benefit</th><th>Cost</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Card Issuer</strong></td><td>2.5–3.5% interchange on each transaction</td><td>Rebate to buyer (0.5–1.5%); processing costs</td></tr>
+              <tr><td><strong>Buyer (AP dept)</strong></td><td>Rebate income; reduced AP processing cost; float</td><td>Program administration; supplier onboarding effort</td></tr>
+              <tr><td><strong>AP Platform</strong></td><td>SaaS fees; share of interchange from issuer</td><td>Technology development; supplier network maintenance</td></tr>
+              <tr><td><strong>Supplier</strong></td><td>Faster payment (T+1 vs. net-30); no lockbox</td><td>MDR of 2.5–3.5% — the primary friction point</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout callout-warning">
+            <div class="callout-icon">⚠️</div>
+            <div class="callout-content">
+              <h4>The Supplier Acceptance Problem</h4>
+              <p>The primary obstacle to virtual card AP adoption is <strong>supplier resistance to paying the MDR</strong>. A supplier on thin margins cannot afford to lose 2.5–3.5% of each invoice. Solutions being deployed: (1) <strong>Dynamic discounting</strong> — buyer offers early payment discount in exchange for card acceptance; (2) <strong>Blended programs</strong> — high-MDR suppliers pay via ACH instead, maintaining the relationship; (3) <strong>Supplier education</strong> — calculating that faster cash flow has a working capital value that offsets MDR cost.</p>
+            </div>
+          </div>
+
+          <h3>Market Leaders</h3>
+          <table class="data-table">
+            <thead><tr><th>Company</th><th>Focus</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td><strong>AvidXchange</strong></td><td>Mid-market AP automation</td><td>Integrated AP + payment; virtual card + ACH + check</td></tr>
+              <tr><td><strong>Billtrust</strong></td><td>Order-to-cash / AR automation</td><td>Supplier-side focus; helps suppliers accept virtual cards</td></tr>
+              <tr><td><strong>MineralTree</strong></td><td>AP automation (acquired by Global Payments)</td><td>Strong ERP integration (NetSuite, Sage, Dynamics)</td></tr>
+              <tr><td><strong>SAP Ariba</strong></td><td>Enterprise procurement</td><td>Integrated with SAP ERP; largest enterprise customer base</td></tr>
+              <tr><td><strong>Corpay (FLEETCOR)</strong></td><td>Commercial payments (AP + Fleet)</td><td>Cross-sells fleet, lodging, AP virtual card programs</td></tr>
+              <tr><td><strong>WEX</strong></td><td>Fleet + health + corporate payments</td><td>Expanding from fleet into broader commercial payments</td></tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+  
+    <div class="chapter-panel" data-tab="assessment">
+      <div class="content-section" data-section-id="assessment" id="assessment">
+        <div class="quiz-section-title">Module 4 Assessment</div>
+        <div class="quiz-wrapper" data-module="4"></div>
+      </div>
+    </div>
+
+    <div class="module-footer">
+      <a href="module3.html" class="footer-nav-btn">← Module 3: Consumer Payments</a>
+      <a href="module5.html" class="footer-nav-btn primary">Module 5: Risk & Fraud →</a>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+
+    <div class="footer-facts">
+      <div class="footer-fact">
+        <div class="footer-fact-icon">✍️</div>
+        <div>
+          <div class="footer-fact-title">Original Written Expression</div>
+          <div class="footer-fact-body">The explanations, summaries, flow descriptions, and educational narratives in this platform are original content created specifically for this Academy. No text has been copied verbatim from any copyrighted publication, proprietary rulebook, or paywalled source.</div>
+        </div>
+      </div>
+      <div class="footer-fact">
+        <div class="footer-fact-icon">📊</div>
+        <div>
+          <div class="footer-fact-title">Publicly Reported Statistics</div>
+          <div class="footer-fact-body">All figures and statistics — including transaction volumes, fee rates, and market data — are drawn from publicly available sources: company earnings releases, Federal Reserve reports, CFPB studies, and Nacha annual reports. Facts are not copyrightable.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-disclaimer">
+      <div class="footer-disclaimer-icon">⚠️</div>
+      <div>
+        <strong>Regulatory Disclaimer:</strong> The regulatory and compliance content in this platform has been simplified for educational purposes. It is intended to build conceptual understanding, not to serve as legal or compliance advice. Payment regulations are complex, jurisdiction-specific, and subject to change. <strong>Anyone making compliance, legal, or business decisions should consult the primary regulatory sources directly and seek qualified legal counsel.</strong>
+      </div>
+    </div>
+
+    <div class="footer-sources-title">Primary Sources &amp; References</div>
+    <div class="footer-sources-grid">
+      <a class="footer-source-tag" href="https://www.nacha.org" target="_blank" rel="noopener">Nacha — ACH Operating Rules</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/paymentsystems.htm" target="_blank" rel="noopener">Federal Reserve — Payment Systems</a>
+      <a class="footer-source-tag" href="https://www.frbservices.org/financial-services/fednow" target="_blank" rel="noopener">Federal Reserve — FedNow Service</a>
+      <a class="footer-source-tag" href="https://www.theclearinghouse.org/payment-systems/rtp" target="_blank" rel="noopener">The Clearing House — RTP Network</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/pubs/fedpoint/fed43.htm" target="_blank" rel="noopener">Federal Reserve — Fedwire Funds</a>
+      <a class="footer-source-tag" href="https://www.cfpb.gov/rules-policy/regulations/1005/" target="_blank" rel="noopener">CFPB — Regulation E (EFTA)</a>
+      <a class="footer-source-tag" href="https://usa.visa.com/run-your-business/merchant-resources/interchange-reimbursement-fees.html" target="_blank" rel="noopener">Visa — Interchange Reimbursement Fees</a>
+      <a class="footer-source-tag" href="https://www.mastercard.us/en-us/business/overview/support/merchant-interchange-rates.html" target="_blank" rel="noopener">Mastercard — Interchange Rates</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/releases/z1/" target="_blank" rel="noopener">Federal Reserve — Z.1 Financial Accounts</a>
+      <a class="footer-source-tag" href="https://www.fdic.gov/regulations/applications/financial/" target="_blank" rel="noopener">FDIC — Banking Regulations</a>
+      <a class="footer-source-tag" href="https://www.swift.com" target="_blank" rel="noopener">SWIFT — Global Messaging Network</a>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/insights.js"></script>
+<script src="js/questions-m4.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

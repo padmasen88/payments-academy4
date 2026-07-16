@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Payment Flows — Payments Academy 3.0</title>
+  <meta name="description" content="Explore interactive payment flow maps for ACH, Cards, Wires, FedNow, Refunds, and Chargebacks." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .flows-layout {
+      max-width: 1200px;
+      margin: 6rem auto 3rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
+    @media (max-width: 900px) {
+      .flows-layout { grid-template-columns: 1fr; }
+    }
+    .flow-selector {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .flow-sel-btn {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all var(--t-fast);
+    }
+    .flow-sel-btn.active, .flow-sel-btn:hover {
+      background: var(--grad-indigo);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: var(--shadow-glow-indigo);
+    }
+    
+    /* Interactive Flow Area */
+    .flow-canvas {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      min-height: 450px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    
+    .flow-nodes-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      position: relative;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    
+    .flow-node {
+      background: rgba(255,255,255,0.02);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      width: 170px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      z-index: 5;
+      transition: all var(--t-normal);
+    }
+    .flow-node:hover, .flow-node.active {
+      border-color: var(--accent-teal);
+      background: rgba(45,212,191,0.05);
+      box-shadow: 0 0 20px rgba(45,212,191,0.25);
+      transform: translateY(-3px);
+    }
+    .flow-node-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+    .flow-node-role {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    
+    .flow-arrow-connector {
+      flex-grow: 1;
+      height: 2px;
+      background: dashed var(--border-subtle);
+      position: relative;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--accent-teal);
+      margin: 0 -0.5rem;
+      min-width: 30px;
+    }
+    .flow-arrow-connector::after {
+      content: '➔';
+      position: absolute;
+      right: 0;
+      top: -8px;
+    }
+    
+    /* Details Panel */
+    .details-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      height: fit-content;
+      position: sticky;
+      top: 6rem;
+      animation: fadeIn var(--t-slow);
+    }
+    .details-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--accent-teal);
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.5rem;
+    }
+    .details-section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 1.25rem;
+      margin-bottom: 0.25rem;
+    }
+    .details-text {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .details-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      background: rgba(0,0,0,0.3);
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      color: var(--accent-sky);
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">⚡</div>
+    Payments Academy
+  </a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html" class="active">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="map-header" style="padding-bottom:2rem;">
+  <div class="hero-badge">INTERACTIVE DIAGRAMS</div>
+  <h1 class="hero-title">Interactive Flow Maps</h1>
+  <p class="hero-desc" style="max-width:700px; margin: 1rem auto 0;">
+    Select a payments rail or scenario to load the step-by-step transaction lifecycle. Click any node in the flow diagram to inspect transaction payloads, rules, and failure exceptions.
+  </p>
+</header>
+
+<div class="flows-layout">
+  <div>
+    <!-- Selector Bar -->
+    <div class="flow-selector" id="flow-selector">
+      <button class="flow-sel-btn active" data-flow="card-auth">Card Authorization</button>
+      <button class="flow-sel-btn" data-flow="card-settle">Card Settlement</button>
+      <button class="flow-sel-btn" data-flow="ach-flow">ACH Clearing Flow</button>
+      <button class="flow-sel-btn" data-flow="fednow-flow">FedNow Real-time</button>
+      <button class="flow-sel-btn" data-flow="wire-flow">Wire Transfer</button>
+      <button class="flow-sel-btn" data-flow="disbursement">Disbursement (OCT)</button>
+      <button class="flow-sel-btn" data-flow="refund-flow">Refund Flow</button>
+      <button class="flow-sel-btn" data-flow="chargeback-flow">Chargeback Cycle</button>
+    </div>
+
+    <!-- Interactive Canvas -->
+    <div class="flow-canvas" id="flow-canvas">
+      <!-- Generated via JS -->
+    </div>
+  </div>
+
+  <!-- Detail side cards -->
+  <div class="details-panel" id="details-panel">
+    <div class="details-title" id="det-title">Click a node to begin</div>
+    
+    <div class="details-section-title">Step Description</div>
+    <p class="details-text" id="det-desc">Click any entity block in the flow map to show transaction details, participants, data fields, and potential error exceptions.</p>
+
+    <div class="details-section-title">Data Exchanged</div>
+    <div class="details-code" id="det-data">Select a step to inspect payload fields.</div>
+
+    <div class="details-section-title">Governing Regulation / Rules</div>
+    <p class="details-text" id="det-reg">Select a step to inspect regulatory codes.</p>
+
+    <div class="details-section-title">Common Exceptions &amp; Failures</div>
+    <p class="details-text" id="det-fail" style="color:var(--accent-rose); font-weight: 500;">Select a step to view exceptions.</p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Flows Database
+  const FLOWS = {
+    'card-auth': [
+      {
+        id: 'node-1',
+        title: 'Cardholder Tap/Swipe',
+        role: 'Initiation',
+        desc: 'Cardholder taps card or phone at Point of Sale. POS captures PAN, Expiry, and dynamic EMV Cryptogram.',
+        data: 'Track 2 Data\nField 55: EMV Cryptogram\nAmount: $45.00',
+        reg: 'PCI DSS standards, EMV specifications',
+        fail: 'Shimmer/skimmer reads, Chip malformed error, Card blocked.'
+      },
+      {
+        id: 'node-2',
+        title: 'Merchant Acquirer',
+        role: 'Gateway / Processor',
+        desc: 'Acquiring bank receives transaction payload and formats it into ISO 8583 message, forwarding it to Card Network.',
+        data: 'ISO 8583 Message:\nMTI: 0100 (Auth Request)\nField 3: Processing Code\nField 4: Amount',
+        reg: 'Visa/Mastercard operating rules',
+        fail: 'Gateway timeout, merchant accounts deactivated.'
+      },
+      {
+        id: 'node-3',
+        title: 'Visa/MC Switch',
+        role: 'Network Operator',
+        desc: 'Network router checks Bin Range of PAN, performs velocity check, and switches request to issuing bank.',
+        data: 'MTI: 0100\nField 32: Acquiring Inst ID\nField 49: Currency Code (840)',
+        reg: 'Visa Rules Section 4.2',
+        fail: 'Network switch offline (rare), network routing error.'
+      },
+      {
+        id: 'node-4',
+        title: 'Issuing Bank',
+        role: 'Ledger Authorization',
+        desc: 'Issuer validates card CVV/Cryptogram, checks account balance/credit line, and sends authorization approval code.',
+        data: 'MTI: 0110 (Auth Response)\nField 38: Approval Code\nField 39: Action Code (00 - Approved)',
+        reg: 'Regulation E consumer access, CARD Act',
+        fail: 'Declined (05 - Do Not Honor), Insufficient Funds (51), CVV Mismatch (N7).'
+      }
+    ],
+    'card-settle': [
+      {
+        id: 'node-1',
+        title: 'Batch Capture',
+        role: 'Merchant Close',
+        desc: 'Merchant locks daily terminal batch of approved authorizations and uploads settlement request to Acquirer.',
+        data: 'MTI: 0200 (Capture Request)\nApproved transactions count: 114\nTotal: $5,240.00',
+        reg: 'Merchant agreement schedules',
+        fail: 'Duplicate batch file, batch out-of-sync error.'
+      },
+      {
+        id: 'node-2',
+        title: 'Acquirer Netting',
+        role: 'Clearing Prep',
+        desc: 'Acquiring bank calculates net clearing file, aggregates interchange obligations, and submits to Card Network.',
+        data: 'IPM File Format:\nRecord Type 1: File Header\nTotal Interchange: $115.40',
+        reg: 'Durbin Amendment fee caps (debit)',
+        fail: 'Clearing processing lag, missing transaction records.'
+      },
+      {
+        id: 'node-3',
+        title: 'Card Network Settlement',
+        role: 'Net Clearinghouse',
+        desc: 'Visa/MC nets multilateral positions between all member banks, debits/credits central pre-funded reserve files.',
+        data: 'Net Settlement Report (902):\nIssuer A debit: $102,400\nAcquirer B credit: $98,200',
+        reg: 'Visa Operating Regulations',
+        fail: 'Multilateral settlement bank failure (systemic).'
+      },
+      {
+        id: 'node-4',
+        title: 'Issuer Reserve Transfer',
+        role: 'Reserve Settlement',
+        desc: 'Issuer transfers reserves to network settlement bank via Fedwire, deducting interchange before releasing consumer credit billing.',
+        data: 'Fedwire Funds Transfer:\nBeneficiary: Visa Settlement Bank\nAmount: Net Debits',
+        reg: 'Regulation J, Fedwire Operating Rules',
+        fail: 'Liquidity deficit, Fedwire routing timeout.'
+      }
+    ],
+    'ach-flow': [
+      {
+        id: 'node-1',
+        title: 'Originator File Submission',
+        role: 'ODFI Origination',
+        desc: 'Corporate Originator uploads ACH batch file (direct deposit payroll) to its ODFI using standard Nacha formats.',
+        data: 'Nacha File Header:\nRecord Type 1\nFile ID Modifier: A\nSEC Code: PPD',
+        reg: 'Nacha Rules Section 2',
+        fail: 'Nacha formatting errors, invalid routing format.'
+      },
+      {
+        id: 'node-2',
+        title: 'FedACH / EPN',
+        role: 'ACH Operator',
+        desc: 'ACH operator parses files, validates batch headers, splits payments by RDFI, and computes net clearing obligations.',
+        data: 'ACH Batch Header:\nRecord Type 5\nODFI Routing: 12200024\nBatch Total: $480,000',
+        reg: 'Nacha Operating Rules',
+        fail: 'File rejection, ACH operator queue lock.'
+      },
+      {
+        id: 'node-3',
+        title: 'Fed Settlement',
+        role: 'Net Settlement',
+        desc: 'Federal Reserve settles net clearing positions across ODFI and RDFI master reserve accounts at designated DNS windows.',
+        data: 'Federal Reserve DNS Ledger:\nFedACH clearing debit: ODFI Master\nFedACH clearing credit: RDFI Master',
+        reg: 'Federal Reserve Regulation J',
+        fail: 'Reserve account overdraft (devolved to ODFI).'
+      },
+      {
+        id: 'node-4',
+        title: 'RDFI Posting',
+        role: 'Receiver Account Posting',
+        desc: 'RDFI receives credit files, matches accounts, and posts funds to Receiver accounts by Nacha mandated timeframes.',
+        data: 'Nacha Entry Detail Record:\nRecord Type 6\nDFI Account: 987654321\nAmount: $2,450.00',
+        reg: 'Regulation E consumer credits, Nacha posting rules',
+        fail: 'Return Code R01 (NSF), R02 (Closed), R03 (No Account).'
+      }
+    ],
+    'fednow-flow': [
+      {
+        id: 'node-1',
+        title: 'Sender Initiates',
+        role: 'Credit Push',
+        desc: 'Payer initiates real-time payment in mobile app. Bank validates balance and pushes credit to FedNow immediately.',
+        data: 'ISO 20022 message:\npact.008.001.10 (Customer Credit Transfer)\nDbtrAcct: 4321098\nAmt: $120.00',
+        reg: 'CFPB Regulation E consumer rules',
+        fail: 'Sender balance insufficient, local app timeout.'
+      },
+      {
+        id: 'node-2',
+        title: 'FedNow Router',
+        role: 'Central Bank RTGS',
+        desc: 'FedNow network validates ISO payload syntax, does sanctions screening checks, and debits sender bank reserve account.',
+        data: 'ISO 20022 message:\npact.008 (Interbank Credit Transfer)\nSettlementMethod: CLRG',
+        reg: 'Federal Reserve FedNow Rules',
+        fail: 'Syntax validation reject, OFAC match hold.'
+      },
+      {
+        id: 'node-3',
+        title: 'Reserve Settlement',
+        role: 'Immediate Settlement',
+        desc: 'Federal Reserve instantly credits receiving bank reserve account gross and sends settlement confirmation.',
+        data: 'FedNow Ledger Entry:\nDebit: Sender Bank Reserve\nCredit: Receiver Bank Reserve',
+        reg: 'FedNow Service Operating Circular 12',
+        fail: 'Receiver bank liquidity limit exceeded.'
+      },
+      {
+        id: 'node-4',
+        title: 'RDFI Credits Payee',
+        role: 'Real-time Posting',
+        desc: 'Receiving bank receives ISO payload, confirms account is active, posts funds in seconds, and notifies payee.',
+        data: 'ISO 20022 message:\npact.002.001.10 (Payment Status Report)\nStatus: ACSC (Accepted Settlement Complete)',
+        reg: 'FedNow 20-second posting mandate',
+        fail: 'Account closed rejection, bank core timeout.'
+      }
+    ],
+    'wire-flow': [
+      {
+        id: 'node-1',
+        title: 'Payer Wire Instruction',
+        role: 'Wire Initiation',
+        desc: 'Corporate client instructs bank to send wire. Bank verifies signature, does security audits, and blocks funds.',
+        data: 'Fedwire Format:\n{4000} Type Code: 1000\n{5000} Beneficiary: General Corp',
+        reg: 'Bank Secrecy Act (BSA) Recordkeeping',
+        fail: 'Corporate approval failure, signature mismatch.'
+      },
+      {
+        id: 'node-2',
+        title: 'Fedwire Funds Service',
+        role: 'RTGS Operator',
+        desc: 'Fedwire processes payment individually and debits/credits Federal Reserve master accounts in real time.',
+        data: 'Fedwire Tag {2000}:\nOriginator routing: 021000021\nBeneficiary routing: 122000248',
+        reg: 'Federal Reserve Regulation J',
+        fail: 'Fedwire queue delay, OFAC sanction match.'
+      },
+      {
+        id: 'node-3',
+        title: 'Correspondent Routing',
+        role: 'International / Intermediate',
+        desc: 'If payment is cross-border, intermediating SWIFT correspondent routes message through nostro/vostro channels.',
+        data: 'SWIFT MT103 (Single Customer Cov)\nField 32A: Value Date, Currency, Amount\nField 50K: Ordering Customer',
+        reg: 'SWIFT operating regulations, FATF Travel Rule',
+        fail: 'Correspondent routing mismatch, intermediary fee dispute.'
+      },
+      {
+        id: 'node-4',
+        title: 'Beneficiary Posting',
+        role: 'Final Credit',
+        desc: 'Receiving bank credits corporate client ledger. Wire transfers are legally final and irrevocable upon posting.',
+        data: 'SWIFT MT910 (Debit Confirmation)\nBeneficiary: General Corp Account',
+        reg: 'UCC Article 4A wire finality rules',
+        fail: 'Incorrect account name/number mismatch.'
+      }
+    ],
+    'disbursement': [
+      {
+        id: 'node-1',
+        title: 'Disbursement Trigger',
+        role: 'Originator payout',
+        desc: 'Payout portal (e.g. Uber, insurance provider) triggers real-time payout using driver or client debit card numbers.',
+        data: 'API Payout Request:\nCard Token: tkn_4982\nAmount: $150.00\nType: OCT (Original Credit)',
+        reg: 'PCI Tokenization guidelines',
+        fail: 'Portal API authentication fail, merchant balance deficit.'
+      },
+      {
+        id: 'node-2',
+        title: 'Visa Direct / MC Send',
+        role: 'Network OCT Switch',
+        desc: 'Card network switches the Original Credit Transaction (OCT) payload back to issuer as a credit push authorization.',
+        data: 'ISO 8583 MTI: 0200 (OCT Request)\nProcessing Code: 28 (Credit to Cardholder)\nAmount: $150.00',
+        reg: 'Visa Direct / Mastercard Send network rules',
+        fail: 'Issuer does not support OCT messages.'
+      },
+      {
+        id: 'node-3',
+        title: 'Issuer Card Approval',
+        role: 'Issuer Authorization',
+        desc: 'Issuer approves the incoming credit and commits to posting the funds to the cardholder\'s deposit account.',
+        data: 'ISO 8583 MTI: 0210 (OCT Response)\nApproval Code: 99882\nAction Code: 00',
+        reg: 'Regulation E consumer dispute protections',
+        fail: 'Account closed, card invalid, risk block.'
+      },
+      {
+        id: 'node-4',
+        title: 'Payee Account Credited',
+        role: '30-Min Availability',
+        desc: 'Receiving bank posts the funds. Network rules mandate that payee must have access to cash within 30 minutes.',
+        data: 'Ledger Post:\nCredit: Payer Checking Account\nAmount: $150.00',
+        reg: 'Visa 30-minute credit availability mandate',
+        fail: 'Bank batch processing delay, regulatory hold.'
+      }
+    ],
+    'refund-flow': [
+      {
+        id: 'node-1',
+        title: 'Merchant Refund Trigger',
+        role: 'Initiation',
+        desc: 'Customer requests refund; merchant initiates card refund transaction via payment gateway/processor.',
+        data: 'API Refund Request:\nOriginal Transaction ID: chg_901\nRefund Amount: $45.00',
+        reg: 'Visa/MC Refund Guidelines',
+        fail: 'Merchant portal API connection failure, refund window expired.'
+      },
+      {
+        id: 'node-2',
+        title: 'Acquirer Clearing File',
+        role: 'Acquirer Processing',
+        desc: 'Acquirer submits refund transaction in daily clearing batch to the Card Network (no real-time authorization needed).',
+        data: 'Clearing Record:\nMTI: 0220\nAmount: -$45.00 (Refund)',
+        reg: 'Visa Operating Rules',
+        fail: 'Transaction file corruption, clearing mismatch.'
+      },
+      {
+        id: 'node-3',
+        title: 'Network Settlement',
+        role: 'Net Settlement',
+        desc: 'Network routes refund, debits acquirer reserve, and credits issuer reserve.',
+        data: 'Net Settlement Report:\nAcquirer Debit: $45.00\nIssuer Credit: $45.00',
+        reg: 'Visa rules on interchange returns',
+        fail: 'Issuer/acquirer reserve funding shortfall.'
+      },
+      {
+        id: 'node-4',
+        title: 'Issuer Credits Cardholder',
+        role: 'Posting',
+        desc: 'Issuer posts credit to cardholder account, reversing dynamic billing, returning funds in 2-5 banking days.',
+        data: 'Ledger Post:\nCredit Cardholder Account: -$45.00',
+        reg: 'Regulation E dispute credits',
+        fail: 'Cardholder account inactive/closed.'
+      }
+    ],
+    'chargeback-flow': [
+      {
+        id: 'node-1',
+        title: 'Cardholder Dispute',
+        role: 'Dispute Initiation',
+        desc: 'Cardholder notifies issuer about unrecognized charge. Issuer initiates chargeback under network code.',
+        data: 'Dispute Request:\nDispute Code: 10.4 (Other Fraud - Card Absent)\nOriginal Charge: $180.00',
+        reg: 'Regulation E consumer liability rules ($50 cap)',
+        fail: 'Dispute filed past 120-day network limit.'
+      },
+      {
+        id: 'node-2',
+        title: 'Network Routing',
+        role: 'Chargeback Forward',
+        desc: 'Network debits acquirer account immediately and routes dispute package to merchant portal.',
+        data: 'Dispute Package Forward:\nCase ID: cb_889201\nAcquirer Account Debited: $180.00',
+        reg: 'Visa Chargeback Rules',
+        fail: 'Acquirer response timeout, network routing error.'
+      },
+      {
+        id: 'node-3',
+        title: 'Merchant Re-presentment',
+        role: 'Representment',
+        desc: 'Merchant chooses to fight dispute by submitting evidence (IP logs, proof of delivery) back through acquirer.',
+        data: 'Representment Package:\nMTI: 0200\nSigned Receipt PDF, IP Address: 172.56.21.9',
+        reg: 'Merchant Terms of Service',
+        fail: 'Insufficient evidence, late submission past 30 days.'
+      },
+      {
+        id: 'node-4',
+        title: 'Issuer / Network Ruling',
+        role: 'Arbitration Resolution',
+        desc: 'Issuer reviews evidence. If dispute remains un-reconciled, network arbitration makes binding decision.',
+        data: 'Arbitration Verdict:\nWinner: Merchant (Dispute Reversed)\nArbitration Fee: $250.00',
+        reg: 'Visa Rules Arbitrations',
+        fail: 'Arbitration fee charged to losing bank.'
+      }
+    ]
+  };
+
+  // Render nodes on select
+  const flowSelector = document.getElementById('flow-selector');
+  const flowCanvas = document.getElementById('flow-canvas');
+  
+  function renderFlow(flowKey) {
+    const data = FLOWS[flowKey];
+    if (!data) return;
+    
+    flowCanvas.innerHTML = '';
+    
+    const wrapper = document.createElement('div');
+    wrapper.className = 'flow-nodes-wrapper';
+    
+    data.forEach((node, index) => {
+      // Create Node
+      const nodeEl = document.createElement('div');
+      nodeEl.className = 'flow-node';
+      nodeEl.dataset.nodeId = node.id;
+      nodeEl.innerHTML = `
+        <div class="flow-node-title">${node.title}</div>
+        <div class="flow-node-role">${node.role}</div>
+      `;
+      
+      nodeEl.onclick = () => selectNode(node);
+      wrapper.appendChild(nodeEl);
+      
+      // Create Connector Arrow if not last
+      if (index < data.length - 1) {
+        const arrow = document.createElement('div');
+        arrow.className = 'flow-arrow-connector';
+        wrapper.appendChild(arrow);
+      }
+    });
+    
+    flowCanvas.appendChild(wrapper);
+    
+    // Automatically select the first node
+    selectNode(data[0]);
+  }
+
+  function selectNode(node) {
+    // Toggle active state in UI
+    document.querySelectorAll('.flow-node').forEach(el => {
+      el.classList.toggle('active', el.dataset.nodeId === node.id);
+    });
+    
+    // Fill Details Drawer
+    document.getElementById('det-title').innerText = node.title;
+    document.getElementById('det-desc').innerText = node.desc;
+    document.getElementById('det-data').innerText = node.data;
+    document.getElementById('det-reg').innerText = node.reg;
+    document.getElementById('det-fail').innerText = node.fail;
+  }
+
+  // Bind Buttons
+  flowSelector.querySelectorAll('.flow-sel-btn').forEach(btn => {
+    btn.onclick = () => {
+      flowSelector.querySelectorAll('.flow-sel-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderFlow(btn.dataset.flow);
+    };
+  });
+
+  // Init
+  renderFlow('card-auth');
+</script>
+</body>
+</html>

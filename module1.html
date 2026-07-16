@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 1: Foundation of Payments | Payments Academy</title>
+  <meta name="description" content="Master the fundamental layers of modern payments: study the 7 stages of a payment journey, vocabulary of ledgers, universal participant roles, and clearing vs. settlement mechanics." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .hero-badge { background: rgba(var(--mod1-color-rgb, 99, 102, 241), 0.12); border-color: rgba(var(--mod1-color-rgb, 99, 102, 241), 0.35); color: var(--mod1-color); }
+    .module-hero::before { background: radial-gradient(circle, var(--mod1-color), transparent 70%); top: -40%; left: -10%; width: 500px; height: 500px; }
+    .module-hero::after  { background: radial-gradient(circle, #6366f1, transparent 70%); }
+    .sidebar-nav li a.active::before { background: var(--mod1-color); }
+    .section-icon { background: rgba(var(--mod1-color-rgb, 99, 102, 241), 0.12); color: var(--mod1-color); }
+    .key-fact::before { background: var(--mod1-color); }
+    .process-step-num { border-color: rgba(var(--mod1-color-rgb, 99, 102, 241), 0.4); color: var(--mod1-color); }
+    .chapter-tab.active { background: var(--mod1-color); }
+    .check { color: #10b981; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-icon">⚡</div>Payments Academy</a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="module-hero">
+  <div class="hero-badge">MODULE 01</div>
+  <h1 class="hero-title">Foundation of Payments</h1>
+  <p class="hero-desc">Master the fundamental layers of modern payments: study the 7 stages of a payment journey, vocabulary of ledgers, universal participant roles, and clearing vs. settlement mechanics.</p>
+  <div class="hero-meta">
+    <span class="hero-meta-item">📚 4 Chapters</span>
+    <span class="hero-meta-item">⏱ Est. 60 Mins</span>
+    <span class="hero-meta-item">🎯 Practitioner Level</span>
+    <span class="hero-meta-item">💡 Comprehensive Depth</span>
+  </div>
+</header>
+
+<div class="module-layout">
+  <aside class="sidebar">
+    
+    <div class="sidebar-title">Journey</div>
+    <ul class="sidebar-nav">
+      <li><a href="#lifecycle-journey" data-section="lifecycle-journey">Payment Journey</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Bookkeeping</div>
+    <ul class="sidebar-nav">
+      <li><a href="#vocab-ledgers" data-section="vocab-ledgers">Ledgers &amp; Terms</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Ecosystem</div>
+    <ul class="sidebar-nav">
+      <li><a href="#participants-guide" data-section="participants-guide">Universal Roles</a></li>
+      <li><a href="#clearing-settlement" data-section="clearing-settlement">Clearing &amp; Settlement</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Assessment</div>
+    <ul class="sidebar-nav">
+      <li><a href="#assessment" data-section="assessment">Module Assessment</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    
+      <div class="highlights-container" style="background: var(--bg-glass); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15); backdrop-filter: blur(10px);">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--mod1-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📊</span> Module Highlights &amp; Architecture
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5;">
+          A high-level visual summary of this module. Click through the tabs below for the complete practitioner-grade deep dives.
+        </p>
+        
+    <div class="flow-container" style="margin-top: 1rem;">
+      <div class="flow-title">MESSAGE ROUTING vs. SETTLEMENT ASSETS</div>
+      <div class="flow-diagram" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center;">
+        <div class="flow-node-box" style="border-color: var(--mod1-color); padding: 0.75rem 1.25rem; background: rgba(99, 102, 241, 0.05); border: 1px solid; border-radius: var(--radius-md); text-align: center; min-width: 140px;">
+          <strong>Originator (Payer)</strong>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Initiates payment instruction</div>
+        </div>
+        <div class="flow-arrow" style="color: var(--mod1-color); font-weight: bold;">➔</div>
+        <div class="flow-node-box" style="border-color: var(--mod1-color); padding: 0.75rem 1.25rem; background: rgba(99, 102, 241, 0.05); border: 1px solid; border-radius: var(--radius-md); text-align: center; min-width: 140px;">
+          <strong>ODFI / Acquirer</strong>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Forwards clearing record</div>
+        </div>
+        <div class="flow-arrow" style="color: var(--mod1-color); font-weight: bold;">➔</div>
+        <div class="flow-node-box" style="border-color: var(--mod1-color); padding: 0.75rem 1.25rem; background: rgba(99, 102, 241, 0.05); border: 1px solid; border-radius: var(--radius-md); text-align: center; min-width: 140px;">
+          <strong>Operator (Clearing)</strong>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Nets/routes messages</div>
+        </div>
+        <div class="flow-arrow" style="color: var(--mod1-color); font-weight: bold;">➔</div>
+        <div class="flow-node-box" style="border-color: var(--mod1-color); padding: 0.75rem 1.25rem; background: rgba(99, 102, 241, 0.05); border: 1px solid; border-radius: var(--radius-md); text-align: center; min-width: 140px;">
+          <strong>RDFI / Issuer</strong>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Checks balance, credits Receiver</div>
+        </div>
+      </div>
+      <div style="margin-top: 1rem; border-top: 1px dashed var(--border-subtle); padding-top: 1rem; text-align: center; font-size: 0.85rem; color: var(--text-secondary);">
+        <strong>Settlement Step:</strong> Operator moves <strong>Central Bank Reserves</strong> between banks at the Fed to legally finalize the transfer.
+      </div>
+    </div>
+
+      </div>
+    
+
+    <div class="chapter-tabs" data-panels="m1-panels">
+      
+        <button class="chapter-tab active" data-tab="journey">⏱ Payment Journey</button>
+      
+        <button class="chapter-tab " data-tab="vocabulary">📖 Key Vocabulary</button>
+      
+        <button class="chapter-tab " data-tab="participants">👥 Participants</button>
+      
+        <button class="chapter-tab " data-tab="clearing">⚙️ Clearing &amp; Settlement</button>
+      
+        <button class="chapter-tab" data-tab="assessment">🎯 Assessment</button>
+      
+    </div>
+
+    <div id="m1-panels">
+      
+    <div class="chapter-panel active" data-tab="journey">
+      
+    <div class="content-section" data-section-id="lifecycle-journey" id="lifecycle-journey">
+      <div class="section-header">
+        <div class="section-icon">⏱</div>
+        <div>
+          <div class="section-num">1.1</div>
+          <h2>The Payment Lifecycle</h2>
+        </div>
+      </div>
+      <p>Every electronic payment, regardless of the user interface or network used, follows a structured 7-stage lifecycle. Understanding this journey provides a mental framework that connects the consumer experience to the backend ledger operations.</p>
+      
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="process-step-num">1</div>
+          <div class="process-step-body">
+            <strong>Initiation</strong>
+            <p>The consumer or merchant starts the transaction. This involves capturing credentials (card numbers, routing details, digital signatures) via point-of-sale terminals, web forms, or mobile app logins.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">2</div>
+          <div class="process-step-body">
+            <strong>Transportation</strong>
+            <p>The payment instruction is securely transmitted from the initiation point through gateways, processors, and network routers to the appropriate financial operators.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">3</div>
+          <div class="process-step-body">
+            <strong>Authorization</strong>
+            <p>The payer's financial institution (the issuer) validates the credentials, evaluates transaction risk, and checks ledger balances to approve or decline the purchase.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">4</div>
+          <div class="process-step-body">
+            <strong>Clearing</strong>
+            <p>The process of exchanging financial records between banks to reconcile transaction amounts, calculate net positions, and prepare for final settlement.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">5</div>
+          <div class="process-step-body">
+            <strong>Settlement</strong>
+            <p>The final transfer of money between banks to satisfy the cleared obligations. Settlement occurs on central bank balance sheets, making the transfer of funds legally binding and irrevocable.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">6</div>
+          <div class="process-step-body">
+            <strong>Risk Management</strong>
+            <p>Defenses are applied at every stage, including real-time fraud scoring, network velocity checks, and post-transaction dispute resolution systems (e.g., chargebacks).</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">7</div>
+          <div class="process-step-body">
+            <strong>Regulation &amp; Economics</strong>
+            <p>Federal rules (such as Regulation E) protect consumer rights, while fee distributions (interchange, network fees) incentivize banks to operate the infrastructure.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    </div>
+    <div class="chapter-panel" data-tab="vocabulary">
+      
+    <div class="content-section" data-section-id="vocab-ledgers" id="vocab-ledgers">
+      <div class="section-header">
+        <div class="section-icon">📖</div>
+        <div>
+          <div class="section-num">1.2</div>
+          <h2>Ledgers &amp; Key Vocabulary</h2>
+        </div>
+      </div>
+      <p>Before studying specific rails, a practitioner must master the terminology of ledgers and value transfer:</p>
+      
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Double-Entry Ledgers</h4>
+          <p>Money does not exist as floating physical tokens in a computer. Every transfer is simply a coordinated debit (reduction) on one database ledger and a credit (addition) on another. Payment networks synchronize these database edits across multiple independent financial institutions.</p>
+        </div>
+        <div class="info-card">
+          <h4>Push vs. Pull Payments</h4>
+          <p><strong>Push Payments:</strong> The sender instructs their bank to move money to the receiver. The sender holds the authorization controls, minimizing unauthorized fraud (e.g., wires, RTP, FedNow).</p>
+          <p><strong>Pull Payments:</strong> The receiver requests to drag funds from the sender's account. This requires the sender to share account credentials beforehand, carrying higher fraud risks (e.g., ACH debits, check clearing, card checkouts).</p>
+        </div>
+        <div class="info-card">
+          <h4>Central vs. Commercial Money</h4>
+          <p><strong>Central Bank Money:</strong> Reserves held by commercial banks on the balance sheet of the central bank (e.g., the Federal Reserve). It carries zero credit risk and represents ultimate settlement finality.</p>
+          <p><strong>Commercial Bank Money:</strong> Liabilities of commercial banks to their depositors (e.g., checking balances). While backed by deposit insurance, it carries commercial credit risk.</p>
+        </div>
+      </div>
+    </div>
+  
+    </div>
+    <div class="chapter-panel" data-tab="participants">
+      
+    <div class="content-section" data-section-id="participants-guide" id="participants-guide">
+      <div class="section-header">
+        <div class="section-icon">👥</div>
+        <div>
+          <div class="section-num">1.3</div>
+          <h2>Universal Participants &amp; Roles</h2>
+        </div>
+      </div>
+      <p>While the terms change depending on whether you are analyzing ACH, cards, or wires, the core roles in any payment network remain identical:</p>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Role</th>
+              <th>Generic Term</th>
+              <th>ACH Equivalent</th>
+              <th>Card Equivalent</th>
+              <th>Core Function</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Originator</strong></td>
+              <td>Payer / Sender</td>
+              <td>Originator</td>
+              <td>Cardholder</td>
+              <td>Initiates the transaction message and funds.</td>
+            </tr>
+            <tr>
+              <td><strong>Originating Bank</strong></td>
+              <td>Sender's Institution</td>
+              <td>ODFI (Originating DFI)</td>
+              <td>Issuing Bank</td>
+              <td>Validates payer balance and forwards message to operator.</td>
+            </tr>
+            <tr>
+              <td><strong>Operator</strong></td>
+              <td>Clearinghouse / Router</td>
+              <td>ACH Operator (FedACH/EPN)</td>
+              <td>Card Network (Visa/MC)</td>
+              <td>Clears records, nets balances, and routes messages.</td>
+            </tr>
+            <tr>
+              <td><strong>Receiving Bank</strong></td>
+              <td>Receiver's Institution</td>
+              <td>RDFI (Receiving DFI)</td>
+              <td>Acquiring Bank</td>
+              <td>Receives clearing message and updates receiver ledger.</td>
+            </tr>
+            <tr>
+              <td><strong>Receiver</strong></td>
+              <td>Payee / Merchant</td>
+              <td>Receiver</td>
+              <td>Merchant</td>
+              <td>Collects transaction proceeds.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    </div>
+    <div class="chapter-panel" data-tab="clearing">
+      
+    <div class="content-section" data-section-id="clearing-settlement" id="clearing-settlement">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <div>
+          <div class="section-num">1.4</div>
+          <h2>Clearing vs. Settlement Mechanics</h2>
+        </div>
+      </div>
+      <p>One of the most critical distinctions in payments is between clearing and settlement:</p>
+      
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Clearing (The Agreement)</h4>
+          <p>The exchange of payment instructions and transactional details. Clearing determines the amount each bank owes to other participants. It is an agreement of what must be settled later, but does not move any actual central bank reserve funds.</p>
+        </div>
+        <div class="info-card">
+          <h4>Settlement (The Transfer)</h4>
+          <p>The actual exchange of central bank reserves to satisfy the cleared obligations. Settlement represents the legal fulfillment of the debt between the financial institutions. It can occur in two main forms:</p>
+          <ul style="margin-left:1.5rem; margin-top:0.5rem;">
+            <li><strong>RTGS (Real-Time Gross Settlement):</strong> Each payment is settled individually on a gross basis in real time (e.g., Fedwire, FedNow, RTP).</li>
+            <li><strong>DNS (Deferred Net Settlement):</strong> Transactions are accumulated, netted against each other, and a single net transfer is settled at designated times (e.g., ACH overnight).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <div class="chapter-panel" data-tab="assessment">
+      <div class="content-section" data-section-id="assessment" id="assessment">
+        <div class="quiz-section-title">Module 1 Assessment</div>
+        <div class="quiz-wrapper" data-module="1"></div>
+      </div>
+    </div>
+
+    </div>
+  
+    </div>
+
+    <div class="module-footer">
+      <a href="index.html" class="footer-nav-btn">← Home Page</a>
+      <a href="module2.html" class="footer-nav-btn primary">Module 2: Payments Infrastructure →</a>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+
+    <div class="footer-facts">
+      <div class="footer-fact">
+        <div class="footer-fact-icon">✍️</div>
+        <div>
+          <div class="footer-fact-title">Original Written Expression</div>
+          <div class="footer-fact-body">The explanations, summaries, flow descriptions, and educational narratives in this platform are original content created specifically for this Academy. No text has been copied verbatim from any copyrighted publication, proprietary rulebook, or paywalled source.</div>
+        </div>
+      </div>
+      <div class="footer-fact">
+        <div class="footer-fact-icon">📊</div>
+        <div>
+          <div class="footer-fact-title">Publicly Reported Statistics</div>
+          <div class="footer-fact-body">All figures and statistics — including transaction volumes, fee rates, and market data — are drawn from publicly available sources: company earnings releases, Federal Reserve reports, CFPB studies, and Nacha annual reports. Facts are not copyrightable.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-disclaimer">
+      <div class="footer-disclaimer-icon">⚠️</div>
+      <div>
+        <strong>Regulatory Disclaimer:</strong> The regulatory and compliance content in this platform has been simplified for educational purposes. It is intended to build conceptual understanding, not to serve as legal or compliance advice. Payment regulations are complex, jurisdiction-specific, and subject to change. <strong>Anyone making compliance, legal, or business decisions should consult the primary regulatory sources directly and seek qualified legal counsel.</strong>
+      </div>
+    </div>
+
+    <div class="footer-sources-title">Primary Sources &amp; References</div>
+    <div class="footer-sources-grid">
+      <a class="footer-source-tag" href="https://www.nacha.org" target="_blank" rel="noopener">Nacha — ACH Operating Rules</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/paymentsystems.htm" target="_blank" rel="noopener">Federal Reserve — Payment Systems</a>
+      <a class="footer-source-tag" href="https://www.frbservices.org/financial-services/fednow" target="_blank" rel="noopener">Federal Reserve — FedNow Service</a>
+      <a class="footer-source-tag" href="https://www.theclearinghouse.org/payment-systems/rtp" target="_blank" rel="noopener">The Clearing House — RTP Network</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/pubs/fedpoint/fed43.htm" target="_blank" rel="noopener">Federal Reserve — Fedwire Funds</a>
+      <a class="footer-source-tag" href="https://www.cfpb.gov/rules-policy/regulations/1005/" target="_blank" rel="noopener">CFPB — Regulation E (EFTA)</a>
+      <a class="footer-source-tag" href="https://usa.visa.com/run-your-business/merchant-resources/interchange-reimbursement-fees.html" target="_blank" rel="noopener">Visa — Interchange Reimbursement Fees</a>
+      <a class="footer-source-tag" href="https://www.mastercard.us/en-us/business/overview/support/merchant-interchange-rates.html" target="_blank" rel="noopener">Mastercard — Interchange Rates</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/releases/z1/" target="_blank" rel="noopener">Federal Reserve — Z.1 Financial Accounts</a>
+      <a class="footer-source-tag" href="https://www.fdic.gov/regulations/applications/financial/" target="_blank" rel="noopener">FDIC — Banking Regulations</a>
+      <a class="footer-source-tag" href="https://www.swift.com" target="_blank" rel="noopener">SWIFT — Global Messaging Network</a>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/insights.js"></script>
+<script src="js/questions-m1.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

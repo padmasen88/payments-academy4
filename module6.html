@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 6: Compliance &amp; Regulation | Payments Academy</title>
+  <meta name="description" content="Understand compliance guardrails: Regulation E error resolutions, Durbin Amendment interchange rules, CARD Act credit restrictions, Dodd-Frank Section 1033 Open Banking APIs, and OFAC/AML sanctions screening." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .hero-badge { background: rgba(var(--mod6-color-rgb, 99, 102, 241), 0.12); border-color: rgba(var(--mod6-color-rgb, 99, 102, 241), 0.35); color: var(--mod6-color); }
+    .module-hero::before { background: radial-gradient(circle, var(--mod6-color), transparent 70%); top: -40%; left: -10%; width: 500px; height: 500px; }
+    .module-hero::after  { background: radial-gradient(circle, #6366f1, transparent 70%); }
+    .sidebar-nav li a.active::before { background: var(--mod6-color); }
+    .section-icon { background: rgba(var(--mod6-color-rgb, 99, 102, 241), 0.12); color: var(--mod6-color); }
+    .key-fact::before { background: var(--mod6-color); }
+    .process-step-num { border-color: rgba(var(--mod6-color-rgb, 99, 102, 241), 0.4); color: var(--mod6-color); }
+    .chapter-tab.active { background: var(--mod6-color); }
+    .check { color: #10b981; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-icon">⚡</div>Payments Academy</a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="module-hero">
+  <div class="hero-badge">MODULE 06</div>
+  <h1 class="hero-title">Compliance &amp; Regulation</h1>
+  <p class="hero-desc">Understand compliance guardrails: Regulation E error resolutions, Durbin Amendment interchange rules, CARD Act credit restrictions, Dodd-Frank Section 1033 Open Banking APIs, and OFAC/AML sanctions screening.</p>
+  <div class="hero-meta">
+    <span class="hero-meta-item">📚 3 Chapters</span>
+    <span class="hero-meta-item">⏱ Est. 45 Mins</span>
+    <span class="hero-meta-item">🎯 Practitioner Level</span>
+    <span class="hero-meta-item">💡 Comprehensive Depth</span>
+  </div>
+</header>
+
+<div class="module-layout">
+  <aside class="sidebar">
+    
+    <div class="sidebar-title">Consumer</div>
+    <ul class="sidebar-nav">
+      <li><a href="#db-rege" data-section="db-rege">Regulation E</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Card Rules</div>
+    <ul class="sidebar-nav">
+      <li><a href="#db-durbin" data-section="db-durbin">Durbin Amendment</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Open Banking</div>
+    <ul class="sidebar-nav">
+      <li><a href="#ob-1033" data-section="ob-1033">US Section 1033</a></li>
+      <li><a href="#ob-uk" data-section="ob-uk">UK VRP Open Banking</a></li>
+      <li><a href="#ob-europe" data-section="ob-europe">PSD3 &amp; European A2A</a></li>
+      <li><a href="#regulatory" data-section="regulatory">BSA, AML, &amp; OFAC</a></li>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Assessment</div>
+    <ul class="sidebar-nav">
+      <li><a href="#assessment" data-section="assessment">Module Assessment</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    
+      <div class="highlights-container" style="background: var(--bg-glass); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15); backdrop-filter: blur(10px);">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--mod6-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📊</span> Module Highlights &amp; Architecture
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5;">
+          A high-level visual summary of this module. Click through the tabs below for the complete practitioner-grade deep dives.
+        </p>
+        
+    <div class="two-col" style="gap: 1.5rem; margin-top: 1rem;">
+      <div class="card" style="padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+        <h4 style="color: var(--mod6-color); font-size: 1.05rem; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">⚖️ Reg E (EFTA)</h4>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+          Governs consumer dispute liability limits ($50 / $500 / unlimited) and strict bank investigation windows (10 days / 45 days).
+        </p>
+      </div>
+      <div class="card" style="padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+        <h4 style="color: var(--mod6-color); font-size: 1.05rem; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">💳 Durbin Amendment</h4>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+          Caps debit interchange fees for banks &gt;$10B to $0.21 + 0.05% + $0.01, and mandates dual-routing networks.
+        </p>
+      </div>
+      <div class="card" style="padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+        <h4 style="color: var(--mod6-color); font-size: 1.05rem; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">🔓 Section 1033</h4>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+          Forces data providers to support secure APIs for data portability and phases out credentials sharing/screen-scraping.
+        </p>
+      </div>
+      <div class="card" style="padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+        <h4 style="color: var(--mod6-color); font-size: 1.05rem; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">🕵️ BSA / AML / OFAC</h4>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+          Mandates customer identity verification (KYC), suspicious activity reports (SARs), and sanctions checks.
+        </p>
+      </div>
+    </div>
+
+      </div>
+    
+
+    <div class="chapter-tabs" data-panels="m6-panels">
+      
+        <button class="chapter-tab active" data-tab="consumer">⚖️ Consumer Regulations</button>
+      
+        <button class="chapter-tab " data-tab="cards">💳 Card Regulations</button>
+      
+        <button class="chapter-tab " data-tab="global">🔓 Open Banking &amp; AML</button>
+      
+        <button class="chapter-tab" data-tab="assessment">🎯 Assessment</button>
+      
+    </div>
+
+    <div id="m6-panels">
+      
+    <div class="chapter-panel active" data-tab="consumer">
+      <div class="content-section" data-section-id="db-rege" id="db-rege">
+          <div class="section-header">
+            <div class="section-icon">📋</div>
+            <div><div class="section-num">2.2</div><h2>Regulation E (EFTA) — Deep Dive</h2></div>
+          </div>
+          <p>The <strong>Electronic Fund Transfer Act (EFTA)</strong>, implemented by the Federal Reserve's <strong>Regulation E</strong>, is the primary consumer protection framework for electronic fund transfers — including debit card transactions, ACH, and prepaid cards. Every payments practitioner must know its key provisions.</p>
+
+          <h3>Unauthorized Transaction Liability Limits</h3>
+          <table class="data-table">
+            <thead><tr><th>Scenario</th><th>Consumer Liability</th><th>Bank Obligation</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Report within 2 business days of learning of loss</strong></td><td>Maximum <strong>$50</strong></td><td>Bank covers the rest</td></tr>
+              <tr><td><strong>Report 3–60 days after statement with error</strong></td><td>Maximum <strong>$500</strong></td><td>Bank covers amounts over $500</td></tr>
+              <tr><td><strong>Report after 60 days from statement</strong></td><td><strong>Unlimited</strong></td><td>Bank may not be required to cover</td></tr>
+              <tr><td><strong>Timely report; no negligence</strong></td><td>$0 (full bank coverage)</td><td>Bank absorbs full loss</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Bank Investigation Requirements</h3>
+          <ul>
+            <li><strong>10 business days:</strong> Bank must complete investigation within 10 business days of receiving dispute</li>
+            <li><strong>Provisional credit:</strong> If bank needs more than 10 days, it must provide provisional credit to the consumer within 10 days and can extend investigation to <strong>45 days</strong></li>
+            <li><strong>45 days (POS/foreign):</strong> For POS or foreign transactions, the investigation window extends to 45 days if provisional credit is given (90 days for new accounts)</li>
+            <li><strong>Notification:</strong> Bank must notify consumer of the outcome of the investigation</li>
+          </ul>
+
+          <h3>Regulation E — Overdraft Opt-In Rule</h3>
+          <p>A critical 2010 amendment: Under Reg E, consumers must <strong>affirmatively opt in</strong> to overdraft coverage for <strong>one-time debit card transactions and ATM withdrawals</strong>. Without opt-in, the bank must decline debit transactions that would overdraw the account (no fee charged; consumer is simply declined). For ACH and checks, banks can still charge overdraft fees without opt-in. This rule significantly reduced bank overdraft fee revenue from debit card transactions.</p>
+
+          <div class="callout callout-warning">
+            <div class="callout-icon">⚠️</div>
+            <div class="callout-content">
+              <h4>Reg E Does NOT Cover Business Accounts</h4>
+              <p>Regulation E protections apply to <strong>consumer</strong> accounts only. Business debit card disputes are governed by commercial bank agreements (typically UCC Article 4) and have far less protective rules. This is why business account holders have much shorter dispute windows and must implement stronger internal controls.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="chapter-panel" data-tab="cards">
+      <div class="content-section" data-section-id="db-durbin" id="db-durbin">
+          <div class="section-header">
+            <div class="section-icon">⚖️</div>
+            <div><div class="section-num">2.3</div><h2>The Durbin Amendment — Deep Dive</h2></div>
+          </div>
+          <p>The Durbin Amendment (Dodd-Frank Act Section 1075, implemented as Federal Reserve Regulation II) is arguably the most consequential piece of US payments regulation in decades. Championed by Senator Dick Durbin of Illinois, it was a direct response to merchant lobbying about high debit interchange costs — and fundamentally restructured the debit card industry.</p>
+
+          <div class="two-col">
+            <div class="card">
+              <h4 style="margin-bottom:0.75rem">📉 The Interchange Cap</h4>
+              <p style="font-size:0.875rem;color:var(--text-secondary)">For covered issuers (assets &gt;$10B): Maximum debit interchange = <strong>$0.21 + 0.05%</strong> of transaction + <strong>$0.01</strong> fraud adjustment. This replaced pre-Durbin rates of $0.44 average per transaction. The cap reduced issuer revenue by ~50% on debit interchange.</p>
+            </div>
+            <div class="card">
+              <h4 style="margin-bottom:0.75rem">🔀 Network Routing (Section 920)</h4>
+              <p style="font-size:0.875rem;color:var(--text-secondary)">Every debit card must have <strong>two unaffiliated network brands</strong>. Merchants have the right to route to the network of their choice. The practical result: merchants route to cheaper PIN networks (Star, NYCE, Pulse) over Visa/MC, saving significant interchange costs.</p>
+            </div>
+          </div>
+
+          <h3>Small Bank Exemption — The Reality</h3>
+          <p>The law nominally exempts issuers under $10 billion in assets from the cap. But in practice, networks created dual interchange schedules — one capped rate for large issuers, one higher "exempt" rate for small issuers. Merchants and acquirers route debit cards to whichever network provides the rate they prefer. Small issuers have found that routing to the regulated interchange schedule still happens frequently, eroding their theoretical exemption benefit.</p>
+
+          <h3>Durbin's Ripple Effects</h3>
+          <ul>
+            <li><strong>End of free checking:</strong> Large banks (BofA, Chase, Wells) eliminated free checking or added minimum balance requirements to recoup lost interchange revenue</li>
+            <li><strong>Debit rewards eliminated:</strong> Virtually all debit card rewards programs at large banks were discontinued — debit interchange can no longer fund them at Durbin-capped rates</li>
+            <li><strong>PIN terminal investment:</strong> Merchants heavily invested in PIN-capable terminals to route to cheaper PIN networks</li>
+            <li><strong>Fintech/small bank advantage:</strong> Neobanks (Chime, Current, Dave) partner with banks under $10B (e.g., Bancorp Bank, MetaBank) to offer debit cards with higher interchange — funding their reward programs</li>
+            <li><strong>The Durbin 2.0 debate:</strong> The Fed's 2023 proposed rule would extend routing rights to CNP (e-commerce) transactions — currently, Visa/MC dominate online debit routing. Merchants strongly support; networks and issuers strongly oppose.</li>
+          </ul>
+        </div>
+    </div>
+    <div class="chapter-panel" data-tab="global">
+      <section class="content-section" id="ob-1033">
+        <div class="section-header">
+          <div class="section-icon">🔓</div>
+          <div>
+            <h2>US Open Banking: Section 1033</h2>
+            <p class="section-lead">The CFPB's landmark Personal Financial Data Rights rule — the cornerstone of US open banking — remains in regulatory limbo as of mid-2026, caught between legal injunctions and an administration-driven reconsideration process.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Oct 2024</div>
+          <div class="timeline-text"><strong>Final Rule Published</strong> — CFPB finalizes the Section 1033 "Personal Financial Data Rights" rule. First compliance date for largest banks: April 1, 2026.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Late 2024</div>
+          <div class="timeline-text"><strong>Legal Challenge</strong> — Bank Policy Institute + Kentucky Bankers Association file suit. Eastern District of Kentucky issues an <strong>injunction blocking enforcement</strong>.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jul 2025</div>
+          <div class="timeline-text"><strong>CFPB Reconsideration</strong> — CFPB moves to stay legal proceedings and initiate a new rulemaking process to revise the rule.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Aug 2025</div>
+          <div class="timeline-text"><strong>ANPRM Issued</strong> — Advance Notice of Proposed Rulemaking on key topics: data privacy, security standards, fee structures, definition of "authorized representatives."</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 1, 2026</div>
+          <div class="timeline-text"><strong>Deadline Passes Unenforced</strong> — Original compliance date for the largest banks passes with no enforcement due to the injunction and ongoing reconsideration.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Mid-2026</div>
+          <div class="timeline-text"><strong>Current Status</strong> — Rule under active revision. Voluntary industry infrastructure development continues. No binding US open banking mandate currently in force.</div>
+        </div>
+
+        <h3>What the 2024 Rule Would Have Required</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Party</th><th>Obligation</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Banks (Data Providers)</strong></td><td>Provide consumers and authorized third parties secure data portability, including electronic access to account balances, transaction history, and payment initiation data — <em>at no cost</em></td></tr>
+              <tr><td><strong>Banks (Data Providers)</strong></td><td>Maintain secure developer APIs; no screen-scraping as primary access method</td></tr>
+              <tr><td><strong>Third Parties (Fintechs)</strong></td><td>Qualify as "authorized third party" with strict data use and retention rules; cannot sell or use data beyond the stated consumer purpose</td></tr>
+              <tr><td><strong>Exemption</strong></td><td>Depository institutions with ≤$850M in assets are exempt from data provider obligations</td></tr>
+              <tr><td><strong>Scope</strong></td><td>Credit cards and Reg E accounts (checking/savings) as starting scope; future expansion planned</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="content-section" id="ob-uk">
+        <div class="section-header">
+          <div class="section-icon">🇬🇧</div>
+          <div>
+            <h2>UK Open Banking & Variable Recurring Payments</h2>
+            <p class="section-lead">The UK leads the world in operational open banking adoption, having moved well beyond data sharing into a live payment initiation ecosystem. The next frontier is commercial VRP — turning open banking into a true card alternative.</p>
+          </div>
+        </div>
+
+        <div class="key-facts-grid">
+          <div class="key-fact">
+            <div class="key-fact-value">16.5M</div>
+            <div class="key-fact-label">Monthly active user connections on UK Open Banking APIs</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">33M+</div>
+            <div class="key-fact-label">Open banking payments in a single month (early 2026)</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">~50%</div>
+            <div class="key-fact-label">Year-over-year growth in open banking payment volumes</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">Jun 2026</div>
+            <div class="key-fact-label">UK Payments Initiative launches commercial VRP scheme</div>
+          </div>
+        </div>
+
+        <h3>Variable Recurring Payments (VRP)</h3>
+        <p>VRP is the UK's most significant open banking evolution. Unlike a one-off payment, a VRP is a consent-based arrangement that allows a third party to initiate payments on the customer's behalf — within pre-agreed limits — without requiring re-authentication each time. This enables programmable, automated payments that are more flexible than direct debits.</p>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="process-step-num">1</div>
+            <div class="process-step-body">
+              <strong>Sweeping VRP (Live since 2022)</strong>
+              <p>The CMA9 banks are mandated to support sweeping VRP — moving money between a customer's own accounts (e.g., auto-sweeping excess current account balance into savings). Live and operational.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">2</div>
+            <div class="process-step-body">
+              <strong>Commercial VRP (cVRP) — Launched June 2026</strong>
+              <p>The UK Payments Initiative (UKPI) launched a commercial VRP scheme in June 2026 — enabling recurring A2A payments to merchants. Use cases: subscriptions, utility bills, government payments. A lower-cost, programmable alternative to card-on-file transactions.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <p>💡 <strong>Why VRP matters for cards:</strong> Every VRP transaction that replaces a card-on-file recurring payment represents lost interchange revenue for card networks and issuers. In markets where VRP scales (UK and eventually EU), card economics for subscription-type merchants are under structural pressure.</p>
+        </div>
+      </section>
+      <section class="content-section" id="ob-europe">
+        <div class="section-header">
+          <div class="section-icon">🇪🇺</div>
+          <div>
+            <h2>PSD3, Wero & European A2A Payments</h2>
+            <p class="section-lead">Europe is pursuing payments sovereignty — a concerted effort to build indigenous payment infrastructure that reduces dependence on US-controlled card networks, driven by both economic and geopolitical imperatives.</p>
+          </div>
+        </div>
+
+        <h3>PSD3 / Payment Services Regulation (PSR)</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Item</th><th>Detail</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Final Texts Published</strong></td><td>April 23, 2026</td></tr>
+              <tr><td><strong>Formal Adoption</strong></td><td>Expected mid-to-late 2026</td></tr>
+              <tr><td><strong>Full Implementation</strong></td><td>~21 months after publication → approximately <strong>late 2028</strong></td></tr>
+              <tr><td><strong>Key Structural Change</strong></td><td>PSD2 was a <em>Directive</em> (transposed country-by-country, leading to inconsistency). PSR is a <em>Regulation</em> — directly applicable across all EU member states as a single rulebook, eliminating fragmentation</td></tr>
+              <tr><td><strong>API Improvements</strong></td><td>Stricter API performance standards; mandatory fallback/contingency mechanisms when primary API is unavailable</td></tr>
+              <tr><td><strong>AISP/PISP Clarity</strong></td><td>Clearer regulatory treatment of Account Information Service Providers (AISPs) and Payment Initiation Service Providers (PISPs)</td></tr>
+              <tr><td><strong>Verification of Payee</strong></td><td>Mandatory "Confirmation of Payee" (VoP) requirement at ~27 months post-adoption</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Wero — Europe's Answer to Venmo and Visa</h3>
+        <p>The <strong>European Payments Initiative (EPI)</strong> launched <strong>Wero</strong> — a pan-European A2A digital wallet designed to unify Europe's fragmented payments landscape and reduce dependence on US card networks.</p>
+
+        <div class="key-facts-grid">
+          <div class="key-fact">
+            <div class="key-fact-value">48M+</div>
+            <div class="key-fact-label">Wero users by mid-2026 (Germany, France, Belgium, Netherlands)</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">2025</div>
+            <div class="key-fact-label">Wero expanded from P2P to e-commerce and m-commerce payments</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">2026</div>
+            <div class="key-fact-label">iDEAL (Netherlands) began phased migration to the Wero platform</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">2026–27</div>
+            <div class="key-fact-label">POS/NFC integration planned — tap-to-pay bypassing card networks entirely</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <p>⚠️ <strong>Geopolitical Driver:</strong> European policymakers explicitly describe Visa and Mastercard's dominance as a strategic vulnerability — both because transaction data flows to US-controlled entities and because US sanctions or regulatory action could theoretically restrict European payment processing. Wero and the digital euro project are explicitly framed as "payments sovereignty" initiatives.</p>
+        </div>
+      </section>
+      <section class="content-section" id="regulatory">
+        <div class="section-header">
+          <div class="section-icon">⚖️</div>
+          <div>
+            <h2>US Regulatory Landscape 2025–2026</h2>
+            <p class="section-lead">The Trump administration's second term has produced a dramatic shift in the US payments regulatory environment — significantly reducing consumer protection enforcement while simultaneously establishing clear frameworks for digital assets and fintech innovation.</p>
+          </div>
+        </div>
+
+        <h3>CFPB — Major Restructuring</h3>
+        <div class="timeline-item">
+          <div class="timeline-date">Feb 2025</div>
+          <div class="timeline-text"><strong>Russell Vought</strong> appointed Acting CFPB Director. Campaign to shrink the bureau began immediately — attempted 90% workforce reduction (courts blocked), later revised to ~50%.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jul 2025</div>
+          <div class="timeline-text">P.L. 119-21 (reconciliation law) <strong>cuts CFPB's funding cap by nearly half</strong>. Agency continues to function under court injunctions protecting core operations.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 2025</div>
+          <div class="timeline-text">Federal judge in Northern District of Texas <strong>vacates the credit card late fee rule</strong> (which would have capped late fees at $8 vs. the ~$32 average) via consent judgment after CFPB moved to abandon it.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jun 2026</div>
+          <div class="timeline-text">Trump nominates <strong>Brian Johnson</strong> (former CFPB official, Capital One executive) to lead the CFPB as permanent director — pending Senate confirmation.</div>
+        </div>
+
+        <h3>OCC & FDIC — Deregulatory Agenda</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Action</th><th>Date</th><th>Impact</th></tr></thead>
+            <tbody>
+              <tr><td>Eliminated "reputation risk" as standalone supervisory category</td><td>April 2026</td><td>Reduces subjective bank examinations; limits ability to de-risk based on non-financial reputational concerns; helps BaaS banks retain fintech partnerships</td></tr>
+              <tr><td>Executive Order on fintech/digital asset regulatory integration</td><td>May 2026</td><td>Directs all bank regulators to remove barriers for fintech and digital asset companies; signals administration's pro-innovation stance</td></tr>
+              <tr><td>GENIUS Act NPRs (BSA/AML for stablecoin issuers)</td><td>June 2026</td><td>OCC and FDIC issue proposed rules to operationalize GENIUS Act requirements — provides regulatory roadmap for stablecoin issuers seeking federal licensing</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="trend-card">
+          <h4>The Two-Track Regulatory Reality</h4>
+          <p>The 2025–2026 regulatory environment creates a distinctive two-track landscape: <strong>(1) Consumer protection is being significantly rolled back</strong> — the CFPB is smaller, less active, and less likely to bring enforcement actions against payment companies on consumer protection grounds. <strong>(2) Digital asset / stablecoin regulation is being actively built out</strong> — the GENIUS Act, OCC/FDIC NPRs, and FinCEN guidance represent the most comprehensive digital asset regulatory framework the US has ever produced. Companies operating across both tracks must navigate very different compliance priorities.</p>
+        </div>
+
+        <h3>Key Dates at a Glance</h3>
+        <div class="timeline-item">
+          <div class="timeline-date">May 2024</div>
+          <div class="timeline-text">CFPB issues BNPL interpretive rule (Reg Z card issuer treatment)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Oct 2024</div>
+          <div class="timeline-text">CFPB Section 1033 Personal Financial Data Rights rule finalized</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 2025</div>
+          <div class="timeline-text">CFPB credit card late fee rule vacated by federal court</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">May 2025</div>
+          <div class="timeline-text">CFPB: no enforcement priority on BNPL interpretive rule</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jul 18, 2025</div>
+          <div class="timeline-text"><strong>GENIUS Act signed into law</strong></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Sep 10, 2025</div>
+          <div class="timeline-text"><strong>Klarna IPO</strong> (NYSE: KLAR, $40/share, ~$15.1B valuation)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Nov 22, 2025</div>
+          <div class="timeline-text"><strong>SWIFT ISO 20022 coexistence period ends</strong> — legacy MT messages retired</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jan 1, 2026</div>
+          <div class="timeline-text">e-CNY becomes interest-bearing "digital deposit money"</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 23, 2026</div>
+          <div class="timeline-text">PSD3/PSR final compromise texts published by EU</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jun 3, 2026</div>
+          <div class="timeline-text"><strong>Amazon One discontinued</strong></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jun 2026</div>
+          <div class="timeline-text">UKPI launches commercial VRP scheme; EP ECON approves digital euro</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Nov 2026</div>
+          <div class="timeline-text">Next SWIFT mandate: structured addresses for cross-border payments</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">~2028</div>
+          <div class="timeline-text">PSD3/PSR full implementation in EU</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2029</div>
+          <div class="timeline-text">Digital euro potential first issuance</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Dec 31, 2030</div>
+          <div class="timeline-text">US retail CBDC prohibition expires (Congress may extend)</div>
+        </div>
+
+      </section>
+    </div>
+  
+    <div class="chapter-panel" data-tab="assessment">
+      <div class="content-section" data-section-id="assessment" id="assessment">
+        <div class="quiz-section-title">Module 6 Assessment</div>
+        <div class="quiz-wrapper" data-module="6"></div>
+      </div>
+    </div>
+
+    <div class="module-footer">
+      <a href="module5.html" class="footer-nav-btn">← Module 5: Risk & Fraud</a>
+      <a href="module7.html" class="footer-nav-btn primary">Module 7: Innovation →</a>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+
+    <div class="footer-facts">
+      <div class="footer-fact">
+        <div class="footer-fact-icon">✍️</div>
+        <div>
+          <div class="footer-fact-title">Original Written Expression</div>
+          <div class="footer-fact-body">The explanations, summaries, flow descriptions, and educational narratives in this platform are original content created specifically for this Academy. No text has been copied verbatim from any copyrighted publication, proprietary rulebook, or paywalled source.</div>
+        </div>
+      </div>
+      <div class="footer-fact">
+        <div class="footer-fact-icon">📊</div>
+        <div>
+          <div class="footer-fact-title">Publicly Reported Statistics</div>
+          <div class="footer-fact-body">All figures and statistics — including transaction volumes, fee rates, and market data — are drawn from publicly available sources: company earnings releases, Federal Reserve reports, CFPB studies, and Nacha annual reports. Facts are not copyrightable.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-disclaimer">
+      <div class="footer-disclaimer-icon">⚠️</div>
+      <div>
+        <strong>Regulatory Disclaimer:</strong> The regulatory and compliance content in this platform has been simplified for educational purposes. It is intended to build conceptual understanding, not to serve as legal or compliance advice. Payment regulations are complex, jurisdiction-specific, and subject to change. <strong>Anyone making compliance, legal, or business decisions should consult the primary regulatory sources directly and seek qualified legal counsel.</strong>
+      </div>
+    </div>
+
+    <div class="footer-sources-title">Primary Sources &amp; References</div>
+    <div class="footer-sources-grid">
+      <a class="footer-source-tag" href="https://www.nacha.org" target="_blank" rel="noopener">Nacha — ACH Operating Rules</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/paymentsystems.htm" target="_blank" rel="noopener">Federal Reserve — Payment Systems</a>
+      <a class="footer-source-tag" href="https://www.frbservices.org/financial-services/fednow" target="_blank" rel="noopener">Federal Reserve — FedNow Service</a>
+      <a class="footer-source-tag" href="https://www.theclearinghouse.org/payment-systems/rtp" target="_blank" rel="noopener">The Clearing House — RTP Network</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/pubs/fedpoint/fed43.htm" target="_blank" rel="noopener">Federal Reserve — Fedwire Funds</a>
+      <a class="footer-source-tag" href="https://www.cfpb.gov/rules-policy/regulations/1005/" target="_blank" rel="noopener">CFPB — Regulation E (EFTA)</a>
+      <a class="footer-source-tag" href="https://usa.visa.com/run-your-business/merchant-resources/interchange-reimbursement-fees.html" target="_blank" rel="noopener">Visa — Interchange Reimbursement Fees</a>
+      <a class="footer-source-tag" href="https://www.mastercard.us/en-us/business/overview/support/merchant-interchange-rates.html" target="_blank" rel="noopener">Mastercard — Interchange Rates</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/releases/z1/" target="_blank" rel="noopener">Federal Reserve — Z.1 Financial Accounts</a>
+      <a class="footer-source-tag" href="https://www.fdic.gov/regulations/applications/financial/" target="_blank" rel="noopener">FDIC — Banking Regulations</a>
+      <a class="footer-source-tag" href="https://www.swift.com" target="_blank" rel="noopener">SWIFT — Global Messaging Network</a>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/insights.js"></script>
+<script src="js/questions-m6.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

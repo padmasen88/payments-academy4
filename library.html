@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Standards Library &amp; Search — Payments Academy 3.0</title>
+  <meta name="description" content="Searchable payments standards library, regulatory codes, ACH return definitions, and comprehensive glossary." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .library-layout {
+      max-width: 1000px;
+      margin: 6rem auto 3rem;
+      padding: 0 1.5rem;
+    }
+    
+    /* Search Bar area */
+    .search-box-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .big-search-input {
+      width: 100%;
+      max-width: 700px;
+      background: rgba(0,0,0,0.4);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      font-size: 1.1rem;
+      transition: all var(--t-fast);
+    }
+    .big-search-input:focus {
+      border-color: var(--accent-indigo);
+      outline: none;
+      box-shadow: 0 0 15px rgba(99,102,241,0.2);
+    }
+    .popular-tags {
+      margin-top: 1.25rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .pop-tag {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-md);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--t-fast);
+    }
+    .pop-tag:hover {
+      background: var(--bg-glass-hover);
+      color: var(--accent-teal);
+      border-color: var(--accent-teal);
+    }
+    
+    /* Results Area */
+    .results-section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .results-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+    .result-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+      transition: all var(--t-normal);
+      animation: fadeIn 0.3s ease;
+    }
+    .result-card:hover {
+      border-color: var(--border-accent);
+      transform: translateX(4px);
+    }
+    .res-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .res-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .res-category {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      background: rgba(99,102,241,0.12);
+      color: var(--accent-indigo);
+    }
+    .res-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .res-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      border-top: 1px dashed var(--border-subtle);
+      padding-top: 0.75rem;
+    }
+    .res-crosslinks {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .res-link {
+      color: var(--accent-teal);
+      font-weight: 600;
+    }
+    .res-link:hover {
+      color: var(--text-primary);
+    }
+    
+    /* Glossary Index */
+    .glossary-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+    }
+    .glossary-header {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+    .alphabet-bar {
+      display: flex;
+      gap: 0.4rem;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .alpha-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      transition: all var(--t-fast);
+    }
+    .alpha-btn:hover, .alpha-btn.active {
+      color: var(--accent-teal);
+      background: rgba(45,212,191,0.08);
+    }
+    .glossary-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .glossary-item {
+      border-left: 3px solid var(--border-accent);
+      padding-left: 0.75rem;
+    }
+    .gl-term {
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+    .gl-def {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">⚡</div>
+    Payments Academy
+  </a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html" class="active">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<div class="library-layout">
+  
+  <!-- Search Header -->
+  <div class="search-box-wrap">
+    <div class="hero-badge">KNOWLEDGE SEARCH</div>
+    <h1 class="hero-title" style="font-size: 2rem; margin-bottom: 1.25rem;">Standards &amp; Concept Library</h1>
+    <input type="text" id="lib-search" class="big-search-input" placeholder="Search Reg E, PCI, ISO 20022, Chargebacks, Return codes..." oninput="handleSearch()" />
+    
+    <div class="popular-tags">
+      <span class="pop-tag" onclick="setSearch('Reg E')">Reg E</span>
+      <span class="pop-tag" onclick="setSearch('PCI')">PCI DSS</span>
+      <span class="pop-tag" onclick="setSearch('ISO 20022')">ISO 20022</span>
+      <span class="pop-tag" onclick="setSearch('FedNow')">FedNow</span>
+      <span class="pop-tag" onclick="setSearch('Chargeback')">Chargeback</span>
+      <span class="pop-tag" onclick="setSearch('R10')">R10 Return</span>
+      <span class="pop-tag" onclick="setSearch('KYC')">KYC / CIP</span>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div>
+    <div class="results-section-title">
+      <span>Search Results</span>
+      <span id="results-count" style="font-size:0.85rem; color:var(--text-muted); font-weight:normal;">0 items found</span>
+    </div>
+    
+    <div class="results-grid" id="results-container">
+      <!-- Search hits rendered here -->
+    </div>
+  </div>
+
+  <!-- Glossary -->
+  <div class="glossary-wrap">
+    <div class="glossary-header">Payments Glossary Index</div>
+    
+    <div class="alphabet-bar" id="alphabet-bar">
+      <!-- Generated via JS -->
+    </div>
+    
+    <div class="glossary-list" id="glossary-container">
+      <!-- Glossary items rendered here -->
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Library Database
+  const DATABASE = [
+    {
+      title: 'Regulation E (EFTA)',
+      category: 'Regulation',
+      desc: 'US federal consumer protection regulation governing electronic funds transfers. Caps consumer liability at $50 if unauthorized charges are reported within 2 business days.',
+      link: 'regulations.html',
+      linkText: 'Open Regulations Academy'
+    },
+    {
+      title: 'PCI DSS Security Standards',
+      category: 'Standard',
+      desc: 'Security rules managed by the PCI Security Standards Council to secure credit card databases and restrict cardholder PIN/CVV caching.',
+      link: 'regulations.html',
+      linkText: 'Open Regulations Academy'
+    },
+    {
+      title: 'ISO 20022 Financial Messaging',
+      category: 'Standard',
+      desc: 'An XML/JSON standard for global interbank messaging. Utilized by FedNow and RTP networks to carry rich invoices and remittance information.',
+      link: 'module2.html',
+      linkText: 'Study Infrastructure Module'
+    },
+    {
+      title: 'R10 Return Code (Customer Advises Unauthorized)',
+      category: 'ACH Return',
+      desc: 'Nacha return code used by the RDFI when a consumer asserts that an ACH debit was unauthorized. The RDFI has an extended 60 calendar-day return window.',
+      link: 'module5.html#ach-returns',
+      linkText: 'Review ACH Return Codes'
+    },
+    {
+      title: 'Chargeback Dispute Cycle',
+      category: 'Operation',
+      desc: 'The card network procedure where cardholders dispute charges, forcing the merchant to re-present documentation or forfeit funds.',
+      link: 'module5.html#cr-chargebacks',
+      linkText: 'Study Dispute Lifecycles'
+    },
+    {
+      title: 'FedNow Real-time Payments',
+      category: 'Payment Rail',
+      desc: 'The Federal Reserve\'s instant payment rail launched in July 2023. Settle interbank credits gross in real-time 24/7/365.',
+      link: 'module2.html#rtp-overview',
+      linkText: 'Study Real-Time Rails'
+    },
+    {
+      title: 'KYC / Customer Identification Program (CIP)',
+      category: 'Compliance',
+      desc: 'USA PATRIOT Act mandate requiring banks to capture and verify customer identity parameters (Name, Address, DOB, SSN) before opening ledgers.',
+      link: 'module6.html#regulatory',
+      linkText: 'Open Compliance Module'
+    },
+    {
+      title: 'Durbin Amendment Interchange Capping',
+      category: 'Regulation',
+      desc: 'Caps debit interchange fees for issuing banks with assets over $10 billion to a formula of 21 cents + 0.05% + 1 cent.',
+      link: 'module6.html#db-durbin',
+      linkText: 'Review Interchange Regulations'
+    }
+  ];
+
+  // Glossary List (A-Z)
+  const GLOSSARY = [
+    { term: 'ACH', def: 'Automated Clearing House — batch-based deferred net settlement payment network.' },
+    { term: 'Acquirer', def: 'Merchant bank that processes card payments and deposits settlement funds.' },
+    { term: 'Arbitration', def: 'The final network dispute ruling stage where Visa/MC issues a binding card decision.' },
+    { term: 'BaaS', def: 'Banking-as-a-Service — middleware APIs enabling fintechs to leverage chartered sponsor banks.' },
+    { term: 'BSA', def: 'Bank Secrecy Act — US anti-money laundering law requiring CTR and SAR filings.' },
+    { term: 'CCD', def: 'Corporate Credit or Debit — Nacha SEC code used for business-to-business transactions.' },
+    { term: 'CHIPS', def: 'Clearing House Interbank Payments System — private large-value wire netting network.' },
+    { term: 'Clearing', def: 'The process of transmitting, reconciling, and netting transaction payment instructions.' },
+    { term: 'DNS', def: 'Deferred Net Settlement — payment system netting transfers before batch settlement.' },
+    { term: 'EMV', def: 'Europay, Mastercard, Visa — global technical standard for chip card terminal interfaces.' },
+    { term: 'FBO Account', def: 'For Benefit Of — pooled custodial bank account aggregating fintech client deposits.' },
+    { term: 'FedNow', def: 'Federal Reserve real-time gross settlement instant payments service.' },
+    { term: 'Interchange', def: 'Fee paid by the acquirer to the card issuer to cover credit and transaction risks.' },
+    { term: 'Issuer', def: 'Cardholder\'s bank that extends credit lines, issues cards, and authorizes charges.' },
+    { term: 'KYC', def: 'Know Your Customer — verification standards for customer identities.' },
+    { term: 'MDR', def: 'Merchant Discount Rate — all-in percentage fee merchants pay to process cards.' },
+    { term: 'Nacha', def: 'National Automated Clearing House Association — governing body of the ACH network.' },
+    { term: 'OCT', def: 'Original Credit Transaction — message payload pushing real-time funds to cardholders.' },
+    { term: 'ODFI', def: 'Originating Depository Financial Institution — bank introducing files into the ACH network.' },
+    { term: 'PPD', def: 'Prearranged Payment and Deposit — Nacha SEC code used for consumer recurring transactions.' },
+    { term: 'RDFI', def: 'Receiving Depository Financial Institution — bank receiving incoming ACH entries.' },
+    { term: 'RFP', def: 'Request for Payment — secure, non-binding interbank payment requests.' },
+    { term: 'RTGS', def: 'Real-Time Gross Settlement — immediately settling payments individually and gross.' },
+    { term: 'SAR', def: 'Suspicious Activity Report — AML filing tracking potential financial crimes.' },
+    { term: 'Settlement', def: 'The legal transfer of funds on central bank ledgers to resolve interbank debt.' },
+    { term: 'SWIFT', def: 'Society for Worldwide Interbank Financial Telecommunication — secure messaging network.' },
+    { term: 'Tokenization', def: 'Substituting sensitive card PANs with random surrogate tokens (DPANs).' },
+    { term: 'UCC', def: 'Uniform Commercial Code — standard commercial statutes (Articles 3 & 4 cover checks).' }
+  ];
+
+  let selectedLetter = 'All';
+
+  // Initialize Search & Glossary
+  function init() {
+    renderAlphabet();
+    renderGlossary();
+    handleSearch(); // Empty search shows popular items
+  }
+
+  function handleSearch() {
+    const query = document.getElementById('lib-search').value.toLowerCase();
+    const container = document.getElementById('results-container');
+    const countLabel = document.getElementById('results-count');
+    
+    container.innerHTML = '';
+    
+    // Filter database
+    const results = DATABASE.filter(item => {
+      return item.title.toLowerCase().includes(query) || 
+             item.desc.toLowerCase().includes(query) || 
+             item.category.toLowerCase().includes(query);
+    });
+    
+    countLabel.textContent = `${results.length} items found`;
+    
+    if (results.length === 0) {
+      container.innerHTML = `
+        <div style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.9rem;">
+          No standard records matched your search query. Try choosing a popular tag above.
+        </div>
+      `;
+      return;
+    }
+    
+    results.forEach(res => {
+      const card = document.createElement('div');
+      card.className = 'result-card';
+      card.innerHTML = `
+        <div class="res-hdr">
+          <span class="res-title">${res.title}</span>
+          <span class="res-category">${res.category}</span>
+        </div>
+        <p class="res-desc">${res.desc}</p>
+        <div class="res-footer">
+          <span>Connected Section:</span>
+          <a href="${res.link}" class="res-link">${res.linkText} →</a>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function setSearch(term) {
+    document.getElementById('lib-search').value = term;
+    handleSearch();
+  }
+
+  // Glossary rendering
+  function renderAlphabet() {
+    const bar = document.getElementById('alphabet-bar');
+    bar.innerHTML = '';
+    
+    const letters = ['All', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')];
+    letters.forEach(letter => {
+      const btn = document.createElement('button');
+      btn.className = `alpha-btn ${letter === selectedLetter ? 'active' : ''}`;
+      btn.textContent = letter;
+      btn.onclick = () => filterLetter(letter);
+      bar.appendChild(btn);
+    });
+  }
+
+  function filterLetter(letter) {
+    selectedLetter = letter;
+    renderAlphabet();
+    renderGlossary();
+  }
+
+  function renderGlossary() {
+    const container = document.getElementById('glossary-container');
+    container.innerHTML = '';
+    
+    const filtered = GLOSSARY.filter(item => {
+      return selectedLetter === 'All' || item.term.toUpperCase().startsWith(selectedLetter);
+    });
+    
+    if (filtered.length === 0) {
+      container.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem;">No glossary items starting with this letter.</div>';
+      return;
+    }
+    
+    filtered.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'glossary-item';
+      el.innerHTML = `
+        <div class="gl-term">${item.term}</div>
+        <div class="gl-def">${item.def}</div>
+      `;
+      container.appendChild(el);
+    });
+  }
+
+  // Boot
+  init();
+</script>
+</body>
+</html>

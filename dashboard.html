@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Dashboard &amp; Certifications — Payments Academy 3.0</title>
+  <meta name="description" content="Your learning dashboard: track progress, select role-based paths, take practice exams, and earn payments certifications." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .dash-layout {
+      max-width: 1200px;
+      margin: 6rem auto 3rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
+    @media (max-width: 900px) {
+      .dash-layout { grid-template-columns: 1fr; }
+    }
+    
+    .dash-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      margin-bottom: 2rem;
+    }
+    .dash-card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    /* Paths styling */
+    .paths-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    @media (max-width: 600px) {
+      .paths-grid { grid-template-columns: 1fr; }
+    }
+    .path-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all var(--t-normal);
+    }
+    .path-card:hover, .path-card.active {
+      border-color: var(--accent-indigo);
+      background: rgba(99,102,241,0.05);
+      box-shadow: 0 0 15px rgba(99,102,241,0.15);
+    }
+    .path-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .path-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .prog-bar-container {
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    .prog-bar-fill {
+      height: 100%;
+      background: var(--grad-indigo);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    .prog-text {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    /* Certifications styling */
+    .certs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .cert-item {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    @media (max-width: 600px) {
+      .cert-item { flex-direction: column; align-items: start; }
+    }
+    .cert-info {
+      flex-grow: 1;
+    }
+    .cert-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .cert-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+    }
+    .cert-status-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-sm);
+      text-transform: uppercase;
+    }
+    .cert-locked { background: rgba(255,255,255,0.08); color: var(--text-muted); }
+    .cert-passed { background: rgba(16,185,129,0.15); color: #10b981; }
+    
+    /* Practice Exam Modal styling */
+    .exam-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(8,12,20,0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+    .exam-modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+    }
+    
+    /* Notes & Bookmarks side panel */
+    .side-notes-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .bookmark-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed var(--border-subtle);
+    }
+    .note-textarea {
+      width: 100%;
+      height: 120px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      color: #fff;
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">⚡</div>
+    Payments Academy
+  </a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="map-header" style="padding-bottom:2rem;">
+  <div class="hero-badge">PERSONAL PROGRESS</div>
+  <h1 class="hero-title">Your Learning Dashboard</h1>
+  <p class="hero-desc" style="max-width:700px; margin: 1rem auto 0;">
+    Select role-based paths, track course completions, write notes, and pass practice exams to earn digital payments badges.
+  </p>
+</header>
+
+<div class="dash-layout">
+  
+  <div>
+    <!-- Active Pathway Card -->
+    <div class="dash-card" id="active-pathway-container">
+      <div class="dash-card-title" id="active-pathway-header">Active Learning Pathway</div>
+      
+      <!-- No active pathway selected yet -->
+      <div id="active-pathway-empty" style="text-align: center; padding: 2.5rem 1rem;">
+        <div style="font-size: 2.5rem; margin-bottom: 1rem;">🗺️</div>
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">No Active Pathway</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.5;">
+          You haven't selected a learning pathway yet. Select either the sequential levels path or a custom role-based playlist to begin.
+        </p>
+        <a href="pathways.html" class="qz-btn qz-btn-primary" style="text-decoration: none; padding: 0.55rem 1.25rem; display: inline-block;">Choose Pathway</a>
+      </div>
+
+      <div id="active-pathway-details" style="display: none;">
+        <!-- Progress bar row -->
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: var(--radius-lg); flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 200px;">
+            <div style="font-size: 0.72rem; font-weight: 800; color: var(--accent-indigo); text-transform: uppercase; margin-bottom: 0.25rem;">Current Pathway</div>
+            <div id="pathway-summary-text" style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem;">Loading pathway...</div>
+            <div id="pathway-progress-subtitle" style="font-size: 0.8rem; color: var(--text-muted);">0 of 0 modules completed</div>
+          </div>
+          <div style="flex: 1.5; min-width: 200px; height: 6px; background: rgba(255,255,255,0.07); border-radius: 99px; overflow: hidden; position: relative;">
+            <div id="pathway-summary-bar" style="height: 100%; background: linear-gradient(90deg, #6366f1, #2dd4bf); border-radius: 99px; width: 0%; transition: width 0.4s ease;"></div>
+          </div>
+          <a href="pathways.html" class="qz-btn" style="text-decoration: none; font-size: 0.75rem; padding: 0.4rem 0.8rem;">Change Path</a>
+        </div>
+
+        <!-- Interactive Course Map Progress Path -->
+        <div id="pathway-visual-map" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.15); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+          <div class="details-section-title" style="margin-top:0; margin-bottom: 1.25rem; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted);">Interactive Study Path</div>
+          <div id="pathway-visual-list" style="display: flex; align-items: center; justify-content: space-around; position: relative; flex-wrap: wrap; gap: 1rem;"></div>
+        </div>
+
+        <div class="details-section-title" style="font-size: 0.8rem; margin-bottom: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Required Pathway Modules</div>
+        <div id="active-pathway-modules-list" style="display: flex; flex-direction: column; gap: 1rem;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Side Panel -->
+  <div class="side-notes-panel">
+    
+    <!-- User Progress Summary -->
+    <div class="dash-card" style="padding:1.5rem;">
+      <div class="details-section-title" style="margin-top:0;">Progress Summary</div>
+      <p class="details-text" style="font-size:0.85rem;" id="progress-summary">Completed modules: None. Get started by clicking modules in the roadmap.</p>
+      <button class="qz-btn" onclick="clearProgress()" style="margin-top:0.75rem; font-size:0.7rem; padding:0.35rem 0.65rem;">Reset All Progress</button>
+    </div>
+
+    <!-- Bookmarks & Notes -->
+    <div class="dash-card" style="padding:1.5rem;">
+      <div class="details-section-title" style="margin-top:0;">My Study Notes</div>
+      <textarea id="my-notes" class="note-textarea" placeholder="Jot down notes or interview questions here... (automatically saved)" oninput="saveNotes()"></textarea>
+      
+      <div class="details-section-title">Bookmarked Lessons</div>
+      <div id="bookmark-list">
+        <div style="font-size:0.8rem; color:var(--text-muted);">No bookmarks saved yet.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- footer -->
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/progress.js"></script>
+<script>
+  function initDashboard() {
+    loadNotes();
+    loadBookmarks();
+    updateProgressVisuals();
+  }
+
+  function updateProgressVisuals() {
+    if (!window.PA || !window.PA.progress) {
+      console.warn("Progress library not loaded yet.");
+      return;
+    }
+
+    const activeKey = window.PA.progress.getActivePathway();
+    const completed = window.PA.progress.getCompleted();
+
+    const emptyEl   = document.getElementById('active-pathway-empty');
+    const detailsEl = document.getElementById('active-pathway-details');
+    
+    // Side progress panel text summary
+    const summaryText = document.getElementById('progress-summary');
+    if (completed.length > 0) {
+      summaryText.textContent = `Completed modules: ${completed.join(', ').toUpperCase()}`;
+    } else {
+      summaryText.textContent = 'Completed modules: None yet. Study lessons and pass module quizzes to track completion.';
+    }
+
+    if (!activeKey) {
+      emptyEl.style.display = 'block';
+      detailsEl.style.display = 'none';
+      return;
+    }
+
+    emptyEl.style.display = 'none';
+    detailsEl.style.display = 'block';
+
+    const pathway = window.PA.progress.PATHWAYS[activeKey];
+    const { done, total, pct } = window.PA.progress.calcProgress(activeKey);
+
+    // Update banner & subtitle info
+    document.getElementById('pathway-summary-text').textContent = pathway.title;
+    document.getElementById('pathway-progress-subtitle').textContent = `${done} of ${total} modules completed`;
+    document.getElementById('pathway-summary-bar').style.width = `${pct}%`;
+
+    // Render interactive path nodes
+    const visualListEl = document.getElementById('pathway-visual-list');
+    visualListEl.innerHTML = '';
+
+    pathway.modules.forEach((modId, idx) => {
+      const metadata = window.PA.progress.MODULE_METADATA[modId];
+      const isDone = completed.includes(modId);
+      
+      const nodeHtml = `
+        <div style="text-align: center; position: relative; z-index: 5; flex: 1; min-width: 80px;">
+          <a href="${metadata.file}" style="text-decoration:none; display: inline-block;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 0.4rem; display: flex; align-items: center; justify-content: center; font-weight: 800; font-family: 'Outfit'; font-size: 1rem; transition: all 0.3s ease;
+                        background: ${isDone ? 'var(--grad-indigo)' : 'rgba(255,255,255,0.03)'};
+                        border: 2px solid ${isDone ? 'var(--accent-teal)' : 'var(--border-subtle)'};
+                        box-shadow: ${isDone ? '0 0 12px rgba(45,212,191,0.2)' : 'none'};
+                        color: ${isDone ? '#fff' : 'var(--text-muted)'};">
+              ${modId.toUpperCase().slice(1)}
+            </div>
+            <div style="font-size: 0.68rem; font-weight: 700; color: ${isDone ? 'var(--text-primary)' : 'var(--text-muted)'}; max-width: 90px; margin: 0 auto; line-height: 1.2;">
+              ${metadata.name.split(':')[1].trim()}
+            </div>
+          </a>
+        </div>
+      `;
+      visualListEl.insertAdjacentHTML('beforeend', nodeHtml);
+
+      if (idx < pathway.modules.length - 1) {
+        const nextModId = pathway.modules[idx + 1];
+        const nextDone = completed.includes(nextModId);
+        const arrowHtml = `
+          <div style="font-size: 1.1rem; color: ${isDone && nextDone ? 'var(--accent-teal)' : 'var(--border-subtle)'}; font-weight: bold; margin: 0 0.15rem;">➔</div>
+        `;
+        visualListEl.insertAdjacentHTML('beforeend', arrowHtml);
+      }
+    });
+
+    // Render detailed required list
+    const listEl = document.getElementById('active-pathway-modules-list');
+    listEl.innerHTML = '';
+
+    pathway.modules.forEach(modId => {
+      const metadata = window.PA.progress.MODULE_METADATA[modId];
+      const isDone = completed.includes(modId);
+
+      const item = document.createElement('div');
+      item.className = 'cert-item';
+      item.style.background = 'rgba(255,255,255,0.01)';
+      item.style.padding = '1rem 1.25rem';
+      
+      item.innerHTML = `
+        <div class="cert-info">
+          <div class="cert-badge-row">
+            <span class="cert-title" style="font-size:0.9rem; font-weight:700;">${metadata.name}</span>
+            <span class="cert-status-badge ${isDone ? 'cert-passed' : 'cert-locked'}" style="font-size:0.65rem; padding:0.15rem 0.45rem;">
+              ${isDone ? 'Complete' : 'Not Started'}
+            </span>
+          </div>
+          <p class="details-text" style="font-size:0.8rem; margin:0; line-height:1.4;">${metadata.desc}</p>
+        </div>
+        <a href="${metadata.file}" class="qz-btn qz-btn-primary" style="font-size:0.75rem; padding:0.35rem 0.75rem; text-decoration:none;">
+          ${isDone ? 'Review' : 'Study'} →
+        </a>
+      `;
+      listEl.appendChild(item);
+    });
+  }
+
+  function clearProgress() {
+    if (confirm("Are you sure you want to reset all of your progress, pathway choices, and study notes?")) {
+      localStorage.removeItem('pa_completed');
+      localStorage.removeItem('pa_active_pathway');
+      localStorage.removeItem('my_payments_notes');
+      localStorage.removeItem('bookmarked_lessons');
+      document.getElementById('my-notes').value = '';
+      updateProgressVisuals();
+      loadBookmarks();
+    }
+  }
+
+  // Notes
+  function saveNotes() {
+    const notes = document.getElementById('my-notes').value;
+    localStorage.setItem('my_payments_notes', notes);
+  }
+  function loadNotes() {
+    const notes = localStorage.getItem('my_payments_notes') || '';
+    document.getElementById('my-notes').value = notes;
+  }
+
+  // Bookmarks
+  function loadBookmarks() {
+    const listEl = document.getElementById('bookmark-list');
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarked_lessons') || '[]');
+    if (bookmarks.length === 0) {
+      listEl.innerHTML = '<div style="font-size:0.8rem; color:var(--text-muted);">No bookmarks saved yet.</div>';
+      return;
+    }
+    listEl.innerHTML = bookmarks.map(b => `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:0.4rem 0; border-bottom:1px solid rgba(255,255,255,0.03);">
+        <a href="${b.file}" style="font-size:0.82rem; color:var(--accent-indigo); text-decoration:none; font-weight:600;">${b.name}</a>
+        <button onclick="removeBookmark('${b.file}')" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:0.75rem;">✕</button>
+      </div>
+    `).join('');
+  }
+
+  function removeBookmark(file) {
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarked_lessons') || '[]');
+    bookmarks = bookmarks.filter(b => b.file !== file);
+    localStorage.setItem('bookmarked_lessons', JSON.stringify(bookmarks));
+    loadBookmarks();
+  }
+
+  // Boot
+  window.onload = initDashboard;
+</script>
+</body>
+</html>

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 7: Innovation | Payments Academy</title>
+  <meta name="description" content="Explore emerging financial technologies: stablecoin settlements, retail/wholesale CBDC rails, Project mBridge cross-border systems, agentic autonomous commerce, and BaaS sponsor bank compliance." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .hero-badge { background: rgba(var(--mod7-color-rgb, 99, 102, 241), 0.12); border-color: rgba(var(--mod7-color-rgb, 99, 102, 241), 0.35); color: var(--mod7-color); }
+    .module-hero::before { background: radial-gradient(circle, var(--mod7-color), transparent 70%); top: -40%; left: -10%; width: 500px; height: 500px; }
+    .module-hero::after  { background: radial-gradient(circle, #6366f1, transparent 70%); }
+    .sidebar-nav li a.active::before { background: var(--mod7-color); }
+    .section-icon { background: rgba(var(--mod7-color-rgb, 99, 102, 241), 0.12); color: var(--mod7-color); }
+    .key-fact::before { background: var(--mod7-color); }
+    .process-step-num { border-color: rgba(var(--mod7-color-rgb, 99, 102, 241), 0.4); color: var(--mod7-color); }
+    .chapter-tab.active { background: var(--mod7-color); }
+    .check { color: #10b981; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-icon">⚡</div>Payments Academy</a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="module-hero">
+  <div class="hero-badge">MODULE 07</div>
+  <h1 class="hero-title">Innovation</h1>
+  <p class="hero-desc">Explore emerging financial technologies: stablecoin settlements, retail/wholesale CBDC rails, Project mBridge cross-border systems, agentic autonomous commerce, and BaaS sponsor bank compliance.</p>
+  <div class="hero-meta">
+    <span class="hero-meta-item">📚 3 Chapters</span>
+    <span class="hero-meta-item">⏱ Est. 45 Mins</span>
+    <span class="hero-meta-item">🎯 Practitioner Level</span>
+    <span class="hero-meta-item">💡 Comprehensive Depth</span>
+  </div>
+</header>
+
+<div class="module-layout">
+  <aside class="sidebar">
+    
+    <div class="sidebar-title">Digital Money</div>
+    <ul class="sidebar-nav">
+      <li><a href="#stablecoins" data-section="stablecoins">Stablecoins &amp; GENIUS</a></li>
+      <li><a href="#cbdc" data-section="cbdc">CBDCs: Global pilots</a></li>
+      <li><a href="#mbridge" data-section="mbridge">Project mBridge</a></li>
+      <li><a href="#nexus" data-section="nexus">Project Nexus</a></li>
+      <li><a href="#iso20022" data-section="iso20022">ISO 20022 messaging</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Agentic</div>
+    <ul class="sidebar-nav">
+      <li><a href="#ai-agentic" data-section="ai-agentic">Agentic Payments</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">BaaS Stack</div>
+    <ul class="sidebar-nav">
+      <li><a href="#embedded" data-section="embedded">BaaS &amp; Embedded Finance</a></li>
+      <li><a href="#rfp" data-section="rfp">Request for Payment</a></li>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Assessment</div>
+    <ul class="sidebar-nav">
+      <li><a href="#assessment" data-section="assessment">Module Assessment</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    
+      <div class="highlights-container" style="background: var(--bg-glass); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15); backdrop-filter: blur(10px);">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--mod7-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📊</span> Module Highlights &amp; Architecture
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5;">
+          A high-level visual summary of this module. Click through the tabs below for the complete practitioner-grade deep dives.
+        </p>
+        
+    <div class="flow-container" style="margin-top: 1rem;">
+      <div class="flow-title">THE BANKING-AS-A-SERVICE (BaaS) MODEL</div>
+      <div class="flow-diagram" style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 1rem; width: 100%;">
+        <div style="text-align: center; width: 150px;">
+          <div style="font-weight: 700; color: var(--mod7-color); font-family: 'Outfit', sans-serif; margin-bottom: 0.25rem;">1. Brand / Fintech</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); padding: 0.5rem; border-radius: 6px; background: rgba(139,92,246,0.05); font-weight: 500;">Customer App Interface</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">Shopify, Uber, Chime</div>
+        </div>
+        <div class="flow-arrow" style="color: var(--mod7-color); font-weight: bold;">➔</div>
+        <div style="text-align: center; width: 200px; border: 1px dashed var(--border-subtle); padding: 0.75rem; border-radius: var(--radius-md); background: rgba(255,255,255,0.02);">
+          <div style="font-weight: 700; color: var(--mod7-color); font-family: 'Outfit', sans-serif; margin-bottom: 0.25rem;">2. BaaS Middleware</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary);">API Ledger Platform</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">Unit, Synctera, Treasury Prime</div>
+        </div>
+        <div class="flow-arrow" style="color: var(--mod7-color); font-weight: bold;">➔</div>
+        <div style="text-align: center; width: 150px;">
+          <div style="font-weight: 700; color: var(--mod7-color); font-family: 'Outfit', sans-serif; margin-bottom: 0.25rem;">3. Sponsor Bank</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); padding: 0.5rem; border-radius: 6px; background: rgba(139,92,246,0.05); font-weight: 500;">Charter &amp; Core Rails</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">Evolve, Sutton, Lineage</div>
+        </div>
+      </div>
+    </div>
+
+      </div>
+    
+
+    <div class="chapter-tabs" data-panels="m7-panels">
+      
+        <button class="chapter-tab active" data-tab="digital">💰 Stablecoins &amp; CBDCs</button>
+      
+        <button class="chapter-tab " data-tab="agentic">🤖 Agentic Commerce</button>
+      
+        <button class="chapter-tab " data-tab="baas">🏢 BaaS &amp; Sponsor Banking</button>
+      
+        <button class="chapter-tab" data-tab="assessment">🎯 Assessment</button>
+      
+    </div>
+
+    <div id="m7-panels">
+      
+    <div class="chapter-panel active" data-tab="digital">
+      <section class="content-section" id="stablecoins">
+        <div class="section-header">
+          <div class="section-icon">💵</div>
+          <div>
+            <h2>Stablecoins & the GENIUS Act</h2>
+            <p class="section-lead">After years of regulatory uncertainty, stablecoins achieved a landmark legal framework in 2025 — shifting from a crypto-native instrument to a regulated component of mainstream payment infrastructure.</p>
+          </div>
+        </div>
+
+        <div class="key-facts-grid">
+          <div class="key-fact">
+            <div class="key-fact-value">Jul 18, 2025</div>
+            <div class="key-fact-label">GENIUS Act signed into law — first comprehensive US stablecoin regulatory framework</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">1:1</div>
+            <div class="key-fact-label">Mandatory reserve backing — USD or equivalent low-risk assets, no algorithmic stablecoins</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">PPSI</div>
+            <div class="key-fact-label">Permitted Payment Stablecoin Issuers — treated as financial institutions under the Bank Secrecy Act</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">70 markets</div>
+            <div class="key-fact-label">PayPal PYUSD expanded to 70 countries by early 2026</div>
+          </div>
+        </div>
+
+        <h3>The GENIUS Act — Key Provisions</h3>
+        <p>The <strong>Guiding and Establishing National Innovation for U.S. Stablecoins (GENIUS) Act</strong>, signed July 18, 2025, established the first comprehensive federal framework for payment stablecoins in the United States:</p>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Requirement</th><th>Detail</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Reserve Backing</strong></td><td>1:1 by USD or short-term US Treasuries / equivalent low-risk assets. Algorithmic stablecoins (backed by crypto) are excluded from PPSI status.</td></tr>
+              <tr><td><strong>BSA Treatment</strong></td><td>PPSIs are treated as financial institutions under the Bank Secrecy Act — requiring full AML, CFT, and OFAC sanctions programs.</td></tr>
+              <tr><td><strong>Customer Identification</strong></td><td>Mandatory Customer Identification Programs (CIP) — same as traditional banks.</td></tr>
+              <tr><td><strong>Consumer Priority</strong></td><td>Stablecoin holders receive priority over other creditors in an issuer insolvency — direct consumer protection.</td></tr>
+              <tr><td><strong>Implementation Timeline</strong></td><td>OCC, FDIC, FinCEN, and OFAC issuing Notice of Proposed Rulemakings (NPRs) to operationalize requirements, with NPRs issued June 2026.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Stablecoins in the Payment Stack</h3>
+        <div class="trend-card">
+          <h4>Stripe + Bridge: The Stablecoin Infrastructure Play</h4>
+          <p>Following Stripe's acquisition of stablecoin infrastructure firm <strong>Bridge</strong> in 2024, Stripe integrated stablecoin acceptance into its global payment platform. Merchants can now accept USDC and other stablecoins with settlement completing in seconds — with payouts available in fiat or stablecoins. Stripe processed nearly <span class="stat-highlight">$2 trillion</span> in total volume in 2025.</p>
+        </div>
+
+        <div class="trend-card">
+          <h4>Visa & Mastercard: Stablecoin Settlement</h4>
+          <p>Both networks are using stablecoins (primarily USDC) to modernize the interbank settlement leg of card transactions — enabling near-instant, 24/7 settlement between acquiring and issuing banks, bypassing batch ACH settlement windows. <strong>Mastercard</strong> acquired stablecoin infrastructure firm <strong>BVNK in 2026</strong> to own the underlying rails. <strong>Visa</strong> focused on network capability-building and issuer/acquirer partnerships.</p>
+        </div>
+
+        <div class="trend-card">
+          <h4>PayPal PYUSD & Circle USDC</h4>
+          <p><strong>PYUSD</strong> (issued by Paxos) expanded to 70 markets by early 2026, targeting faster, lower-cost cross-border settlement compared to SWIFT. <strong>USDC</strong> remains dominant in US institutional and B2B use — widely used by Stripe, Visa, and Mastercard for treasury management and settlement. The 2025 use case shift: from crypto trading to cross-border B2B payment settlement.</p>
+        </div>
+      </section>
+      <section class="content-section" id="cbdc">
+        <div class="section-header">
+          <div class="section-icon">🏛️</div>
+          <div>
+            <h2>Central Bank Digital Currencies: Global Landscape</h2>
+            <p class="section-lead">As of 2026, the global CBDC picture shows a clear geopolitical divide: China at the frontier, Europe in deliberation, and the United States legally prohibited from retail CBDC issuance until at least 2030.</p>
+          </div>
+        </div>
+
+        <div class="cbdc-map">
+          <div class="cbdc-card">
+            <div class="cbdc-flag">🇺🇸</div>
+            <div class="cbdc-name">United States — No Retail CBDC</div>
+            <div class="cbdc-status status-none">Legally Prohibited</div>
+            <div class="cbdc-desc">Congress embedded a four-year prohibition on the Federal Reserve issuing a retail CBDC — legally banned until at least <strong>December 31, 2030</strong>. The US approach: support private-sector stablecoins (GENIUS Act) instead. <strong>FedNow is NOT a CBDC</strong> — it is an instant payment rail, not a central bank liability to the public.</div>
+          </div>
+          <div class="cbdc-card">
+            <div class="cbdc-flag">🇨🇳</div>
+            <div class="cbdc-name">China — e-CNY (Digital Yuan)</div>
+            <div class="cbdc-status status-live">Live & Scaling</div>
+            <div class="cbdc-desc">World leader in CBDC implementation. As of <strong>January 1, 2026</strong>, e-CNY shifted from a cash-like instrument to "digital deposit money" — now officially <strong>interest-bearing</strong> when held in commercial bank wallets. Cumulative transactions: <strong>16.7 trillion yuan (~$2.3T USD)</strong> by late 2025.</div>
+          </div>
+          <div class="cbdc-card">
+            <div class="cbdc-flag">🇪🇺</div>
+            <div class="cbdc-name">European Union — Digital Euro</div>
+            <div class="cbdc-status status-planned">In Legislation</div>
+            <div class="cbdc-desc">As of <strong>June 2026</strong>, the European Parliament's ECON committee approved the digital euro, advancing toward legislation. Pilot testing targeted for <strong>2027</strong>; potential first issuance <strong>2029</strong>. Two-tier model via commercial banks; privacy-focused; designed to complement (not replace) cash.</div>
+          </div>
+          <div class="cbdc-card">
+            <div class="cbdc-flag">🌐</div>
+            <div class="cbdc-name">Project mBridge — Wholesale</div>
+            <div class="cbdc-status status-pilot">Commercializing</div>
+            <div class="cbdc-desc">Multilateral wholesale CBDC for central bank cross-border settlement. Participants: <strong>China, Hong Kong, Thailand, UAE, Saudi Arabia</strong>. BIS exited in late 2024; now independently led by participating central banks. Processing billions in settlements; moving toward full commercialization in 2026. Widely seen as a tool to reduce USD-correspondent banking dependence.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <p>⚠️ <strong>Geopolitical Context:</strong> Project mBridge and the e-CNY are widely analyzed as China's effort to build an alternative to SWIFT and USD-denominated correspondent banking for participating countries. The US CBDC prohibition and GENIUS Act stablecoin framework represent an explicit policy choice to maintain dollar dominance through private-sector dollar-pegged instruments rather than a government-issued digital dollar.</p>
+        </div>
+      </section>
+      <section class="content-section" id="mbridge">
+        <div class="section-header">
+          <div class="section-icon">🌉</div>
+          <div>
+            <h2>Project mBridge: Wholesale CBDC Cross-Border Settlement</h2>
+            <p class="section-lead">Project mBridge is the most consequential geopolitical development in global payment infrastructure — a wholesale CBDC platform that enables central banks to settle directly with each other, bypassing SWIFT and USD correspondent banking.</p>
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Dimension</th><th>Detail</th></tr></thead>
+            <tbody>
+              <tr><td><strong>What it is</strong></td><td>Multilateral wholesale CBDC platform for cross-border settlement between central banks and financial institutions — NOT a retail payment product</td></tr>
+              <tr><td><strong>Participants</strong></td><td>China (PBoC), Hong Kong (HKMA), Thailand (BOT), UAE (CBUAE), Saudi Arabia (SAMA) — with observer participation from others</td></tr>
+              <tr><td><strong>BIS exit</strong></td><td>Bank for International Settlements departed the project in late 2024, citing concerns about the geopolitical direction; project now independently led by participating central banks</td></tr>
+              <tr><td><strong>Status (2026)</strong></td><td>Processing billions in cross-border settlements; moving from pilot to commercialization phase in 2026</td></tr>
+              <tr><td><strong>Technology</strong></td><td>Purpose-built distributed ledger (not public blockchain); each participating central bank operates a node</td></tr>
+              <tr><td><strong>Geopolitical significance</strong></td><td>Creates a settlement rail for trade between participating countries that does not require USD clearing or SWIFT messaging — a structural alternative to the dollar-based correspondent banking system</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Correspondent Banking Decline</h3>
+        <p>The number of active correspondent banking relationships globally has declined approximately <span class="stat-highlight rose">20%</span> over the past decade. Large banks have de-risked by dropping relationships with smaller, higher-risk counterparties — driven by rising AML compliance costs and regulatory pressure. This "de-risking" has cut off banking access for entire regions and financial institutions, fueling demand for alternatives including mBridge, stablecoins, and Project Nexus.</p>
+      </section>
+      <section class="content-section" id="nexus">
+        <div class="section-header">
+          <div class="section-icon">🔗</div>
+          <div>
+            <h2>Project Nexus & the G20 Roadmap</h2>
+            <p class="section-lead">Project Nexus represents the most ambitious technical solution to the cross-border payments problem: a single hub that interlinks domestic instant payment systems globally, eliminating the need for bespoke bilateral connections.</p>
+          </div>
+        </div>
+
+        <h3>Project Nexus — How It Works</h3>
+        <p>Led by the BIS Innovation Hub, Project Nexus proposes a central infrastructure "nexus scheme" that sits between domestic instant payment systems (IPS). Rather than each country's IPS needing a direct bilateral connection to every other country's IPS, each connects once to Nexus — and immediately gains interoperability with all others.</p>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="process-step-num">1</div>
+            <div class="process-step-body">
+              <strong>Sender initiates in domestic IPS</strong>
+              <p>A Thai consumer initiates a cross-border transfer through their local PromptPay instant payment system. PromptPay connects to the Nexus hub.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">2</div>
+            <div class="process-step-body">
+              <strong>Nexus routes and converts</strong>
+              <p>Nexus handles foreign exchange, compliance checks, and message translation between the sending and receiving instant payment systems. FX conversion is embedded in the flow — not a manual step.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">3</div>
+            <div class="process-step-body">
+              <strong>Receiving IPS delivers funds</strong>
+              <p>Singapore's PayNow receives the converted payment message from Nexus and credits the Singapore recipient's account — in seconds, not days.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="key-facts-grid">
+          <div class="key-fact">
+            <div class="key-fact-value">5 countries</div>
+            <div class="key-fact-label">Initial Nexus participants: India, Malaysia, Philippines, Singapore, Thailand</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">End of 2027</div>
+            <div class="key-fact-label">G20 cross-border payments roadmap comprehensive target deadline — 3% average remittance cost, 25% of payments in under 1 hour</div>
+          </div>
+        </div>
+
+        <h3>G20 Cross-Border Payments Roadmap</h3>
+        <p>The G20's multi-year initiative aims to make cross-border payments: <strong>cheaper</strong> (average remittance cost below 3%), <strong>faster</strong> (25% of payments settled within 1 hour), <strong>more transparent</strong> (real-time tracking of status and fees), and <strong>more inclusive</strong> (access for individuals without bank accounts).</p>
+        <p>International bodies note that while significant technical progress has been made — particularly through ISO 20022 adoption and Project Nexus — meeting all comprehensive targets by end of 2027 remains <strong>challenging</strong>. The largest barriers are governance fragmentation, FX settlement risk management across jurisdictions, and AML/compliance harmonization.</p>
+      </section>
+      <section class="content-section" id="iso20022">
+        <div class="section-header">
+          <div class="section-icon">📋</div>
+          <div>
+            <h2>ISO 20022: The Migration Is Complete</h2>
+            <p class="section-lead">November 22, 2025 marked the end of SWIFT's coexistence period — the legacy MT message format is no longer supported for cross-border payment instructions. The entire industry has now committed to ISO 20022 MX.</p>
+          </div>
+        </div>
+
+        <div class="key-facts-grid">
+          <div class="key-fact">
+            <div class="key-fact-value">Nov 22, 2025</div>
+            <div class="key-fact-label">SWIFT MT → ISO 20022 MX coexistence period officially ended. Legacy MT 103, MT 202 messages no longer supported.</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">Nov 2026</div>
+            <div class="key-fact-label">Next SWIFT mandate: hybrid or fully structured addresses required for all cross-border payments</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">ISO 20022</div>
+            <div class="key-fact-label">XML-based messaging standard carrying rich, structured data vs. legacy fixed-field MT formats</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">FedNow + RTP</div>
+            <div class="key-fact-label">Both US instant payment networks use ISO 20022 natively — positioning the US for faster cross-border interoperability</div>
+          </div>
+        </div>
+
+        <h3>MT vs. MX: Why the Data Richness Matters</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Dimension</th><th>Legacy MT Messages</th><th>ISO 20022 MX Messages</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Format</strong></td><td>Fixed-field, character-limited text</td><td>XML-based, richly structured</td></tr>
+              <tr><td><strong>Remittance Data</strong></td><td>Limited free-text fields; often truncated</td><td>Full structured remittance information — invoice references, purpose codes, line items</td></tr>
+              <tr><td><strong>Party Data</strong></td><td>Name only; address often truncated or omitted</td><td>Structured addresses (street, city, country, postal code) + Legal Entity Identifiers (LEIs)</td></tr>
+              <tr><td><strong>Sanctions Screening</strong></td><td>High false-positive rate from incomplete/truncated names</td><td>Richer structured data → more accurate screening, fewer false positives, faster processing</td></tr>
+              <tr><td><strong>Reconciliation</strong></td><td>Manual matching at many banks</td><td>Machine-readable remittance data enables automated, straight-through reconciliation</td></tr>
+              <tr><td><strong>Analytics</strong></td><td>Limited; unstructured data hard to analyze</td><td>Structured data enables rich payment analytics, trend monitoring, fraud pattern detection</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <div class="chapter-panel" data-tab="agentic">
+      <section class="content-section" id="ai-agentic">
+        <div class="section-header">
+          <div class="section-icon">🚀</div>
+          <div>
+            <h2>Agentic Commerce: When AI Makes the Payment</h2>
+            <p class="section-lead">The logical endpoint of AI in payments isn't just detecting fraud — it's AI agents that autonomously initiate, route, and complete payments on behalf of consumers and businesses.</p>
+          </div>
+        </div>
+
+        <p>Agentic commerce refers to AI agents — operating within apps, voice assistants, or autonomous systems — that transact on a user's behalf. The payments infrastructure must evolve to support machine-to-machine transactions at scale:</p>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="process-step-num">1</div>
+            <div class="process-step-body">
+              <strong>Credential Delegation</strong>
+              <p>A user grants an AI agent scoped permission to make payments: e.g., "pay utility bills up to $500 automatically." The agent holds a delegated credential, not the full account credentials, limiting blast radius if compromised.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">2</div>
+            <div class="process-step-body">
+              <strong>Optimal Funding Source Selection</strong>
+              <p>The agent evaluates available payment methods — debit (low cost), credit (rewards), installment (cash flow management), loyalty points — and selects the optimal one per transaction. Visa's Flexible Credential enables this at the network token level.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">3</div>
+            <div class="process-step-body">
+              <strong>Real-Time Routing</strong>
+              <p>The agent routes payments across available rails: card network for merchant payments, FedNow/RTP for instant B2B disbursements, stablecoin rails for cross-border. Each route is selected based on cost, speed, and merchant acceptance.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">4</div>
+            <div class="process-step-body">
+              <strong>Reconciliation & Reporting</strong>
+              <p>The agent auto-reconciles transactions to expense categories, submits receipts to accounting systems, and generates reports — without the human ever logging into a banking app.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <p>💡 <strong>Visa Flexible Credential + Agentic Commerce:</strong> Visa is explicitly positioning the Flexible Credential (a single card that toggles between debit, credit, installment, and rewards) as the credential layer for agentic commerce — allowing AI agents to select the optimal funding source without requiring the consumer to manage multiple cards.</p>
+        </div>
+      </section>
+    </div>
+    <div class="chapter-panel" data-tab="baas">
+      <section class="content-section" id="embedded">
+        <div class="section-header">
+          <div class="section-icon">🏗️</div>
+          <div>
+            <h2>Embedded Finance & Banking as a Service</h2>
+            <p class="section-lead">Embedded finance — integrating financial products directly into non-financial platforms — has moved from a startup novelty to a primary growth driver for SaaS platforms, marketplaces, and enterprise software vendors.</p>
+          </div>
+        </div>
+
+        <div class="key-facts-grid">
+          <div class="key-fact">
+            <div class="key-fact-value">$74–150B</div>
+            <div class="key-fact-label">Global embedded finance market size in 2025 (range by scope definition)</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">$1.7T</div>
+            <div class="key-fact-label">Long-term market projection by 2034</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">3–4×</div>
+            <div class="key-fact-label">Revenue per user uplift for SaaS platforms that embed financial products</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">Apr 2026</div>
+            <div class="key-fact-label">OCC + FDIC finalized rule eliminating "reputation risk" as standalone supervisory category — easing BaaS pressure</div>
+          </div>
+        </div>
+
+        <h3>How Embedded Finance Works</h3>
+        <p>A vertical SaaS platform (e.g., restaurant management software, contractor tools, agricultural software) integrates financial services — payments acceptance, business lending, insurance, treasury — directly into its core workflow. The customer never leaves the platform to access these services. Revenue sharing between the SaaS platform and the underlying bank/fintech creates a new income stream that dwarfs subscription fees.</p>
+
+        <div class="trend-card">
+          <h4>Shopify Capital — The Flagship Embedded Lending Example</h4>
+          <p>Shopify offers merchant cash advances and business loans directly within the Shopify dashboard, using the merchant's transaction history (already on Shopify's platform) as underwriting data. Merchants apply with one click; decisions arrive in hours. Shopify Capital has originated <strong>billions in merchant loans</strong> — without Shopify being a bank. The model is powered by BaaS partnerships with licensed lenders.</p>
+        </div>
+
+        <h3>BaaS Regulatory Trajectory</h3>
+        <p>The 2023–2024 period saw heavy regulatory action against BaaS partner banks — consent decrees, consent orders, and Matters Requiring Attention (MRAs) against Blue Ridge Bank, Sutton Bank, Piermont Bank, and others, citing inadequate oversight of fintech partner activities. The pendulum shifted in 2026:</p>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Development</th><th>Date</th><th>Impact</th></tr></thead>
+            <tbody>
+              <tr><td>OCC/FDIC eliminate "reputation risk" supervisory category</td><td>April 2026</td><td>Reduces subjective examination criteria; banks less likely to exit fintech relationships based on reputational concerns alone</td></tr>
+              <tr><td>Executive Order on fintech/digital asset regulatory integration</td><td>May 2026</td><td>Directs regulators to remove barriers for fintech and digital asset companies; signals pro-innovation stance</td></tr>
+              <tr><td>GENIUS Act NPRs issued</td><td>June 2026</td><td>OCC and FDIC issue NPRs for BSA/AML standards for stablecoin issuers — creating a new compliance framework for crypto-native BaaS</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="content-section" id="rfp">
+        <div class="section-header">
+          <div class="section-icon">📨</div>
+          <div>
+            <h2>Request for Payment (RfP) — Bill Pay Reimagined</h2>
+            <p class="section-lead">Request for Payment transforms the bill payment experience: instead of customers navigating biller portals and entering account details, a payment request arrives directly in their banking app — pre-filled, requiring one tap to approve.</p>
+          </div>
+        </div>
+
+        <h3>How RfP Works</h3>
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="process-step-num">1</div>
+            <div class="process-step-body">
+              <strong>Biller Sends the Request</strong>
+              <p>A utility company generates a Request for Payment message via FedNow or RTP. The ISO 20022 message contains: amount due, due date, account reference, biller name, and rich remittance data.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">2</div>
+            <div class="process-step-body">
+              <strong>Customer Receives In-App Notification</strong>
+              <p>The customer's bank receives the RfP and presents it as a push notification in the mobile banking app. The pre-filled payment shows all details — no manual data entry required.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">3</div>
+            <div class="process-step-body">
+              <strong>One-Tap Approval</strong>
+              <p>The customer reviews and taps "Pay." The payment executes immediately on the instant payment rail (FedNow or RTP) — funds are irrevocably settled in seconds, not days.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">4</div>
+            <div class="process-step-body">
+              <strong>Automated Reconciliation</strong>
+              <p>ISO 20022 remittance data flows with the payment, allowing the biller to auto-match the payment to the invoice without manual intervention.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="key-facts-grid">
+          <div class="key-fact">
+            <div class="key-fact-value">1,776</div>
+            <div class="key-fact-label">Financial institutions live on FedNow as of late June 2026</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">1,260+</div>
+            <div class="key-fact-label">Participating institutions on TCH RTP network</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">2.27M</div>
+            <div class="key-fact-label">RTP record transactions in a single day — May 1, 2026</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">$853B</div>
+            <div class="key-fact-label">FedNow 2025 annual volume (vs. $38.2B in 2024 — massive growth)</div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <p>💡 <strong>Average FedNow payment size ~$99,000:</strong> This is driven by B2B and treasury use cases, not consumer P2P. FedNow's growth story is primarily corporate treasury and business-to-business, not consumer bill payment — yet. Consumer RfP for utility and telecom bills is the next major growth vector.</p>
+        </div>
+      </section>
+    </div>
+  
+    <div class="chapter-panel" data-tab="assessment">
+      <div class="content-section" data-section-id="assessment" id="assessment">
+        <div class="quiz-section-title">Module 7 Assessment</div>
+        <div class="quiz-wrapper" data-module="7"></div>
+      </div>
+    </div>
+
+    <div class="module-footer">
+      <a href="module6.html" class="footer-nav-btn">← Module 6: Compliance & Regulation</a>
+      <a href="index.html" class="footer-nav-btn primary">Home Page →</a>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+
+    <div class="footer-facts">
+      <div class="footer-fact">
+        <div class="footer-fact-icon">✍️</div>
+        <div>
+          <div class="footer-fact-title">Original Written Expression</div>
+          <div class="footer-fact-body">The explanations, summaries, flow descriptions, and educational narratives in this platform are original content created specifically for this Academy. No text has been copied verbatim from any copyrighted publication, proprietary rulebook, or paywalled source.</div>
+        </div>
+      </div>
+      <div class="footer-fact">
+        <div class="footer-fact-icon">📊</div>
+        <div>
+          <div class="footer-fact-title">Publicly Reported Statistics</div>
+          <div class="footer-fact-body">All figures and statistics — including transaction volumes, fee rates, and market data — are drawn from publicly available sources: company earnings releases, Federal Reserve reports, CFPB studies, and Nacha annual reports. Facts are not copyrightable.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-disclaimer">
+      <div class="footer-disclaimer-icon">⚠️</div>
+      <div>
+        <strong>Regulatory Disclaimer:</strong> The regulatory and compliance content in this platform has been simplified for educational purposes. It is intended to build conceptual understanding, not to serve as legal or compliance advice. Payment regulations are complex, jurisdiction-specific, and subject to change. <strong>Anyone making compliance, legal, or business decisions should consult the primary regulatory sources directly and seek qualified legal counsel.</strong>
+      </div>
+    </div>
+
+    <div class="footer-sources-title">Primary Sources &amp; References</div>
+    <div class="footer-sources-grid">
+      <a class="footer-source-tag" href="https://www.nacha.org" target="_blank" rel="noopener">Nacha — ACH Operating Rules</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/paymentsystems.htm" target="_blank" rel="noopener">Federal Reserve — Payment Systems</a>
+      <a class="footer-source-tag" href="https://www.frbservices.org/financial-services/fednow" target="_blank" rel="noopener">Federal Reserve — FedNow Service</a>
+      <a class="footer-source-tag" href="https://www.theclearinghouse.org/payment-systems/rtp" target="_blank" rel="noopener">The Clearing House — RTP Network</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/pubs/fedpoint/fed43.htm" target="_blank" rel="noopener">Federal Reserve — Fedwire Funds</a>
+      <a class="footer-source-tag" href="https://www.cfpb.gov/rules-policy/regulations/1005/" target="_blank" rel="noopener">CFPB — Regulation E (EFTA)</a>
+      <a class="footer-source-tag" href="https://usa.visa.com/run-your-business/merchant-resources/interchange-reimbursement-fees.html" target="_blank" rel="noopener">Visa — Interchange Reimbursement Fees</a>
+      <a class="footer-source-tag" href="https://www.mastercard.us/en-us/business/overview/support/merchant-interchange-rates.html" target="_blank" rel="noopener">Mastercard — Interchange Rates</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/releases/z1/" target="_blank" rel="noopener">Federal Reserve — Z.1 Financial Accounts</a>
+      <a class="footer-source-tag" href="https://www.fdic.gov/regulations/applications/financial/" target="_blank" rel="noopener">FDIC — Banking Regulations</a>
+      <a class="footer-source-tag" href="https://www.swift.com" target="_blank" rel="noopener">SWIFT — Global Messaging Network</a>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/insights.js"></script>
+<script src="js/questions-m7.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

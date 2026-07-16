@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 3: Consumer Payments | Payments Academy</title>
+  <meta name="description" content="Understand the retail consumer layer: analyze closed/open-loop mobile wallets, Zelle directory routing, card tokenization, push-to-card payouts, and BNPL retail lending models." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .hero-badge { background: rgba(var(--mod3-color-rgb, 99, 102, 241), 0.12); border-color: rgba(var(--mod3-color-rgb, 99, 102, 241), 0.35); color: var(--mod3-color); }
+    .module-hero::before { background: radial-gradient(circle, var(--mod3-color), transparent 70%); top: -40%; left: -10%; width: 500px; height: 500px; }
+    .module-hero::after  { background: radial-gradient(circle, #6366f1, transparent 70%); }
+    .sidebar-nav li a.active::before { background: var(--mod3-color); }
+    .section-icon { background: rgba(var(--mod3-color-rgb, 99, 102, 241), 0.12); color: var(--mod3-color); }
+    .key-fact::before { background: var(--mod3-color); }
+    .process-step-num { border-color: rgba(var(--mod3-color-rgb, 99, 102, 241), 0.4); color: var(--mod3-color); }
+    .chapter-tab.active { background: var(--mod3-color); }
+    .check { color: #10b981; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-icon">⚡</div>Payments Academy</a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="module-hero">
+  <div class="hero-badge">MODULE 03</div>
+  <h1 class="hero-title">Consumer Payments</h1>
+  <p class="hero-desc">Understand the retail consumer layer: analyze closed/open-loop mobile wallets, Zelle directory routing, card tokenization, push-to-card payouts, and BNPL retail lending models.</p>
+  <div class="hero-meta">
+    <span class="hero-meta-item">📚 3 Chapters</span>
+    <span class="hero-meta-item">⏱ Est. 45 Mins</span>
+    <span class="hero-meta-item">🎯 Practitioner Level</span>
+    <span class="hero-meta-item">💡 Comprehensive Depth</span>
+  </div>
+</header>
+
+<div class="module-layout">
+  <aside class="sidebar">
+    
+    <div class="sidebar-title">P2P Networks</div>
+    <ul class="sidebar-nav">
+      <li><a href="#z-overview" data-section="z-overview">Zelle Overview</a></li>
+      <li><a href="#z-mechanics" data-section="z-mechanics">Zelle Under the Hood</a></li>
+      <li><a href="#z-settlement" data-section="z-settlement">Zelle Settlement</a></li>
+      <li><a href="#z-business" data-section="z-business">Zelle for Business</a></li>
+      <li><a href="#pp-overview" data-section="pp-overview">PayPal Wallet</a></li>
+      <li><a href="#pp-architecture" data-section="pp-architecture">PayPal Architecture</a></li>
+      <li><a href="#pp-fees" data-section="pp-fees">PayPal MDR Economics</a></li>
+      <li><a href="#v-overview" data-section="v-overview">Venmo Social Wallet</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Wallets &amp; Payouts</div>
+    <ul class="sidebar-nav">
+      <li><a href="#tokenization" data-section="tokenization">Wallet Tokenization</a></li>
+      <li><a href="#biometric" data-section="biometric">Biometrics</a></li>
+      <li><a href="#db-pushtocard" data-section="db-pushtocard">Push-to-Card Payouts</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Buy Now Pay Later</div>
+    <ul class="sidebar-nav">
+      <li><a href="#bnpl" data-section="bnpl">BNPL Installments</a></li>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">Assessment</div>
+    <ul class="sidebar-nav">
+      <li><a href="#assessment" data-section="assessment">Module Assessment</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    
+      <div class="highlights-container" style="background: var(--bg-glass); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15); backdrop-filter: blur(10px);">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--mod3-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📊</span> Module Highlights &amp; Architecture
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5;">
+          A high-level visual summary of this module. Click through the tabs below for the complete practitioner-grade deep dives.
+        </p>
+        
+    <div class="flow-container" style="margin-top: 1rem;">
+      <div class="flow-title">WALLET TOKENIZATION FLOW (Apple/Google Pay)</div>
+      <div class="flow-diagram" style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="text-align: center; min-width: 140px;">
+          <div style="font-weight: 700; color: var(--accent-rose); font-size: 0.95rem; font-family: 'Outfit', sans-serif; margin-bottom: 0.25rem;">FPAN</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); padding: 0.5rem; border-radius: 6px; background: rgba(244,63,94,0.05); font-weight: 500;">16-Digit Plastic Card</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">Stored by Issuer/Network</div>
+        </div>
+        <div class="flow-arrow" style="font-size: 1.5rem; color: var(--mod3-color);">⇆</div>
+        <div style="text-align: center; border: 1px dashed var(--border-subtle); padding: 0.75rem 1.25rem; border-radius: var(--radius-md); background: rgba(255,255,255,0.02); min-width: 180px;">
+          <strong style="font-family: 'Outfit', sans-serif; font-size: 0.9rem; color: var(--text-primary);">Token Service Provider (TSP)</strong>
+          <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.25rem;">Maps &amp; validates surrogate tokens</div>
+        </div>
+        <div class="flow-arrow" style="font-size: 1.5rem; color: var(--mod3-color);">⇆</div>
+        <div style="text-align: center; min-width: 140px;">
+          <div style="font-weight: 700; color: var(--mod3-color); font-size: 0.95rem; font-family: 'Outfit', sans-serif; margin-bottom: 0.25rem;">DPAN</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); padding: 0.5rem; border-radius: 6px; background: rgba(56,189,248,0.05); font-weight: 500;">Token in Secure Enclave</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">Sent to POS / Merchant</div>
+        </div>
+      </div>
+    </div>
+
+      </div>
+    
+
+    <div class="chapter-tabs" data-panels="m3-panels">
+      
+        <button class="chapter-tab active" data-tab="p2p">📱 P2P Networks</button>
+      
+        <button class="chapter-tab " data-tab="wallets">💳 Wallets &amp; Payouts</button>
+      
+        <button class="chapter-tab " data-tab="bnpl">💰 Buy Now Pay Later</button>
+      
+        <button class="chapter-tab" data-tab="assessment">🎯 Assessment</button>
+      
+    </div>
+
+    <div id="m3-panels">
+      
+    <div class="chapter-panel active" data-tab="p2p">
+      <div class="content-section" data-section-id="z-overview" id="z-overview">
+          <div class="section-header">
+            <div class="section-icon">💜</div>
+            <div><div class="section-num">1.1</div><h2>Zelle — Overview &amp; History</h2></div>
+          </div>
+          <p><strong>Zelle</strong> is a bank-owned digital payment network that allows consumers to send money directly between US bank accounts using only a phone number or email address. It is owned and operated by <strong>Early Warning Services (EWS)</strong> — a fintech consortium founded by seven of the nation's largest banks: Bank of America, Capital One, JPMorgan Chase, PNC Bank, Truist, U.S. Bank, and Wells Fargo.</p>
+          <p>Zelle launched in June 2017 as the successor to the fragmented <strong>clearXchange</strong> network (which had existed since 2011 but suffered from poor UX and slow adoption). The rebranding and consolidation under Zelle created a cohesive experience embedded directly into bank apps — no separate app required for customers of participating institutions.</p>
+
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-year">2011</div><div class="timeline-text"><strong>clearXchange founded</strong> by Bank of America, JPMorgan Chase, and Wells Fargo. First attempt at bank-owned P2P. Slow, clunky, limited adoption.</div></div>
+            <div class="timeline-item"><div class="timeline-year">2016</div><div class="timeline-text">Early Warning Services acquires clearXchange. Plans to relaunch as a unified, consumer-friendly brand.</div></div>
+            <div class="timeline-item"><div class="timeline-year">June 2017</div><div class="timeline-text"><strong>Zelle launches</strong> embedded in major bank apps. Targets Venmo directly. Key differentiator: no separate app required for most users.</div></div>
+            <div class="timeline-item"><div class="timeline-year">2018–2021</div><div class="timeline-text">Rapid growth. Zelle surpasses Venmo in total transaction dollar volume. Reaches 1,000+ financial institution participants.</div></div>
+            <div class="timeline-item"><div class="timeline-year">2022</div><div class="timeline-text">US Senate Banking Committee scrutinizes Zelle fraud. Banks pressured to improve fraud reimbursement policies.</div></div>
+            <div class="timeline-item"><div class="timeline-year">2023</div><div class="timeline-text"><strong>$806 billion</strong> transacted across 2.9 billion payments. Zelle is embedded in 2,200+ bank and credit union apps.</div></div>
+            <div class="timeline-item"><div class="timeline-year">2024</div><div class="timeline-text">CFPB sues EWS and major Zelle banks over inadequate fraud protections. Significant regulatory and policy developments ongoing.</div></div>
+          </div>
+
+          <div class="key-facts">
+            <div class="key-fact"><div class="key-fact-label">Launched</div><div class="key-fact-value">2017</div><div class="key-fact-note">Replaced clearXchange</div></div>
+            <div class="key-fact"><div class="key-fact-label">Owner</div><div class="key-fact-value" style="font-size:1rem">Early Warning Services</div><div class="key-fact-note">Consortium of 7 major banks</div></div>
+            <div class="key-fact"><div class="key-fact-label">Participating FIs</div><div class="key-fact-value">2,200+</div><div class="key-fact-note">Banks &amp; credit unions</div></div>
+            <div class="key-fact"><div class="key-fact-label">2023 Volume</div><div class="key-fact-value">$806B</div><div class="key-fact-note">2.9 billion transactions</div></div>
+            <div class="key-fact"><div class="key-fact-label">Consumer Fee</div><div class="key-fact-value">Free</div><div class="key-fact-note">No consumer-facing fees</div></div>
+            <div class="key-fact"><div class="key-fact-label">Wallet</div><div class="key-fact-value">None</div><div class="key-fact-note">Bank-to-bank, no stored value</div></div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="z-mechanics" id="z-mechanics">
+          <div class="section-header">
+            <div class="section-icon">⚙️</div>
+            <div><div class="section-num">1.2</div><h2>How Zelle Works Under the Hood</h2></div>
+          </div>
+
+          <div class="callout callout-info">
+            <div class="callout-icon">💡</div>
+            <div class="callout-content">
+              <h4>The Most Important Thing to Understand About Zelle</h4>
+              <p><strong>Zelle does not move money.</strong> It is a messaging and directory layer. The actual money movement happens via ACH between the participating banks. What makes Zelle feel "instant" is that banks extend intraday credit — they debit the sender and credit the receiver on their own ledgers before ACH settlement clears in the background.</p>
+            </div>
+          </div>
+
+          <h3>The EWS Token Directory</h3>
+          <p>At the core of Zelle is the <strong>Early Warning Services (EWS) directory</strong> — a centralized database that maps tokens (phone numbers and email addresses) to bank accounts at participating financial institutions. When you register for Zelle, your bank submits your phone/email to EWS, linking it to your account. No account numbers are exchanged between sender and receiver — privacy is protected by this tokenization layer.</p>
+
+          <div class="flow-container">
+            <div class="flow-title">ZELLE IN-NETWORK PAYMENT FLOW</div>
+            <div class="flow-diagram">
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#2dd4bf;">
+                  <div class="flow-node-icon">📱</div>
+                  <div class="flow-node-name">Sender</div>
+                  <div class="flow-node-abbr">Bank App</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#2dd4bf;"><div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #2dd4bf;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div></div>
+                <div class="flow-arrow-label">Send to phone/email</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#06b6d4;">
+                  <div class="flow-node-icon">🗂</div>
+                  <div class="flow-node-name">EWS Directory</div>
+                  <div class="flow-node-abbr">Token lookup</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#06b6d4;"><div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #06b6d4;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div></div>
+                <div class="flow-arrow-label">Route to receiver's bank</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#10b981;">
+                  <div class="flow-node-icon">🏦</div>
+                  <div class="flow-node-name">Receiver's Bank</div>
+                  <div class="flow-node-abbr">Credits account</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#10b981;"><div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #10b981;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div></div>
+                <div class="flow-arrow-label">Funds available instantly</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#10b981;">
+                  <div class="flow-node-icon">✅</div>
+                  <div class="flow-node-name">Receiver</div>
+                  <div class="flow-node-abbr">Funds credited</div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;">↻ <em>ACH settlement occurs in the background between the two banks — typically overnight or same-day ACH</em></p>
+          </div>
+
+          <h3>In-Network vs. Out-of-Network</h3>
+          <div class="two-col">
+            <div class="card">
+              <h4 style="color:var(--accent-emerald);margin-bottom:0.75rem">✅ In-Network (both at Zelle banks)</h4>
+              <p style="font-size:0.875rem">Both sender and receiver have accounts at Zelle-participating institutions. EWS routes the message, both banks update their ledgers immediately. <strong>Receiver sees funds within seconds to minutes.</strong> Banks settle via ACH in the background. The consumer experience is seamless and instant.</p>
+            </div>
+            <div class="card">
+              <h4 style="color:var(--accent-gold);margin-bottom:0.75rem">⏳ Out-of-Network (receiver not enrolled)</h4>
+              <p style="font-size:0.875rem">If the receiver's bank isn't on Zelle, the receiver gets an invitation link to download the Zelle standalone app and link a debit card or bank account manually. Settlement occurs via ACH (1–3 days). <strong>Not instant.</strong> This path is less common as coverage has grown to 2,200+ FIs.</p>
+            </div>
+          </div>
+
+          <h3>Why Banks Fund Immediately (Intraday Credit Risk)</h3>
+          <p>When the sender's bank debits the sender's account, it credits the receiver's bank immediately — before ACH settles. This means the sending bank extends <strong>intraday credit</strong> to the receiving bank. If the sending account actually has insufficient funds when ACH attempts to clear, the bank absorbs that loss. Banks manage this risk through real-time balance checks at the time of Zelle initiation and internal fraud scoring.</p>
+        </div>
+      <div class="content-section" data-section-id="z-settlement" id="z-settlement">
+          <div class="section-header">
+            <div class="section-icon">💰</div>
+            <div><div class="section-num">1.3</div><h2>Funding &amp; Settlement</h2></div>
+          </div>
+          <ul>
+            <li><strong>No wallet:</strong> Zelle has no stored-value wallet. Funds go directly from one bank account to another. This is a fundamental architectural difference from PayPal and Venmo.</li>
+            <li><strong>Funding source:</strong> Always a bank account (checking or savings). No credit cards, no debit card-to-debit card.</li>
+            <li><strong>Back-end settlement:</strong> Overnight ACH batch (most common) or Same-Day ACH. Banks choose their settlement method; consumers don't see this layer.</li>
+            <li><strong>No consumer fees:</strong> Zelle is free for consumers. Banks absorb the cost as a competitive feature (retention, deposit stickiness).</li>
+            <li><strong>Business accounts:</strong> Banks may charge business customers a per-transaction fee for Zelle Business.</li>
+            <li><strong>Irrevocability:</strong> Once a Zelle payment is sent to an enrolled receiver, it <strong>cannot be reversed</strong>. The sending bank has no mechanism to claw back funds from the receiving bank after crediting.</li>
+          </ul>
+
+          <h3>Transaction Limits (Vary by Bank)</h3>
+          <table class="data-table">
+            <thead><tr><th>Bank</th><th>Daily Send Limit</th><th>Monthly Limit</th><th>Per Transaction</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Bank of America</strong></td><td>$3,500</td><td>$10,000</td><td>$2,500</td></tr>
+              <tr><td><strong>Chase</strong></td><td>$2,500</td><td>N/A</td><td>$2,500</td></tr>
+              <tr><td><strong>Wells Fargo</strong></td><td>$3,500</td><td>$20,000</td><td>$2,500</td></tr>
+              <tr><td><strong>U.S. Bank</strong></td><td>$1,500</td><td>$5,000</td><td>$1,500</td></tr>
+              <tr><td><strong>Citibank</strong></td><td>$2,000</td><td>$10,000</td><td>$2,000</td></tr>
+              <tr><td><strong>Zelle Standalone App</strong></td><td>$500</td><td>$1,000</td><td>$500</td></tr>
+            </tbody>
+          </table>
+        </div>
+      <div class="content-section" data-section-id="z-business" id="z-business">
+          <div class="section-header">
+            <div class="section-icon">🏢</div>
+            <div><div class="section-num">1.5</div><h2>Business Use Cases</h2></div>
+          </div>
+          <p><strong>Zelle for Business</strong> allows small and medium businesses to send and receive payments via Zelle through their bank's business banking app. This is distinct from the consumer-facing product — it's a bank-enabled business service.</p>
+          <div class="two-col">
+            <div class="card">
+              <h4 style="margin-bottom:0.75rem">✅ Strong Use Cases</h4>
+              <ul style="font-size:0.875rem;color:var(--text-secondary);padding-left:1.25rem">
+                <li>Small business payroll (paying contractors, gig workers)</li>
+                <li>Service business collections (hair salons, handymen, cleaning services)</li>
+                <li>Real estate: rental deposits, earnest money between known parties</li>
+                <li>Landlord-tenant rent collection</li>
+                <li>Healthcare: patient balance collection</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4 style="margin-bottom:0.75rem">❌ Poor Fit / Limitations</h4>
+              <ul style="font-size:0.875rem;color:var(--text-secondary);padding-left:1.25rem">
+                <li>E-commerce: no integration with shopping carts or APIs</li>
+                <li>Disputes: no escrow or buyer/seller protection mechanism</li>
+                <li>International: US domestic only</li>
+                <li>High-value B2B: limits too low for most commercial use cases</li>
+                <li>Volume: not designed for bulk or automated payment workflows</li>
+              </ul>
+            </div>
+          </div>
+          <p><strong>Zelle Pay with Zelle (ZPwZ):</strong> An in-store QR code payment experience being piloted at select merchants. Consumer scans QR code at checkout, confirms in their bank app, bank-to-bank transfer executes. Very early stage, not widely deployed as of 2025.</p>
+        </div>
+      <div class="content-section" data-section-id="pp-overview" id="pp-overview">
+          <div class="section-header">
+            <div class="section-icon">🔵</div>
+            <div><div class="section-num">2.1</div><h2>PayPal — Overview &amp; History</h2></div>
+          </div>
+          <p><strong>PayPal</strong> is the world's largest licensed digital payments company — a <strong>money transmitter</strong>, not a bank. Founded in 1998 by Max Levchin, Peter Thiel, and Luke Nosek (later merging with Elon Musk's X.com), PayPal pioneered internet-native payments and remains one of the most consequential fintech companies ever built.</p>
+          <p>PayPal's regulatory classification is the key to understanding it: as a <strong>licensed money transmitter</strong> registered with FinCEN and holding licenses in all 50 US states, PayPal operates a digital wallet that stores real monetary value — completely unlike Zelle's bank-passthrough model.</p>
+
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-year">1998</div><div class="timeline-text"><strong>Confinity founded</strong> by Levchin, Thiel, and Nosek to develop cryptographic security for handheld devices. Pivots to digital wallet.</div></div>
+            <div class="timeline-item"><div class="timeline-year">2000</div><div class="timeline-text">Confinity merges with Elon Musk's <strong>X.com</strong>. Combined company renames to PayPal. Explosive growth through eBay seller adoption.</div></div>
+            <div class="timeline-item"><div class="timeline-year">2002</div><div class="timeline-text"><strong>IPO</strong> on NASDAQ. Three weeks later, eBay acquires PayPal for $1.5 billion. Becomes the default eBay payment method.</div></div>
+            <div class="timeline-item"><div class="timeline-year">2013</div><div class="timeline-text">PayPal acquires <strong>Braintree</strong> for $800 million — which includes Venmo. Expands into mobile and developer-first payments.</div></div>
+            <div class="timeline-item"><div class="timeline-year">2015</div><div class="timeline-text"><strong>Spinoff from eBay</strong> as independent publicly traded company. Market cap: ~$45B. Now operates independently.</div></div>
+            <div class="timeline-item"><div class="timeline-year">2020</div><div class="timeline-text">COVID-era boom: 72 million new accounts added in one year. Crypto buying, Honey acquisition, BNPL launch.</div></div>
+            <div class="timeline-item"><div class="timeline-year">2023</div><div class="timeline-text"><strong>426 million active accounts</strong>. Revenue: $29.8B. New CEO Alex Chriss hired; strategic refocus on profitability over user growth.</div></div>
+          </div>
+
+          <div class="key-facts">
+            <div class="key-fact"><div class="key-fact-label">Founded</div><div class="key-fact-value">1998</div><div class="key-fact-note">San Jose, California</div></div>
+            <div class="key-fact"><div class="key-fact-label">Active Accounts</div><div class="key-fact-value">426M</div><div class="key-fact-note">As of 2023</div></div>
+            <div class="key-fact"><div class="key-fact-label">Markets</div><div class="key-fact-value">200+</div><div class="key-fact-note">25 currencies supported</div></div>
+            <div class="key-fact"><div class="key-fact-label">2023 Revenue</div><div class="key-fact-value">$29.8B</div><div class="key-fact-note">Payments + interest</div></div>
+            <div class="key-fact"><div class="key-fact-label">Regulatory Status</div><div class="key-fact-value" style="font-size:0.9rem">Money Transmitter</div><div class="key-fact-note">All 50 states + FinCEN MSB</div></div>
+            <div class="key-fact"><div class="key-fact-label">Type</div><div class="key-fact-value">Digital Wallet</div><div class="key-fact-note">Stores monetary value</div></div>
+          </div>
+        </div>
+      <div class="content-section" data-section-id="pp-architecture" id="pp-architecture">
+          <div class="section-header">
+            <div class="section-icon">🏗</div>
+            <div><div class="section-num">2.2</div><h2>Network Architecture</h2></div>
+          </div>
+          <p>PayPal operates a <strong>two-sided network</strong> connecting buyers and sellers (merchants). At its core is a digital wallet — a stored-value account on PayPal's own ledger. This is fundamentally different from Zelle: PayPal maintains its own ledger of balances, and many transactions never touch an external payment network at all.</p>
+
+          <h3>Funding Sources (Buyer Side)</h3>
+          <table class="data-table">
+            <thead><tr><th>Funding Source</th><th>How It Works</th><th>Settlement to PayPal</th><th>Cost to User</th></tr></thead>
+            <tbody>
+              <tr><td><strong>PayPal Balance</strong></td><td>Pre-loaded funds on PayPal ledger</td><td>Internal ledger (no external network)</td><td>Free</td></tr>
+              <tr><td><strong>Bank Account (ACH)</strong></td><td>ACH pull from checking/savings</td><td>ACH (1-3 days)</td><td>Free (P2P); merchant fees apply</td></tr>
+              <tr><td><strong>Debit Card</strong></td><td>Card-present style authorization</td><td>Card network (Visa/MC)</td><td>Free (P2P)</td></tr>
+              <tr><td><strong>Credit Card</strong></td><td>Card authorization via network</td><td>Card network (T+1)</td><td>3% surcharge for P2P</td></tr>
+              <tr><td><strong>PayPal Credit</strong></td><td>Revolving credit (Synchrony Bank)</td><td>Credit facility</td><td>Interest if not paid in full</td></tr>
+              <tr><td><strong>Crypto</strong></td><td>Auto-converted at time of purchase</td><td>Internal crypto-to-USD conversion</td><td>Spread fee</td></tr>
+            </tbody>
+          </table>
+
+          <div class="flow-container">
+            <div class="flow-title">PAYPAL TRANSACTION FLOW — GOODS &amp; SERVICES</div>
+            <div class="flow-diagram">
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#0070ba;">
+                  <div class="flow-node-icon">🛒</div>
+                  <div class="flow-node-name">Buyer</div>
+                  <div class="flow-node-abbr">PayPal checkout</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#0070ba;"><div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #0070ba;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div></div>
+                <div class="flow-arrow-label">Payment initiated</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#0070ba;">
+                  <div class="flow-node-icon">💻</div>
+                  <div class="flow-node-name">PayPal Platform</div>
+                  <div class="flow-node-abbr">Fraud score, route</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#0070ba;"><div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #0070ba;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div></div>
+                <div class="flow-arrow-label">Ledger credit to seller</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#10b981;">
+                  <div class="flow-node-icon">🏪</div>
+                  <div class="flow-node-name">Seller</div>
+                  <div class="flow-node-abbr">PayPal balance credited</div>
+                </div>
+              </div>
+              <div class="flow-arrow">
+                <div class="flow-arrow-line" style="background:#10b981;"><div style="position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:7px solid #10b981;border-top:5px solid transparent;border-bottom:5px solid transparent;"></div></div>
+                <div class="flow-arrow-label">ACH withdrawal (free, 1-3d) or Instant (1.75%)</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-box" style="border-color:#10b981;">
+                  <div class="flow-node-icon">🏦</div>
+                  <div class="flow-node-name">Seller's Bank</div>
+                  <div class="flow-node-abbr">Funds deposited</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3>Instant Transfer: Visa Direct / Mastercard Send</h3>
+          <p>When a seller wants funds from their PayPal balance immediately (rather than waiting 1-3 days for ACH), they can use <strong>Instant Transfer</strong>. PayPal pushes funds via <strong>Visa Direct</strong> or <strong>Mastercard Send</strong> to the seller's linked debit card — typically available within minutes. Fee: <strong>1.75%</strong> of the transfer amount (minimum $0.25, maximum $25). This push-to-debit mechanism is how many platforms (Venmo, DoorDash, Lyft, Uber) power their "instant payout" features.</p>
+        </div>
+      <div class="content-section" data-section-id="pp-fees" id="pp-fees">
+          <div class="section-header">
+            <div class="section-icon">💵</div>
+            <div><div class="section-num">2.3</div><h2>Merchant Acquiring &amp; Fee Structure</h2></div>
+          </div>
+          <p>PayPal is its own payment processor AND network. Merchants that accept PayPal are essentially connecting to the PayPal two-sided network — they don't need a separate acquiring bank (though PayPal is also available as a payment method via Braintree, their developer-focused payment gateway).</p>
+
+          <table class="data-table">
+            <thead><tr><th>Transaction Type</th><th>Rate</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Online checkout (standard)</strong></td><td>3.49% + $0.49</td><td>Consumer-initiated via PayPal button</td></tr>
+              <tr><td><strong>Card processing (Braintree)</strong></td><td>2.59% + $0.49</td><td>Custom card processing via API</td></tr>
+              <tr><td><strong>In-store QR code</strong></td><td>2.29% + $0.09</td><td>Consumer scans QR, PayPal balance or bank</td></tr>
+              <tr><td><strong>Invoicing</strong></td><td>3.49% + $0.49</td><td>PayPal invoice payment</td></tr>
+              <tr><td><strong>Venmo (business profile)</strong></td><td>1.9% + $0.10</td><td>Consumer pays business via Venmo tab</td></tr>
+              <tr><td><strong>P2P (Friends &amp; Family)</strong></td><td>Free (bank/balance); 3% (credit card)</td><td>No purchase protection</td></tr>
+              <tr><td><strong>Chargeback fee</strong></td><td>$20.00</td><td>Per dispute opened; refunded if won</td></tr>
+              <tr><td><strong>Micropayment rate</strong></td><td>5% + $0.05</td><td>For transactions under $10</td></tr>
+            </tbody>
+          </table>
+
+          <h3>PayPal Purchase Protection &amp; Seller Protection</h3>
+          <div class="two-col">
+            <div class="card">
+              <h4 style="color:var(--accent-emerald);margin-bottom:0.75rem">🛡 Purchase Protection (Buyer)</h4>
+              <p style="font-size:0.875rem;color:var(--text-secondary)">For Goods &amp; Services transactions, PayPal guarantees buyers a full refund if: (1) the item doesn't arrive, or (2) the item is significantly not as described (SNAD). The buyer must open a dispute within 180 days. This makes PayPal far superior to Zelle/Venmo for marketplace transactions.</p>
+            </div>
+            <div class="card">
+              <h4 style="color:var(--accent-sky);margin-bottom:0.75rem">🛡 Seller Protection</h4>
+              <p style="font-size:0.875rem;color:var(--text-secondary)">Sellers are protected against unauthorized transaction chargebacks and Item Not Received claims if they: (1) ship to the PayPal-confirmed address, (2) provide tracking, (3) mark orders as shipped in PayPal. Does NOT cover intangibles, custom items, or if buyer paid via Friends &amp; Family.</p>
+            </div>
+          </div>
+        </div>
+      
+    <div class="content-section" data-section-id="v-overview" id="v-overview">
+      <div class="section-header">
+        <div class="section-icon">💙</div>
+        <div>
+          <div class="section-num">3.1</div>
+          <h2>Venmo — Overview &amp; History</h2>
+        </div>
+      </div>
+      <p><strong>Venmo</strong> is a social payment app that blends money transfers with a social media-style activity feed. Originally designed purely for peer-to-peer (P2P) splitting among friends, it has evolved into a broader financial platform with debit and credit cards, crypto, and business payments. It operates as a wholly-owned subsidiary of PayPal — acquired in 2013 through PayPal's $800 million purchase of Braintree.</p>
+      <p>Venmo's defining characteristic — what made it culturally distinctive and drove viral growth — is its <strong>public social feed</strong> where users see friends' payment activity (descriptions visible; amounts hidden by default). This social layer created powerful network effects: people joined because their friends were on it.</p>
+
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-year">2009</div><div class="timeline-text"><strong>Venmo founded</strong> by Andrew Kortina and Iqram Magdon-Ismail at University of Pennsylvania. Original concept: payments via SMS.</div></div>
+        <div class="timeline-item"><div class="timeline-year">2010</div><div class="timeline-text">Pivots to smartphone app. Adds the social feed — friends can see payment emoji and descriptions. Viral among college students.</div></div>
+        <div class="timeline-item"><div class="timeline-year">2012</div><div class="timeline-text">Braintree acquires Venmo for $26.2 million. Processing $10 million/month in payments.</div></div>
+        <div class="timeline-item"><div class="timeline-year">2013</div><div class="timeline-text">PayPal acquires Braintree (and Venmo) for $800 million. Venmo begins hyper-growth under PayPal's balance sheet.</div></div>
+        <div class="timeline-item"><div class="timeline-year">2018</div><div class="timeline-text">Venmo launches <strong>Pay with Venmo</strong> for merchants. First step toward revenue monetization beyond P2P.</div></div>
+        <div class="timeline-item"><div class="timeline-year">2020</div><div class="timeline-text">Venmo Debit Card (Mastercard) and Venmo Credit Card (Visa/Synchrony) launched. Crypto buying enabled.</div></div>
+        <div class="timeline-item"><div class="timeline-year">2023</div><div class="timeline-text"><strong>78 million active accounts</strong>. Revenue: ~$935 million (est.). US-only market.</div></div>
+      </div>
+
+      <div class="key-facts">
+        <div class="key-fact"><div class="key-fact-label">Founded</div><div class="key-fact-value">2009</div><div class="key-fact-note">By Kortina &amp; Magdon-Ismail</div></div>
+        <div class="key-fact"><div class="key-fact-label">Parent</div><div class="key-fact-value">PayPal</div><div class="key-fact-note">Acquired 2013 via Braintree</div></div>
+        <div class="key-fact"><div class="key-fact-label">Active Users</div><div class="key-fact-value">78M</div><div class="key-fact-note">US-only</div></div>
+        <div class="key-fact"><div class="key-fact-label">2023 Revenue</div><div class="key-fact-value">~$935M</div><div class="key-fact-note">Estimated</div></div>
+        <div class="key-fact"><div class="key-fact-label">Type</div><div class="key-fact-value">Wallet + Social</div><div class="key-fact-note">Stored-value + social feed</div></div>
+        <div class="key-fact"><div class="key-fact-label">Market</div><div class="key-fact-value">US Only</div><div class="key-fact-note">Domestic operations only</div></div>
+      </div>
+    </div>
+  
+    </div>
+    <div class="chapter-panel" data-tab="wallets">
+      <section class="content-section" id="tokenization">
+        <div class="section-header">
+          <div class="section-icon">🔐</div>
+          <div>
+            <h2>Network Tokenization & Digital Wallets</h2>
+            <p class="section-lead">Tokenization has evolved from a fraud-reduction tool into the foundational credential layer of modern digital commerce — and by 2030, Mastercard aims to eliminate manual card number entry entirely.</p>
+          </div>
+        </div>
+
+        <div class="key-facts-grid">
+          <div class="key-fact">
+            <div class="key-fact-value">12.6B</div>
+            <div class="key-fact-label">Visa tokens in circulation by early 2025 (reached 10B milestone in 2024)</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">2030</div>
+            <div class="key-fact-label">Mastercard's goal: eliminate manual card number entry for e-commerce globally — replaced entirely by tokenized "Click to Pay"</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">20M</div>
+            <div class="key-fact-label">Visa Flexible Credential credentials globally by early 2026; 20+ new issuers implementing in 2026</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">$2T+</div>
+            <div class="key-fact-label">Tokenized assets market projected by 2026 (including real-world asset tokenization)</div>
+          </div>
+        </div>
+
+        <h3>FPAN vs. DPAN Mechanics</h3>
+        <p>In digital wallets, security is maintained by separating the cardholder's actual credentials from the device credentials:</p>
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+          <li><strong>FPAN (Funding Primary Account Number):</strong> The real 16-digit card number printed on the plastic card. It is never stored on the mobile device or shared with the merchant.</li>
+          <li><strong>DPAN (Device Primary Account Number):</strong> A tokenized surrogate card number generated by the card network and stored securely in the phone's hardware vault (e.g., Apple's Secure Enclave). When a transaction occurs, the DPAN is sent in place of the FPAN, securing the real card details from merchant database compromises.</li>
+        </ul>
+
+        <h3>Visa Flexible Credential (VFC)</h3>
+        <p>The Visa Flexible Credential — formerly the Visa Multiple-Account Access Service (VMAAS) — is a single credential that can toggle between multiple underlying funding sources: debit, credit, installments, and rewards. The consumer or an AI agent selects the optimal funding source per transaction within the issuer's app. By early 2026, VFC had reached approximately <span class="stat-highlight">20 million credentials globally</span> and was introduced to Zilch cardholders in the UK in May 2026.</p>
+
+        <h3>Digital Wallet Market (2025)</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Wallet</th><th>Global Users</th><th>2025 Transaction Volume</th><th>Strength</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Apple Pay</strong></td>
+                <td>~650M</td>
+                <td>~$8.7 trillion</td>
+                <td>US retail dominance; Gen Z preferred wallet; high-value transactions; Face ID biometric</td>
+              </tr>
+              <tr>
+                <td><strong>Google Pay / Wallet</strong></td>
+                <td>~500M</td>
+                <td>~$5.2 trillion</td>
+                <td>Global reach; emerging markets (India, SE Asia); Android-native; 2024 rebrand to Google Wallet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Both providers are evolving beyond tap-to-pay toward becoming "primary financial tools" — integrating loyalty programs, BNPL options, credit products, and alternative funding sources. "Click to Pay" (network-level tokenized one-click checkout) is expanding across Visa, Mastercard, Amex, and Discover for web payments, targeting the friction of manual card entry in e-commerce.</p>
+      </section>
+      <section class="content-section" id="biometric">
+        <div class="section-header">
+          <div class="section-icon">👁️</div>
+          <div>
+            <h2>Invisible & Biometric Payments</h2>
+            <p class="section-lead">The 2026 payments experience is increasingly invisible — authentication happens in the background through behavioral biometrics, Face ID, and palm recognition, while agentic AI handles the payment initiation entirely.</p>
+          </div>
+        </div>
+
+        <div class="trend-card">
+          <h4>Amazon One — Discontinued (June 3, 2026)</h4>
+          <p>Amazon officially discontinued its <strong>Amazon One</strong> palm biometric payment service for retail businesses on June 3, 2026 — also deleting all user palm data. Earlier discontinuation had occurred in healthcare settings. Limited consumer adoption at scale was the primary driver. However, the discontinuation of Amazon One does <em>not</em> signal the failure of palm biometrics as a technology — the modality continues to be explored in Japan, the Middle East, and enterprise access control.</p>
+        </div>
+
+        <div class="trend-card">
+          <h4>SoftPOS / Tap-to-Phone — Growing Merchant Adoption</h4>
+          <p>SoftPOS (Software Point of Sale) turns any standard Android smartphone or tablet into a contactless payment terminal — no dedicated hardware required. This dramatically lowers the cost barrier for payment acceptance, particularly for small merchants, gig workers, and emerging markets. Key providers: <strong>Visa VTAP, Mastercard Tap-on-Phone, Square, and Stripe Terminal on mobile</strong>. Growth is strongest in markets where dedicated POS hardware is prohibitively expensive.</p>
+        </div>
+
+        <div class="trend-card">
+          <h4>The De Facto Biometric: Device-Embedded Authentication</h4>
+          <p>While purpose-built biometric POS (Amazon One, facial recognition) struggled with adoption, <strong>Face ID and fingerprint authentication embedded in smartphones</strong> have become the de facto biometric payment experience — used hundreds of millions of times daily for Apple Pay and Google Pay. The consumer never perceives it as "biometric authentication" — it is simply how you pay.</p>
+        </div>
+
+        <h3>Wearable Payments</h3>
+        <p>Smartwatches, fitness bands, and NFC rings continue to grow as payment form factors — <strong>Apple Watch, Samsung Galaxy Watch, Garmin Pay, and McLear Ring</strong> all support contactless NFC payment. The "frictionless" experience (no phone, no wallet, just a tap of the wrist) aligns with the broader trend toward invisible payment experiences. Wearable payment devices are among the fastest-growing segments by device count, though transaction volume remains modest relative to smartphones.</p>
+      </section>
+      
+    <div class="content-section" data-section-id="db-pushtocard" data-section-id="db-pushtocard" id="db-pushtocard">
+      <div class="section-header">
+        <div class="section-icon">📤</div>
+        <div>
+          <div class="section-num">3.3</div>
+          <h2>Push-to-Card Payouts (Visa Direct &amp; Mastercard Send)</h2>
+        </div>
+      </div>
+      <p>Traditional card transactions are "pull" transactions where the merchant initiates a request to pull funds from the cardholder's bank. However, networks created **Push-to-Card** solutions to support real-time disbursements.</p>
+      
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Reverse Transaction Messaging</h4>
+          <p>Visa Direct and Mastercard Send utilize reverse authorization messages (Original Credit Transactions, or OCTs). This allows a sender (e.g., Uber or an insurance provider) to push money directly to a recipient's debit card number.</p>
+        </div>
+        <div class="info-card">
+          <h4>Instant Availability</h4>
+          <p>Because the transaction clears instantly on the card network rails, the receiving bank is required by network rules to credit the recipient's demand deposit account within 30 minutes, and often does so within seconds.</p>
+        </div>
+        <div class="info-card">
+          <h4>B2C &amp; P2P Use Cases</h4>
+          <p>Push-to-card is widely used for gig-economy wage payouts, instant insurance claim disbursements, marketplace seller cashouts, and real-time funding for mobile P2P wallets.</p>
+        </div>
+      </div>
+    </div>
+  
+    </div>
+    <div class="chapter-panel" data-tab="bnpl">
+      <section class="content-section" id="bnpl">
+        <div class="section-header">
+          <div class="section-icon">🛍️</div>
+          <div>
+            <h2>Buy Now Pay Later in 2026</h2>
+            <p class="section-lead">BNPL survived its regulatory scare and emerged in 2026 as a mature, profitable segment — with Klarna's NYSE IPO marking its mainstream arrival and the CFPB's rule withdrawal reducing near-term compliance risk.</p>
+          </div>
+        </div>
+
+        <div class="key-facts-grid">
+          <div class="key-fact">
+            <div class="key-fact-value">$560B</div>
+            <div class="key-fact-label">Global BNPL GMV in 2025 → projected $680B in 2026</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">380M+</div>
+            <div class="key-fact-label">Global BNPL users (2025); projected ~670M by 2028</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">5–6%</div>
+            <div class="key-fact-label">BNPL's share of all US eCommerce transactions</div>
+          </div>
+          <div class="key-fact">
+            <div class="key-fact-value">Sep 10, 2025</div>
+            <div class="key-fact-label">Klarna IPO (NYSE: KLAR) at $40/share (~$15.1B valuation)</div>
+          </div>
+        </div>
+
+        <h3>CFPB BNPL Rule: Issued and Withdrawn</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Event</th><th>Date</th><th>Detail</th></tr></thead>
+            <tbody>
+              <tr><td>CFPB Interpretive Rule issued</td><td>May 2024</td><td>Declared BNPL lenders (Affirm, Afterpay, Klarna, PayPal, Sezzle, Zip) to be "card issuers" and "creditors" under Reg Z/TILA — would have required dispute investigation, billing statements, refund obligations</td></tr>
+              <tr><td>Legal challenge filed</td><td>2024</td><td>Financial Technology Association and others challenged the rule; CFPB also faced internal pressure under new administration</td></tr>
+              <tr><td>CFPB announces revocation</td><td>Early 2025</td><td>Rule characterized as "procedurally defective" — applying open-end credit rules to closed-end BNPL products created burden with minimal consumer benefit</td></tr>
+              <tr><td>No enforcement priority</td><td>May 2025</td><td>CFPB confirmed it would not prioritize enforcement based on the 2024 rule. No binding federal BNPL-specific regulation currently in force.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Key Player Snapshot (2025–2026)</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Company</th><th>Status</th><th>Key Stats</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Klarna</strong></td>
+                <td>NYSE: KLAR (IPO Sep 10, 2025)</td>
+                <td>119M active users; 3.4M daily transactions; GMV $136B; 85M app downloads</td>
+              </tr>
+              <tr>
+                <td><strong>Affirm</strong></td>
+                <td>Nasdaq: AFRM</td>
+                <td>GMV $46B+ (LTM Mar 2026); ~27M active consumers; achieved first GAAP profitability in 2026</td>
+              </tr>
+              <tr>
+                <td><strong>Afterpay</strong></td>
+                <td>Block Inc. subsidiary</td>
+                <td>Credit losses &lt;1% of GMV; &gt;95% GMV from returning customers; integrated with Cash App ecosystem</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box">
+          <p>💡 <strong>Profitability Pivot:</strong> The defining theme of BNPL in 2025–2026 is the industry's shift from "growth at all costs" to sustainable underwriting. Credit losses stabilized at 0.4–1.0% of GMV. BNPL is increasingly integrating into digital banking ecosystems — debit card overlays, long-term installment financing, and AI-driven financial health tools.</p>
+        </div>
+      </section>
+    </div>
+  
+    <div class="chapter-panel" data-tab="assessment">
+      <div class="content-section" data-section-id="assessment" id="assessment">
+        <div class="quiz-section-title">Module 3 Assessment</div>
+        <div class="quiz-wrapper" data-module="3"></div>
+      </div>
+    </div>
+
+    <div class="module-footer">
+      <a href="module2.html" class="footer-nav-btn">← Module 2: Payments Infrastructure</a>
+      <a href="module4.html" class="footer-nav-btn primary">Module 4: Card Payments →</a>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+
+    <div class="footer-facts">
+      <div class="footer-fact">
+        <div class="footer-fact-icon">✍️</div>
+        <div>
+          <div class="footer-fact-title">Original Written Expression</div>
+          <div class="footer-fact-body">The explanations, summaries, flow descriptions, and educational narratives in this platform are original content created specifically for this Academy. No text has been copied verbatim from any copyrighted publication, proprietary rulebook, or paywalled source.</div>
+        </div>
+      </div>
+      <div class="footer-fact">
+        <div class="footer-fact-icon">📊</div>
+        <div>
+          <div class="footer-fact-title">Publicly Reported Statistics</div>
+          <div class="footer-fact-body">All figures and statistics — including transaction volumes, fee rates, and market data — are drawn from publicly available sources: company earnings releases, Federal Reserve reports, CFPB studies, and Nacha annual reports. Facts are not copyrightable.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-disclaimer">
+      <div class="footer-disclaimer-icon">⚠️</div>
+      <div>
+        <strong>Regulatory Disclaimer:</strong> The regulatory and compliance content in this platform has been simplified for educational purposes. It is intended to build conceptual understanding, not to serve as legal or compliance advice. Payment regulations are complex, jurisdiction-specific, and subject to change. <strong>Anyone making compliance, legal, or business decisions should consult the primary regulatory sources directly and seek qualified legal counsel.</strong>
+      </div>
+    </div>
+
+    <div class="footer-sources-title">Primary Sources &amp; References</div>
+    <div class="footer-sources-grid">
+      <a class="footer-source-tag" href="https://www.nacha.org" target="_blank" rel="noopener">Nacha — ACH Operating Rules</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/paymentsystems.htm" target="_blank" rel="noopener">Federal Reserve — Payment Systems</a>
+      <a class="footer-source-tag" href="https://www.frbservices.org/financial-services/fednow" target="_blank" rel="noopener">Federal Reserve — FedNow Service</a>
+      <a class="footer-source-tag" href="https://www.theclearinghouse.org/payment-systems/rtp" target="_blank" rel="noopener">The Clearing House — RTP Network</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/pubs/fedpoint/fed43.htm" target="_blank" rel="noopener">Federal Reserve — Fedwire Funds</a>
+      <a class="footer-source-tag" href="https://www.cfpb.gov/rules-policy/regulations/1005/" target="_blank" rel="noopener">CFPB — Regulation E (EFTA)</a>
+      <a class="footer-source-tag" href="https://usa.visa.com/run-your-business/merchant-resources/interchange-reimbursement-fees.html" target="_blank" rel="noopener">Visa — Interchange Reimbursement Fees</a>
+      <a class="footer-source-tag" href="https://www.mastercard.us/en-us/business/overview/support/merchant-interchange-rates.html" target="_blank" rel="noopener">Mastercard — Interchange Rates</a>
+      <a class="footer-source-tag" href="https://www.federalreserve.gov/releases/z1/" target="_blank" rel="noopener">Federal Reserve — Z.1 Financial Accounts</a>
+      <a class="footer-source-tag" href="https://www.fdic.gov/regulations/applications/financial/" target="_blank" rel="noopener">FDIC — Banking Regulations</a>
+      <a class="footer-source-tag" href="https://www.swift.com" target="_blank" rel="noopener">SWIFT — Global Messaging Network</a>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/insights.js"></script>
+<script src="js/questions-m3.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visual Knowledge Graph — Payments Academy 3.0</title>
+  <meta name="description" content="Explore the interconnected payments knowledge graph, mapping the relations between rails, regulations, standards, and tech." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <style>
+    .graph-layout {
+      max-width: 1200px;
+      margin: 6rem auto 3rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 2rem;
+    }
+    @media (max-width: 900px) {
+      .graph-layout { grid-template-columns: 1fr; }
+    }
+    
+    .graph-canvas-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+      height: 600px;
+      cursor: grab;
+    }
+    .graph-canvas-container:active {
+      cursor: grabbing;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .graph-legend {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      background: rgba(8,12,20,0.85);
+      border: 1px solid var(--border-subtle);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(5px);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      z-index: 10;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    /* Details drawer */
+    .graph-drawer {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      height: fit-content;
+      position: sticky;
+      top: 6rem;
+    }
+    .graph-node-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent-indigo);
+      margin-bottom: 0.5rem;
+    }
+    .graph-node-type {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: rgba(99,102,241,0.12);
+      color: var(--accent-indigo);
+      display: inline-block;
+      margin-bottom: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">⚡</div>
+    Payments Academy
+  </a>
+  <ul class="nav-links">
+    <li><a href="pathways.html">My Learning Path</a></li>
+    <li><a href="flows.html">Flows</a></li>
+    <li><a href="regulations.html">Regulations</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="graph.html" class="active">Graph</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="capstones.html">Capstones</a></li>
+  </ul>
+</nav>
+
+<header class="map-header" style="padding-bottom:2rem;">
+  <div class="hero-badge">VISUAL MAP</div>
+  <h1 class="hero-title">Visual Knowledge Graph</h1>
+  <p class="hero-desc" style="max-width:700px; margin: 1rem auto 0;">
+    Explore relationships between payment rails, regulations, standards, and tech. Click and drag nodes to interact; click a node to reveal details and lessons.
+  </p>
+</header>
+
+<div class="graph-layout">
+  
+  <!-- Network Canvas -->
+  <div class="graph-canvas-container" id="canvas-container">
+    <canvas id="graph-canvas"></canvas>
+    
+    <div class="graph-legend">
+      <div class="legend-item"><div class="legend-color" style="background:#6366f1;"></div><span style="color:#818cf8;">Payment Rail</span></div>
+      <div class="legend-item"><div class="legend-color" style="background:#2dd4bf;"></div><span style="color:#2dd4bf;">Regulation</span></div>
+      <div class="legend-item"><div class="legend-color" style="background:#38bdf8;"></div><span style="color:#38bdf8;">Standard</span></div>
+      <div class="legend-item"><div class="legend-color" style="background:#f59e0b;"></div><span style="color:#f59e0b;">Technology</span></div>
+      <div class="legend-item"><div class="legend-color" style="background:#f43f5e;"></div><span style="color:#f43f5e;">Risk Control</span></div>
+    </div>
+  </div>
+
+  <!-- Info Panel -->
+  <div class="graph-drawer" id="graph-drawer">
+    <div class="graph-node-title" id="node-title">Interactive Graph</div>
+    <div class="graph-node-type" id="node-type">Welcome</div>
+    
+    <p class="details-text" id="node-desc" style="margin-bottom: 1.5rem;">
+      Click any node in the network to inspect its relationships. The edges represent operational bindings: for example, the connection between "ACH" and "Regulation E" representing the consumer debit dispute framework.
+    </p>
+    
+    <div style="border-top:1px solid var(--border-subtle); padding-top:1rem;">
+      <a href="#" class="topic-link" id="node-link" style="display:none;">Open Related Module →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-logo">
+      <div class="site-footer-logo-icon">⚡</div>
+      Payments Academy
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-copy">© 2026 Payments Academy · For educational use only</div>
+      <div class="footer-bottom-note">Content reflects publicly available information as of 2025–2026 · Verify current figures with primary sources</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Node database
+  const NODES = [
+    { id: 0, label: 'ACH', type: 'rail', color: '#6366f1', desc: 'Automated Clearing House — the batch-based payment network operated by FedACH and EPN.', link: 'module2.html' },
+    { id: 1, label: 'Regulation E', type: 'reg', color: '#2dd4bf', desc: 'Federal consumer protection rule capping debit card and ACH debit unauthorized liabilities.', link: 'module6.html#db-rege' },
+    { id: 2, label: 'Nacha Rules', type: 'reg', color: '#2dd4bf', desc: 'Private operating rules governing the ACH network requirements, compliance, and returns.', link: 'regulations.html' },
+    { id: 3, label: 'FedNow', type: 'rail', color: '#6366f1', desc: 'The Federal Reserve\'s real-time gross settlement payment system launched in 2023.', link: 'module2.html#rtp-overview' },
+    { id: 4, label: 'ISO 20022', type: 'standard', color: '#38bdf8', desc: 'The rich data messaging standard used by FedNow, RTP, and SWIFT.', link: 'module2.html' },
+    { id: 5, label: 'Card Networks', type: 'rail', color: '#6366f1', desc: 'Visa and Mastercard switching infrastructure and multi-party clearing schemes.', link: 'module4.html' },
+    { id: 6, label: 'PCI DSS', type: 'standard', color: '#38bdf8', desc: 'Payment Card Industry security standards protecting transaction data storage.', link: 'regulations.html' },
+    { id: 7, label: 'Tokenization', type: 'tech', color: '#f59e0b', desc: 'Substituting card primary account numbers (PAN) with dynamic secure surrogate tokens.', link: 'module3.html#tokenization' },
+    { id: 8, label: 'BaaS Middleware', type: 'tech', color: '#f59e0b', desc: 'Software layer exposing developer APIs to connect fintech apps to sponsor banks.', link: 'module7.html#baas' },
+    { id: 9, label: 'GNN Risk Models', type: 'risk', color: '#f43f5e', desc: 'Graph Neural Networks mapping inter-account flows to block fraud rings in real-time.', link: 'module5.html#ai-techniques' }
+  ];
+
+  // Links database (source and target by index)
+  const EDGES = [
+    { source: 0, target: 1 }, // ACH -> Reg E
+    { source: 0, target: 2 }, // ACH -> Nacha Rules
+    { source: 3, target: 4 }, // FedNow -> ISO 20022
+    { source: 5, target: 1 }, // Cards -> Reg E
+    { source: 5, target: 6 }, // Cards -> PCI DSS
+    { source: 5, target: 7 }, // Cards -> Tokenization
+    { source: 0, target: 8 }, // ACH -> BaaS
+    { source: 8, target: 9 }  // BaaS -> GNN Risk Models
+  ];
+
+  const canvas = document.getElementById('graph-canvas');
+  const ctx = canvas.getContext('2d');
+  const container = document.getElementById('canvas-container');
+
+  // Physics params
+  const kRepulsion = 1500;
+  const kSpring = 0.06;
+  const springLength = 120;
+  const damping = 0.85;
+
+  let width = container.clientWidth;
+  let height = container.clientHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  // Initialize node physics positions
+  NODES.forEach((node, i) => {
+    node.x = width / 2 + (Math.random() - 0.5) * 200;
+    node.y = height / 2 + (Math.random() - 0.5) * 200;
+    node.vx = 0;
+    node.vy = 0;
+    node.radius = 28;
+  });
+
+  let draggedNode = null;
+
+  // Resize canvas
+  window.addEventListener('resize', () => {
+    width = container.clientWidth;
+    height = container.clientHeight;
+    canvas.width = width;
+    canvas.height = height;
+  });
+
+  // Drag listeners
+  canvas.addEventListener('mousedown', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    // Find clicked node
+    NODES.forEach(node => {
+      const dist = Math.hypot(node.x - mouseX, node.y - mouseY);
+      if (dist < node.radius) {
+        draggedNode = node;
+        selectNode(node);
+      }
+    });
+  });
+
+  canvas.addEventListener('mousemove', (e) => {
+    if (!draggedNode) return;
+    const rect = canvas.getBoundingClientRect();
+    draggedNode.x = e.clientX - rect.left;
+    draggedNode.y = e.clientY - rect.top;
+  });
+
+  window.addEventListener('mouseup', () => {
+    draggedNode = null;
+  });
+
+  function selectNode(node) {
+    document.getElementById('node-title').innerText = node.label;
+    document.getElementById('node-title').style.color = node.color;
+    document.getElementById('node-type').innerText = node.type;
+    document.getElementById('node-type').style.background = `rgba(${hexToRgb(node.color)}, 0.12)`;
+    document.getElementById('node-type').style.color = node.color;
+    document.getElementById('node-desc').innerText = node.desc;
+    
+    const link = document.getElementById('node-link');
+    link.style.display = 'inline-block';
+    link.href = node.link;
+  }
+
+  function hexToRgb(hex) {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return `${r},${g},${b}`;
+  }
+
+  // Animation Loop
+  function tick() {
+    ctx.clearRect(0, 0, width, height);
+
+    // 1. Repulsion between all nodes
+    for (let i = 0; i < NODES.length; i++) {
+      for (let j = i + 1; j < NODES.length; j++) {
+        const dx = NODES[j].x - NODES[i].x;
+        const dy = NODES[j].y - NODES[i].y;
+        const dist = Math.hypot(dx, dy) || 1;
+        const force = kRepulsion / (dist * dist);
+        const fx = (dx / dist) * force;
+        const fy = (dy / dist) * force;
+
+        if (NODES[i] !== draggedNode) {
+          NODES[i].vx -= fx;
+          NODES[i].vy -= fy;
+        }
+        if (NODES[j] !== draggedNode) {
+          NODES[j].vx += fx;
+          NODES[j].vy += fy;
+        }
+      }
+    }
+
+    // 2. Spring tension along edges
+    EDGES.forEach(edge => {
+      const source = NODES[edge.source];
+      const target = NODES[edge.target];
+      const dx = target.x - source.x;
+      const dy = target.y - source.y;
+      const dist = Math.hypot(dx, dy) || 1;
+      const displacement = dist - springLength;
+      const force = kSpring * displacement;
+      const fx = (dx / dist) * force;
+      const fy = (dy / dist) * force;
+
+      if (source !== draggedNode) {
+        source.vx += fx;
+        source.vy += fy;
+      }
+      if (target !== draggedNode) {
+        target.vx -= fx;
+        target.vy -= fy;
+      }
+    });
+
+    // 3. Gravity pulling to center & Update positions
+    NODES.forEach(node => {
+      if (node === draggedNode) return;
+      const dx = width / 2 - node.x;
+      const dy = height / 2 - node.y;
+      node.vx += dx * 0.005;
+      node.vy += dy * 0.005;
+
+      node.vx *= damping;
+      node.vy *= damping;
+
+      node.x += node.vx;
+      node.y += node.vy;
+
+      // Boundaries
+      node.x = Math.max(node.radius, Math.min(width - node.radius, node.x));
+      node.y = Math.max(node.radius, Math.min(height - node.radius, node.y));
+    });
+
+    // 4. Draw Edges
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+    ctx.shadowBlur = 0;
+    EDGES.forEach(edge => {
+      const source = NODES[edge.source];
+      const target = NODES[edge.target];
+      ctx.beginPath();
+      ctx.moveTo(source.x, source.y);
+      ctx.lineTo(target.x, target.y);
+      ctx.stroke();
+    });
+
+    // 5. Draw Nodes
+    NODES.forEach(node => {
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+      ctx.fillStyle = node.color;
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = node.color;
+      ctx.fill();
+
+      // Text labels
+      ctx.fillStyle = '#f1f5f9';
+      ctx.font = 'bold 11px Outfit, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.shadowBlur = 0;
+      ctx.fillText(node.label, node.x, node.y);
+    });
+
+    requestAnimationFrame(tick);
+  }
+
+  // Boot
+  tick();
+</script>
+</body>
+</html>
